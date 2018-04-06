@@ -17,6 +17,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -88,9 +90,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
 
@@ -110,3 +112,7 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "marketing", "static", "st
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(BASE_DIR), "marketing", "templates", "assets", "static_files"),
 )
+
+JET_DEFAULT_THEME = 'green'
+
+JET_SIDE_MENU_COMPACT = True
