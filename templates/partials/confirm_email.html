@@ -1,0 +1,5 @@
+{% autoescape off %}
+    Вы зарегистрировались в системе Marketing
+    Пожалуйста перейдите по ссылке для активации
+    http://{{ domain }}{% url 'activate' url %}
+{% endautoescape %}
