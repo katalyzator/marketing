@@ -103,8 +103,13 @@
             </div>
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav reg uk-text-center">
-                    <li><a href="#" uk-toggle="target: #enter">Вход</a></li>
-                    <li><a href="#" uk-toggle="target: #registration"> Регистрация</a></li>
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'profile' %}">{{ request.user }}</a></li>
+                        <li><a href="{% url 'logout' %}">Выход</a></li>
+                    {% else %}
+                        <li><a href="#" uk-toggle="target: #enter">Вход</a></li>
+                        <li><a href="#" uk-toggle="target: #registration"> Регистрация</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -137,16 +142,17 @@
 <div id="enter" uk-modal="">
     <div class="uk-modal-dialog uk-modal-body">
         <button class="uk-modal-close-default" type="button" uk-close=""></button>
-        <form>
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Вход</legend>
                 <div class="uk-margin">
-                    <input class="uk-input" type="text" placeholder="Имя">
+                    {% render_field login_form.username class+='uk-input' %}
                 </div>
                 <div class="uk-margin">
-                    <input class="uk-input" type="text" placeholder="Пароль">
+                    {% render_field login_form.password class+='uk-input' %}
                 </div>
-                <button class="uk-button uk-button-primary" type="button">Войти</button>
+                <button class="uk-button uk-button-primary" type="submit">Войти</button>
             </fieldset>
         </form>
     </div>

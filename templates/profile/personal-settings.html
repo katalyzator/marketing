@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="personal-area">
+        <div class="uk-container-expand uk-container">
+            <div class="uk-card uk-padding uk-card-default">
+                <h2 class="uk-text-center">РЕДАКТИРОВАНИЕ ДАННЫХ</h2>
+                <form class="uk-width-1-2@m uk-margin-auto" method="POST" action="#">
+                    <fieldset class="uk-fieldset">
+                        <div class="uk-margin">
+                            <label for="">Имя:</label>
+                            <input class="uk-input" type="text" placeholder="">
+                        </div>
+                        <div class="uk-margin">
+                            <label for="">Фамилия: </label>
+                            <input class="uk-input" type="text" placeholder="">
+                        </div>
+                        <div class="uk-margin">
+                            <button class="uk-button-primary uk-button" type="submit"> Изменить</button>
+                        </div>
+                        <div class="uk-margin">
+                            <label for="">E-mail:</label>
+                            <input class="uk-input" type="email" placeholder="">
+                        </div>
+                    </fieldset>
+                </form>
+                <hr>
+                <h2 class="uk-text-center">Изменение пароля</h2>
+                <form class="uk-width-1-2@m uk-margin-auto">
+                    <fieldset class="uk-fieldset">
+                        <div class="uk-margin">
+                            <label for="">Старый пароль:</label>
+                            <input class="uk-input" type="password" placeholder="">
+                        </div>
+                        <div class="uk-margin">
+                            <label for="">Новый пароль:</label>
+                            <input class="uk-input" type="password" placeholder="">
+                        </div>
+                        <div class="uk-margin">
+                            <label for="">Повторите новый пароль: </label>
+                            <input class="uk-input" type="password" placeholder="">
+                        </div>
+                        <div class="uk-margin">
+                            <button class="uk-button-primary uk-button" type="submit"> Изменить</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 
-from main.models import User
+from main.models import *
 
 
 class SignUpForm(forms.ModelForm):
@@ -10,3 +10,9 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2', 'email', 'first_name')
+
+
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        model = TransactionKeys
+        fields = '__all__'

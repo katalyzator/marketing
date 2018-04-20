@@ -1,6 +1,7 @@
 import base64
 import json
 
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -12,7 +13,8 @@ from .forms import *
 
 def base_context(request):
     context = {
-        'signup_form': SignUpForm(request.POST)
+        'signup_form': SignUpForm(request.POST),
+        'login_form': AuthenticationForm(request.POST)
     }
     return context
 

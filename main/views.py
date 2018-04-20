@@ -4,10 +4,12 @@ from __future__ import unicode_literals
 import base64
 import json
 
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.encoding import force_text
 from django.views.generic import *
 
@@ -56,3 +58,45 @@ class UserCreateView(CreateView):
         for item in form.errors:
             message += form.errors.get(item)
         return JsonResponse(dict(success=False, message=message))
+
+
+class UserLogoutView(LogoutView):
+    template_name = 'index.html'
+
+    def get_next_page(self):
+        return reverse('main')
+
+
+class UserLoginView(LoginView):
+    template_name = 'base.html'
+
+    def get_success_url(self):
+        return reverse('main')
+
+
+class UserDetailView(UpdateView):
+    model = User
+    fields = ('username',)
+    template_name = 'profile/personal-area.html'
+
+    def get_success_url(self):
+        return self.request.path
+
+    def get_template_names(self):
+        if self.request.path == reverse('profile-settings'):
+            return 'profile/personal-settings.html'
+        return super(UserDetailView, self).get_template_names()
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDetailView, self).get_context_data(**kwargs)
+        context['products'] = Products.objects.all()
+        return context
+
+
+class GetTarif(CreateView):
+    model = TransactionKeys
+    template_name = 'profile/personal-area-tarif.html'
+    form_class = TransactionForm

@@ -7,14 +7,23 @@ from django.db import models
 from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
-levels = (
-    ('1', 'Уровень 1'),
-    ('2', 'Уровень 2'),
-    ('3', 'Уровень 3'),
-    ('4', 'Уровень 4'),
-    ('5', 'Уровень 5'),
-    ('6', 'Уровень 6'),
-)
+
+class Products(models.Model):
+    class Meta:
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
+
+    title = models.CharField(verbose_name='Название продукта', max_length=255)
+    level = models.PositiveIntegerField(verbose_name='Уровень продукта', unique=True)
+    price = models.PositiveIntegerField(verbose_name='Цена продукта')
+
+    def __unicode__(self):
+        return smart_unicode(self.title)
+
+    @property
+    def get_highest_product(self):
+        product = Products.objects.order_by('level').filter(level__gt=self.level).first()
+        return product
 
 
 class TransactionKeys(models.Model):
@@ -24,7 +33,7 @@ class TransactionKeys(models.Model):
 
     handler = models.ForeignKey("User", verbose_name='Владелец ключа', related_name='handler')
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
-    key = models.UUIDField(default=uuid.uuid4())
+    key = models.CharField(verbose_name='ID транзакции', null=True, max_length=255)
 
     def __unicode__(self):
         return smart_unicode(self.handler)
@@ -51,9 +60,9 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
-    level = models.CharField(verbose_name='Текущий уровень', choices=levels, max_length=255)
+    level = models.ForeignKey(Products, verbose_name='Текущий уровень', on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField(verbose_name='Email', unique=True)
-    related_users = models.ManyToManyField("User", verbose_name='Рефералы')
+    related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
 
     def __unicode__(self):
         if self.username:
