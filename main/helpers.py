@@ -36,14 +36,19 @@ def activate(request, url):
         return HttpResponse('Link is invalid')
 
 
-def get_parent_user(user):
+def get_parent_user(user, real_user):
     try:
         parent_user = User.objects.get(level__gt=user.level.level, related_users=user)
-        if TransactionKeys.objects.filter(handler=user, used_by=parent_user, is_confirmed=True).first():
-            return get_parent_user(parent_user)
+        if parent_user and TransactionKeys.objects.filter(handler=real_user, used_by=parent_user,
+                                                          is_confirmed=True).first():
+            return get_parent_user(parent_user, real_user)
         return parent_user
     except:
-        pass
+        parent_user = User.objects.filter(level__gte=user.level.level, related_users=user).order_by(
+            'level__level').last()
+        if parent_user and TransactionKeys.objects.filter(handler=real_user, used_by=parent_user, is_confirmed=True).first():
+            return get_parent_user(parent_user, real_user)
+        return parent_user
 
 
 def confirm_transaction(request):
