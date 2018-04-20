@@ -1,58 +1,63 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load my_filters %}
 {% block content %}
     <section class="personal-area">
         <div class="uk-container-expand uk-container">
             <div class="uk-grid uk-grid-small" uk-grid="">
                 <div class="uk-width-expand@m">
                     <div class="uk-card-default uk-card-body">
+                        {% has_transaction parent_user request.user as user_transactions %}
                         <h1>ЗАКАЗАТЬ ТАРИФ</h1>
                         <div class="uk-overflow-auto">
-                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
-                                <thead>
-                                <tr>
-                                    <th>Спонсор</th>
-                                    <th>Контакты</th>
-                                    <th>QIWI-кошелек</th>
-                                    <th>Сумма</th>
-                                    <th>ID транзакции</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>KasperJr</td>
-                                    <td>+996444 44 44 44</td>
-                                    <td>+79273094808</td>
-                                    <td>400 рублей</td>
-                                    <td>
-                                        <input class="uk-input">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>KasperJr</td>
-                                    <td>+996444 44 44 44</td>
-                                    <td>+79273094808</td>
-                                    <td>400 рублей</td>
-                                    <td>
-                                        <input class="uk-input">
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="uk-text-center">
-                                <button class="uk-button uk-button-default">Заказать тариф</button>
-                            </div>
-                            <div class="uk-placeholder uk-margin-medium">
-                                <p>У вас тариф: Красный, и сейчас вы можете заказать тариф: Жёлтый.</p>
-                                <p>Для заказа тарифа совершите перевод на сумму: 400 рублей через платежную систему
-                                    w.qiwi.com на вышеуказанный номер.</p>
-                                <p>В комментарии к переводу укажите: От max8989, Gamma Finance</p>
-                                <p>После совершения перевода, в QIWI-кошельке в верхнем правом углу переходим в раздел
-                                    "История".</p>
-                                <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
-                                <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать тариф"</p>
-                                <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой QIWI-кошелек, если
-                                    платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
-                            </div>
+                            {% if not user_transactions %}
+                                <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                    <thead>
+                                    <tr>
+                                        <th>Спонсор</th>
+                                        <th>Контакты</th>
+                                        <th>Мобильник-кошелек</th>
+                                        <th>Сумма</th>
+                                        <th>ID транзакции</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{ parent_user }}</td>
+                                        <td>{{ parent_user.phone }}</td>
+                                        <td>{{ parent_user.mobilnik }}</td>
+                                        <td>{{ parent_user.level.price }} рублей</td>
+                                        <td>
+                                            <form action="#" id="transaction_form" method="POST">
+                                                {% render_field transaction_form.handler class+='uk-hidden' value=request.user %}
+                                                {% render_field transaction_form.key class+='uk-input' %}
+                                                {% render_field transaction_form.used_by class+='uk-hidden' value=parent_user %}
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="uk-text-center">
+                                    <button class="uk-button uk-button-default">Заказать тариф</button>
+                                </div>
+                                <div class="uk-placeholder uk-margin-medium">
+                                    <p>У вас тариф: Красный, и сейчас вы можете заказать тариф: Жёлтый.</p>
+                                    <p>Для заказа тарифа совершите перевод на сумму: 400 рублей через платежную систему
+                                        w.qiwi.com на вышеуказанный номер.</p>
+                                    <p>В комментарии к переводу укажите: От max8989, Gamma Finance</p>
+                                    <p>После совершения перевода, в QIWI-кошельке в верхнем правом углу переходим в
+                                        раздел
+                                        "История".</p>
+                                    <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
+                                    <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать тариф"</p>
+                                    <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой QIWI-кошелек,
+                                        если
+                                        платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
+                                </div>
+                            {% else %}
+                                <legend class="uk-text-center uk-legend uk-text-success">Ваш запрос еще обрабатывается
+                                </legend>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>

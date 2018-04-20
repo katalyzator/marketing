@@ -33,3 +33,13 @@ def activate(request, url):
         return redirect(reverse('main'))
     else:
         return HttpResponse('Link is invalid')
+
+
+def get_parent_user(user):
+    try:
+        parent_user = User.objects.get(level__gt=user.level.level, related_users=user)
+        if TransactionKeys.objects.filter(handler=user, used_by=parent_user, is_confirmed=True).first():
+            return get_parent_user(parent_user)
+        return parent_user
+    except:
+        pass

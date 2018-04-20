@@ -15,4 +15,4 @@ class SignUpForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = TransactionKeys
-        fields = '__all__'
+        exclude = ('is_confirmed',)

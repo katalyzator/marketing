@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^logout/$', UserLogoutView.as_view(), name='logout'),
     url(r'^profile/$', login_required(UserDetailView.as_view()), name='profile'),
     url(r'^profile/settings/$', login_required(UserDetailView.as_view()), name='profile-settings'),
-    url(r'^profile/tarif/$', login_required(GetTarif.as_view()), name='get_tarif'),
+    url(r'^profile/tarif/$', login_required(UserDetailView.as_view()), name='get_tariff'),
     url(r'^activate/(?P<url>.*)$', activate, name='activate'),
 ]

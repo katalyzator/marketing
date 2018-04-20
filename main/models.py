@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -34,6 +33,7 @@ class TransactionKeys(models.Model):
     handler = models.ForeignKey("User", verbose_name='Владелец ключа', related_name='handler')
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
     key = models.CharField(verbose_name='ID транзакции', null=True, max_length=255)
+    is_confirmed = models.BooleanField(verbose_name='Подтвержден', default=False)
 
     def __unicode__(self):
         return smart_unicode(self.handler)
@@ -62,6 +62,8 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
 
     level = models.ForeignKey(Products, verbose_name='Текущий уровень', on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField(verbose_name='Email', unique=True)
+    phone = models.CharField(verbose_name='Номер телефона', max_length=255, null=True)
+    mobilnik = models.CharField(verbose_name='Мобильник кошелек', max_length=255, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
 
     def __unicode__(self):

@@ -18,3 +18,4 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(Slider)
 admin.site.register(User, UserAdmin)
 admin.site.register(Products)
+admin.site.register(TransactionKeys)
