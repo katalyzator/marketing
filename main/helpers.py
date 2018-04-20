@@ -1,9 +1,10 @@
+# coding=utf-8
 import base64
 import json
 
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.encoding import force_bytes
@@ -43,3 +44,11 @@ def get_parent_user(user):
         return parent_user
     except:
         pass
+
+
+def confirm_transaction(request):
+    if request.POST:
+        transaction = TransactionKeys.objects.get(key=request.POST.get('transaction_key'))
+        transaction.is_confirmed = True
+        transaction.save()
+        return JsonResponse(dict(success=True, message='Успешно подтвержено'))

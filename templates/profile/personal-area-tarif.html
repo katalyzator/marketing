@@ -28,7 +28,7 @@
                                         <td>{{ parent_user.mobilnik }}</td>
                                         <td>{{ parent_user.level.price }} рублей</td>
                                         <td>
-                                            <form action="#" id="transaction_form" method="POST">
+                                            <form action="{% url 'transaction' %}" id="transaction_form" method="POST">
                                                 {% render_field transaction_form.handler class+='uk-hidden' value=request.user %}
                                                 {% render_field transaction_form.key class+='uk-input' %}
                                                 {% render_field transaction_form.used_by class+='uk-hidden' value=parent_user %}
@@ -61,19 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="uk-width-1-6@m">
-                    <div>
-                        <ul class="uk-list uk-card uk-card-default uk-card-body">
-                            <li class="active"><a href="">Главная</a></li>
-                            <li><a href="">Заказать тариф</a></li>
-                            <li><a href="">Реф-ссылки</a></li>
-                            <li><a href="">Команда</a></li>
-                            <li><a href="">Спонсоры</a></li>
-                            <li><a href="">Профиль</a></li>
-                            <li><a href="">Служба поддержки</a></li>
-                        </ul>
-                    </div>
-                </div>
+                {% include 'partials/profile-sidebar.html' %}
             </div>
         </div>
     </section>

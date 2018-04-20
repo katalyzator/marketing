@@ -1,43 +1,55 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block content %}
     <section class="personal-area">
         <div class="uk-container-expand uk-container">
             <div class="uk-card uk-padding uk-card-default">
                 <h2 class="uk-text-center">РЕДАКТИРОВАНИЕ ДАННЫХ</h2>
-                <form class="uk-width-1-2@m uk-margin-auto" method="POST" action="#">
+                <form class="uk-width-1-2@m uk-margin-auto" method="POST" action="{% url 'profile' %}" id="user_form">
+                    {% csrf_token %}
                     <fieldset class="uk-fieldset">
                         <div class="uk-margin">
                             <label for="">Имя:</label>
-                            <input class="uk-input" type="text" placeholder="">
+                            {% render_field form.first_name class+='uk-input' %}
                         </div>
                         <div class="uk-margin">
-                            <label for="">Фамилия: </label>
-                            <input class="uk-input" type="text" placeholder="">
+                            <label for="">Фамилия:</label>
+                            {% render_field form.last_name class+='uk-input' %}
+                        </div>
+                        <div class="uk-margin">
+                            <label for="">Email:</label>
+                            {% render_field form.email class+='uk-input' %}
+                        </div>
+                        <div class="uk-margin">
+                            <label for="">Номер телефона:</label>
+                            {% render_field form.phone class+='uk-input' %}
+                        </div>
+                        <div class="uk-margin">
+                            <label for="">Мобильник кошелек</label>
+                            {% render_field form.mobilnik class+='uk-input' %}
                         </div>
                         <div class="uk-margin">
                             <button class="uk-button-primary uk-button" type="submit"> Изменить</button>
-                        </div>
-                        <div class="uk-margin">
-                            <label for="">E-mail:</label>
-                            <input class="uk-input" type="email" placeholder="">
                         </div>
                     </fieldset>
                 </form>
                 <hr>
                 <h2 class="uk-text-center">Изменение пароля</h2>
-                <form class="uk-width-1-2@m uk-margin-auto">
+                <form class="uk-width-1-2@m uk-margin-auto" method="POST" action="{% url 'change_password' %}"
+                      id="user_password_form">
+                    {% csrf_token %}
                     <fieldset class="uk-fieldset">
                         <div class="uk-margin">
                             <label for="">Старый пароль:</label>
-                            <input class="uk-input" type="password" placeholder="">
+                            {% render_field password_change_form.old_password class+='uk-input' %}
                         </div>
                         <div class="uk-margin">
                             <label for="">Новый пароль:</label>
-                            <input class="uk-input" type="password" placeholder="">
+                            {% render_field password_change_form.new_password1 class+='uk-input' %}
                         </div>
                         <div class="uk-margin">
                             <label for="">Повторите новый пароль: </label>
-                            <input class="uk-input" type="password" placeholder="">
+                            {% render_field password_change_form.new_password2 class+='uk-input' %}
                         </div>
                         <div class="uk-margin">
                             <button class="uk-button-primary uk-button" type="submit"> Изменить</button>
@@ -47,4 +59,12 @@
             </div>
         </div>
     </section>
+{% endblock %}
+{% block custom_scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ajax_request($('#user_form'));
+            ajax_request($('#user_password_form'))
+        });
+    </script>
 {% endblock %}

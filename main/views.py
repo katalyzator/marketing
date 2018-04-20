@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import base64
 import json
 
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_text
 from django.views.generic import *
+from django.contrib.auth.forms import PasswordChangeForm
 
 from main.forms import *
 from main.helpers import get_parent_user
@@ -86,7 +87,7 @@ class UserLoginView(LoginView):
 
 class UserDetailView(UpdateView):
     model = User
-    fields = ('username',)
+    form_class = UserUpdateForm
     template_name = 'profile/personal-area.html'
 
     def get_success_url(self):
@@ -97,6 +98,10 @@ class UserDetailView(UpdateView):
             return 'profile/personal-settings.html'
         if self.request.path == reverse('get_tariff'):
             return 'profile/personal-area-tarif.html'
+        if self.request.path == reverse('profile-ref-urls'):
+            return 'profile/personal-area-ref.html'
+        if self.request.path == reverse('profile-requests'):
+            return 'profile/personal-requests.html'
         return super(UserDetailView, self).get_template_names()
 
     def get_object(self, queryset=None):
@@ -107,12 +112,28 @@ class UserDetailView(UpdateView):
         context['products'] = Products.objects.all()
         context['transaction_form'] = TransactionForm(self.request.POST)
         context['parent_user'] = get_parent_user(self.request.user)
+        context['password_change_form'] = PasswordChangeForm(self.request.POST)
+        context['user_requests'] = TransactionKeys.objects.filter(used_by=self.request.user, is_confirmed=False)
         return context
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse(dict(success=True, message='Вы успешно изменили свои данные'))
+
+    def form_invalid(self, form):
+        message = ''
+        print(form.errors)
+        for item in form.errors:
+            message += form.errors[item]
+        return JsonResponse(dict(succcess=False, message=message))
 
 
 class TransactionCreateView(CreateView):
     model = TransactionKeys
     form_class = TransactionForm
+
+    def get_success_url(self):
+        return self.request.path
 
     def form_valid(self, form):
         form.save()
@@ -122,4 +143,22 @@ class TransactionCreateView(CreateView):
         message = ''
         for item in form.errors:
             message += form.errors.get(item)
+        return JsonResponse(dict(succcess=False, message=message))
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    title = 'Изменить пароль'
+
+    def get_success_url(self):
+        return self.request.path
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse(dict(success=True, message='Вы успешно изменили свои данные'))
+
+    def form_invalid(self, form):
+        message = ''
+        print(form.errors)
+        for item in form.errors:
+            message += form.errors[item]
         return JsonResponse(dict(succcess=False, message=message))

@@ -188,8 +188,8 @@
 <script src="{% static 'js/libs.min.js' %}"></script>
 <script src="{% static 'js/common.min.js' %}"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#user-form').on('submit', function (e) {
+    function ajax_request(form) {
+        $(form).on('submit', function (e) {
             e.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
@@ -198,7 +198,8 @@
                 datatype: 'JSON',
                 success: function (response) {
                     if (response.success) {
-                        UIkit.notification(response.message, 'success')
+                        UIkit.notification(response.message, 'success');
+                        window.location = window.location.href
                     }
                     else {
                         UIkit.notification(response.message, 'danger')
@@ -206,7 +207,13 @@
                 }
             })
         })
+    }
+
+    $(document).ready(function () {
+        ajax_request($('#user-form'));
     })
 </script>
+{% block custom_scripts %}
+{% endblock %}
 </body>
 </html>

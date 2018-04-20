@@ -32,11 +32,19 @@ class TransactionKeys(models.Model):
 
     handler = models.ForeignKey("User", verbose_name='Владелец ключа', related_name='handler')
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
+    product = models.ForeignKey("Products", verbose_name='За товар', null=True)
     key = models.CharField(verbose_name='ID транзакции', null=True, max_length=255)
     is_confirmed = models.BooleanField(verbose_name='Подтвержден', default=False)
 
     def __unicode__(self):
         return smart_unicode(self.handler)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.is_confirmed:
+            self.handler.level = self.product
+            self.handler.save()
+        super(TransactionKeys, self).save()
 
 
 class Slider(models.Model):
@@ -70,3 +78,8 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         if self.username:
             return smart_unicode(self.username)
         return smart_unicode(self.email)
+
+    @property
+    def get_earned_money(self):
+        summ = TransactionKeys.objects.filter(used_by=self, is_confirmed=True).count()
+        return summ * self.level.price

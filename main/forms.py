@@ -16,3 +16,9 @@ class TransactionForm(forms.ModelForm):
     class Meta:
         model = TransactionKeys
         exclude = ('is_confirmed',)
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'mobilnik', 'phone', 'email')
