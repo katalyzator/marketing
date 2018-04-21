@@ -15,6 +15,7 @@ class Products(models.Model):
     title = models.CharField(verbose_name='Название продукта', max_length=255)
     level = models.PositiveIntegerField(verbose_name='Уровень продукта', unique=True)
     price = models.PositiveIntegerField(verbose_name='Цена продукта')
+    image = models.ImageField(upload_to='images/product_images', blank=True, null=True)
 
     def __unicode__(self):
         return smart_unicode(self.title)
