@@ -5,7 +5,7 @@ from main.helpers import *
 from main.views import *
 
 urlpatterns = [
-    url(r'^$', SliderListView.as_view(), name='main'),
+    url(r'^$', IndexView.as_view(), name='main'),
     url(r'^create_user/$', UserCreateView.as_view(), name='create_user'),
     url(r'^login/$', UserLoginView.as_view(), name='login'),
     url(r'^logout/$', UserLogoutView.as_view(), name='logout'),

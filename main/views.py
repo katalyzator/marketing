@@ -19,15 +19,20 @@ from main.helpers import get_parent_user
 from main.models import *
 
 
-class SliderListView(ListView):
-    model = Slider
-    context_object_name = 'slider'
+class IndexView(TemplateView):
     template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['sliders'] = Slider.objects.all()
+        context['products'] = Products.objects.all()
+
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         if request.GET.get('ref'):
             request.session['ref'] = request.GET.get('ref')
-        return super(SliderListView, self).dispatch(request, *args, **kwargs)
+        return super(IndexView, self).dispatch(request, *args, **kwargs)
 
 
 class UserCreateView(CreateView):

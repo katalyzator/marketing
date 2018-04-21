@@ -144,68 +144,23 @@
     <section class="tarif">
         <div class="uk-container">
             <h2>Тарифы и стоимость</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, similique?</p>
+            <p></p>
             <div class="uk-grid uk-margin-large uk-child-width-1-5@m" uk-grid="">
-                <div>
-                    <div class="item">
-                        <div class="uk-margin">
-                            <h5 class="uk-text-center">Lorem ipsum dolor sit amet.</h5>
-                            <h6>Категория</h6>
+                {% for product in products %}
+                    <div>
+                        <div class="item">
+                            <div class="uk-margin">
+                                <h5 class="uk-text-center">{{ product.title }}</h5>
+                                <h6>{{ product.level }}</h6>
+                            </div>
+                            <div class="uk-cover-container uk-height-small"><img
+                                    src="{{ product.image.url }}"
+                                    alt=""
+                                    uk-cover=""></div>
+                            <p class="uk-text-center">{{ product.price }} Сом</p>
                         </div>
-                        <div class="uk-cover-container uk-height-small"><img src="http://via.placeholder.com/100x100"
-                                                                             alt=""
-                                                                             uk-cover=""></div>
-                        <p class="uk-text-center">6500 Сом</p>
                     </div>
-                </div>
-                <div>
-                    <div class="item">
-                        <div class="uk-margin">
-                            <h5 class="uk-text-center">Lorem ipsum dolor sit amet.</h5>
-                            <h6>Категория</h6>
-                        </div>
-                        <div class="uk-cover-container uk-height-small"><img src="http://via.placeholder.com/100x100"
-                                                                             alt=""
-                                                                             uk-cover=""></div>
-                        <p class="uk-text-center">6500 Сом</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="item">
-                        <div class="uk-margin">
-                            <h5 class="uk-text-center">Lorem ipsum dolor sit amet.</h5>
-                            <h6>Категория</h6>
-                        </div>
-                        <div class="uk-cover-container uk-height-small"><img src="http://via.placeholder.com/100x100"
-                                                                             alt=""
-                                                                             uk-cover=""></div>
-                        <p class="uk-text-center">6500 Сом</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="item">
-                        <div class="uk-margin">
-                            <h5 class="uk-text-center">Lorem ipsum dolor sit amet.</h5>
-                            <h6>Категория</h6>
-                        </div>
-                        <div class="uk-cover-container uk-height-small"><img src="http://via.placeholder.com/100x100"
-                                                                             alt=""
-                                                                             uk-cover=""></div>
-                        <p class="uk-text-center">6500 Сом</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="item">
-                        <div class="uk-margin">
-                            <h5 class="uk-text-center">Lorem ipsum dolor sit amet.</h5>
-                            <h6>Категория</h6>
-                        </div>
-                        <div class="uk-cover-container uk-height-small">
-                            <img src="http://via.placeholder.com/100x100" alt="" uk-cover="">
-                        </div>
-                        <p class="uk-text-center">6500 Сом</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
