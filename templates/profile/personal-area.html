@@ -16,9 +16,9 @@
                                             <p>Сейчас Вы можете заказать
                                                 тариф {{ request.user.level.get_highest_product }}. Для этого вам
                                                 нужно иметь на
-                                                своем QIWI-кошельке не
+                                                своем Мобильник-кошельке не
                                                 менее {{ request.user.level.get_highest_product.price }}
-                                                рублей.</p>
+                                                сомов.</p>
                                         </div>
                                         <a class="uk-button uk-button-default" href="{% url 'get_tariff' %}">Заказать
                                             тариф</a>
@@ -43,7 +43,7 @@
                                                 {% for item in products %}
                                                     <tr>
                                                         <td>{{ item.title }}</td>
-                                                        <td>{{ item.price }} руб</td>
+                                                        <td>{{ item.price }} сом</td>
                                                         <td>{% get_refs_count request item %}</td>
                                                     </tr>
                                                 {% endfor %}
@@ -60,11 +60,14 @@
                                     <div class="uk-width-1-1">
                                         <h2 class="uk-text-center">ПАРТНЕРСКАЯ ССЫЛКА</h2>
                                         <div class="uk-margin">
-                                            <h3 class="uk-card-title uk-margin-remove">Главная страница:</h3><a href="">http://gamma-finance.com/?ref=max8989</a>
+                                            <h3 class="uk-card-title uk-margin-remove">Главная страница:</h3>
+                                            <a href="{% url 'main' %}?ref={{ request.user.username }}">{{ domain }}?ref={{ request.user.username }}</a>
+
                                         </div>
                                         <div class="uk-margin">
-                                            <h3 class="uk-card-title uk-margin-remove">Страница регистрации:</h3><a
-                                                href="">http://gamma-finance.com/reg.php?ref=max8989</a>
+                                            <h3 class="uk-card-title uk-margin-remove">Страница регистрации:</h3>
+                                            <a href="{% url 'main' %}?ref={{ request.user.username }}">{{ domain }}?ref={{ request.user.username }}</a>
+
                                         </div>
                                         <p><a class="uk-button uk-button-default" href="{% url 'profile-ref-urls' %}">Сделать
                                             редирект ссылки</a>

@@ -9,7 +9,7 @@
                             <div class="uk-placeholder uk-margin-medium-top">
                                 <div class="uk-margin-medium">
                                     <p>Главная страница:
-                                        <a href="{% url 'main' %}?ref={{ request.user.username }}">http://gamma-finance.com/?ref={{ request.user.username }}</a>
+                                        <a href="{% url 'main' %}?ref={{ request.user.username }}">{{ domain }}?ref={{ request.user.username }}</a>
                                     </p>
                                 </div>
                                 <div class="uk-background-muted uk-padding uk-panel">

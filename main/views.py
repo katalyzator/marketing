@@ -113,7 +113,9 @@ class UserDetailView(UpdateView):
         return self.request.user
 
     def get_context_data(self, **kwargs):
+        current_site = get_current_site(self.request)
         context = super(UserDetailView, self).get_context_data(**kwargs)
+        context['domain'] = current_site.domain
         context['products'] = Products.objects.all()
         context['transaction_form'] = TransactionForm(self.request.POST)
         context['parent_user'] = get_parent_user(self.request.user, self.request.user)
