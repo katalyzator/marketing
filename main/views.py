@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import base64
 import json
 
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, login
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
@@ -88,6 +88,16 @@ class UserLoginView(LoginView):
 
     def get_success_url(self):
         return reverse('main')
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return JsonResponse(dict(success=True, message='Успешно'))
+
+    def form_invalid(self, form):
+        message = ''
+        for item in form.errors:
+            message += form.errors.get(item)
+        return JsonResponse(dict(sucess=False, message=message))
 
 
 class UserDetailView(UpdateView):

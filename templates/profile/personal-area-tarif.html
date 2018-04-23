@@ -11,51 +11,64 @@
                         <h1>ЗАКАЗАТЬ ТАРИФ</h1>
                         <div class="uk-overflow-auto">
                             {% if not user_transactions %}
-                                <form action="{% url 'transaction' %}" id="transaction_form" method="POST">
-                                    {% csrf_token %}
-                                    <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
-                                        <thead>
-                                        <tr>
-                                            <th>Спонсор</th>
-                                            <th>Контакты</th>
-                                            <th>Мобильник-кошелек</th>
-                                            <th>Сумма</th>
-                                            <th>ID транзакции</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>{{ parent_user }}</td>
-                                            <td>{{ parent_user.phone }}</td>
-                                            <td>{{ parent_user.mobilnik }}</td>
-                                            <td>{{ parent_user.level.price }} рублей</td>
-                                            <td>
-                                                <input type="hidden" name="handler" value={{ request.user.pk }}>
-                                                <input type="hidden" name="product" value={{ parent_user.level.pk }}>
-                                                {% render_field transaction_form.key class+='uk-input' %}
-                                                <input type="hidden" name="used_by" value={{ parent_user.pk }}>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <div class="uk-text-center">
-                                        <button class="uk-button uk-button-default" type="submit">Заказать тариф
-                                        </button>
+                                {{ parent_user }}
+                                {% if parent_user %}
+                                    <form action="{% url 'transaction' %}" id="transaction_form" method="POST">
+                                        {% csrf_token %}
+                                        <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                            <thead>
+                                            <tr>
+                                                <th>Спонсор</th>
+                                                <th>Контакты</th>
+                                                <th>Мобильник-кошелек</th>
+                                                <th>Сумма</th>
+                                                <th>ID транзакции</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>{{ parent_user }}</td>
+                                                <td>{{ parent_user.phone }}</td>
+                                                <td>{{ parent_user.mobilnik }}</td>
+                                                <td>{{ parent_user.level.price }} рублей</td>
+                                                <td>
+                                                    <input type="hidden" name="handler" value={{ request.user.pk }}>
+                                                    <input type="hidden" name="product"
+                                                           value={{ parent_user.level.pk }}>
+                                                    {% render_field transaction_form.key class+='uk-input' %}
+                                                    <input type="hidden" name="used_by" value={{ parent_user.pk }}>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="uk-text-center">
+                                            <button class="uk-button uk-button-default" type="submit">Заказать тариф
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <div class="uk-placeholder uk-margin-medium">
+                                        <p>У вас тариф: Красный, и сейчас вы можете заказать тариф: Жёлтый.</p>
+                                        <p>Для заказа тарифа совершите перевод на сумму: 400 рублей через платежную
+                                            систему
+                                            w.qiwi.com на вышеуказанный номер.</p>
+                                        <p>В комментарии к переводу укажите: От max8989, Gamma Finance</p>
+                                        <p>После совершения перевода, в QIWI-кошельке в верхнем правом углу переходим в
+                                            раздел
+                                            "История".</p>
+                                        <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
+                                        <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать
+                                            тариф"</p>
+                                        <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой QIWI-кошелек,
+                                            если
+                                            платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
                                     </div>
-                                </form>
-                                <div class="uk-placeholder uk-margin-medium">
-                                    <p>У вас тариф: Красный, и сейчас вы можете заказать тариф: Жёлтый.</p>
-                                    <p>Для заказа тарифа совершите перевод на сумму: 400 рублей через платежную систему
-                                        w.qiwi.com на вышеуказанный номер.</p>
-                                    <p>В комментарии к переводу укажите: От max8989, Gamma Finance</p>
-                                    <p>После совершения перевода, в QIWI-кошельке в верхнем правом углу переходим в
-                                        раздел
-                                        "История".</p>
-                                    <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
-                                    <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать тариф"</p>
-                                    <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой QIWI-кошелек,
-                                        если
-                                        платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
-                                </div>
+                                {% else %}
+                                    <div class="uk-placeholder uk-margin medium uk-text-center">
+                                        <p>Вы купили самый последний тариф, можете наслаждаться и зарабатывать
+                                            деньги</p>
+                                        <p>Вероятно скоро появится тариф, на уровень выше вашего, и вы сможете его
+                                            приобрести</p>
+                                    </div>
+                                {% endif %}
                             {% else %}
                                 <legend class="uk-text-center uk-legend uk-text-success">Ваш запрос еще обрабатывается
                                 </legend>

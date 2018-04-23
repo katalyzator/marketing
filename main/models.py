@@ -84,3 +84,18 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     def get_earned_money(self):
         summ = TransactionKeys.objects.filter(used_by=self, is_confirmed=True).count()
         return summ * self.level.price
+
+
+class SocialLinks(models.Model):
+    class Meta:
+        verbose_name_plural = 'Ссылки на соцсети'
+        verbose_name = 'Ссылка'
+
+    title = models.CharField(verbose_name='Название соцсети', max_length=255)
+    link = models.URLField(verbose_name='Ссылка на соцсеть')
+    icon = models.FileField(verbose_name='Иконка')
+    icon_code = models.CharField(verbose_name='Код иконки',
+                                 help_text='Код вы можете взять на сайте fontawesome.io/icons', max_length=255)
+
+    def __unicode__(self):
+        return smart_unicode(self.title)

@@ -87,7 +87,7 @@
         <nav class="uk-navbar" uk-navbar="">
             <div class="uk-navbar-left">
                 <ul class="uk-navbar-nav">
-                    <li><a href="#">Logo</a></li>
+                    <li><a href="{% url 'main' %}">Logo</a></li>
                 </ul>
                 <ul class="uk-navbar-nav">
                     <li class="uk-active"><a href="{% url 'main' %}">Главная</a></li>
@@ -142,7 +142,7 @@
 <div id="enter" uk-modal="">
     <div class="uk-modal-dialog uk-modal-body">
         <button class="uk-modal-close-default" type="button" uk-close=""></button>
-        <form action="{% url 'login' %}" method="POST">
+        <form action="{% url 'login' %}" method="POST" id="login-form">
             {% csrf_token %}
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Вход</legend>
@@ -198,11 +198,13 @@
                 datatype: 'JSON',
                 success: function (response) {
                     if (response.success) {
-                        UIkit.notification(response.message, 'success');
-                        window.location = window.location.href
+                        setTimeout(function () {
+                            window.location = window.location.href;
+                        }, 200)
                     }
                     else {
-                        UIkit.notification(response.message, 'danger')
+                        UIkit.notification.closeAll();
+                        UIkit.notification(response.message, 'danger');
                     }
                 }
             })
@@ -211,6 +213,7 @@
 
     $(document).ready(function () {
         ajax_request($('#user-form'));
+        ajax_request($('#login-form'));
     })
 </script>
 {% block custom_scripts %}
