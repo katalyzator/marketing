@@ -198,9 +198,10 @@
                 datatype: 'JSON',
                 success: function (response) {
                     if (response.success) {
+                        UIkit.notification(response.message, 'success');
                         setTimeout(function () {
                             window.location = window.location.href;
-                        }, 200)
+                        }, 2000)
                     }
                     else {
                         UIkit.notification.closeAll();

@@ -32,6 +32,8 @@ class IndexView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         if request.GET.get('ref'):
             request.session['ref'] = request.GET.get('ref')
+        else:
+            request.session['ref'] = None
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
 
@@ -40,7 +42,10 @@ class UserCreateView(CreateView):
     form_class = SignUpForm
 
     def form_valid(self, form):
-        ref_user = User.objects.get(username=self.request.session['ref'])
+        if self.request.session['ref']:
+            ref_user = User.objects.get(username=self.request.session['ref'])
+        else:
+            ref_user = False
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password1'])
         user.is_active = False
