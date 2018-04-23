@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView,
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_text
@@ -184,3 +185,11 @@ class UserPasswordChangeView(PasswordChangeView):
         for item in form.errors:
             message += form.errors[item]
         return JsonResponse(dict(succcess=False, message=message))
+
+
+def aggreement_view(request):
+    agree = Agree.objects.last()
+    context = {"agree": agree}
+    template = 'aggrement.html'
+
+    return render(request, template, context)

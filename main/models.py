@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.encoding import smart_unicode
@@ -74,7 +75,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     phone = models.CharField(verbose_name='Номер телефона', max_length=255, null=True)
     mobilnik = models.CharField(verbose_name='Мобильник кошелек', max_length=255, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
-    
+
     def __unicode__(self):
         if self.username:
             return smart_unicode(self.username)
@@ -99,3 +100,15 @@ class SocialLinks(models.Model):
 
     def __unicode__(self):
         return smart_unicode(self.title)
+
+
+class Agree(models.Model):
+    title = models.CharField(max_length=255, verbose_name='Название')
+    text = RichTextUploadingField(verbose_name='Контент')
+
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Соглашение'
+        verbose_name = 'соглашение'

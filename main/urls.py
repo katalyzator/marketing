@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^transaction/confirm/$', login_required(confirm_transaction), name='confirm-transaction'),
     url(r'^change_password/$', login_required(UserPasswordChangeView.as_view()), name='change_password'),
     url(r'^activate/(?P<url>.*)$', activate, name='activate'),
+    url(r'^agree/$', aggreement_view, name='aggre_view')
 ]
