@@ -74,7 +74,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     phone = models.CharField(verbose_name='Номер телефона', max_length=255, null=True)
     mobilnik = models.CharField(verbose_name='Мобильник кошелек', max_length=255, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
-
+    
     def __unicode__(self):
         if self.username:
             return smart_unicode(self.username)
