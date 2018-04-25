@@ -15,6 +15,7 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ['is_active', ]
 
 
+admin.site.register(Agree)
 admin.site.register(Slider)
 admin.site.register(User, UserAdmin)
 admin.site.register(Products)
