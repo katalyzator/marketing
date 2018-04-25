@@ -11,25 +11,38 @@
                             <div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-middle">
                                 <div class="uk-flex uk-width-1-1">
                                     <div class="uk-width-1-1">
-                                        <h3 class="uk-card-title">Ваш тариф: {{ request.user.level }}</h3>
-                                        {% if  request.user.level.get_highest_product %}
-                                            <div class="uk-margin">
-                                                <p>Сейчас Вы можете заказать
-                                                    тариф {{ request.user.level.get_highest_product }}. Для этого вам
-                                                    нужно иметь на
-                                                    своем Мобильник-кошельке не
-                                                    менее {{ request.user.level.get_highest_product.price }}
-                                                    сомов.</p>
-                                            </div>
-                                            <a class="uk-button uk-button-default" href="{% url 'get_tariff' %}">Заказать
-                                                тариф</a>
+                                        {% if request.user.level %}
+                                            <h3 class="uk-card-title">Ваш тариф: {{ request.user.level }}</h3>
+                                            {% if request.user.level.get_highest_product %}
+                                                <div class="uk-margin">
+                                                    <p>Сейчас Вы можете заказать
+                                                        тариф {{ request.user.level.get_highest_product }}. Для этого
+                                                        вам
+                                                        нужно иметь на
+                                                        своем Мобильник-кошельке не
+                                                        менее {{ request.user.level.get_highest_product.price }}
+                                                        сомов.</p>
+                                                </div>
+                                                <a class="uk-button uk-button-default" href="{% url 'get_tariff' %}">Заказать
+                                                    тариф</a>
+                                            {% else %}
+                                                <div class="uk-margin">
+                                                    <p>Вы купили самый последний тариф, можете наслаждаться и
+                                                        зарабатывать
+                                                        деньги</p>
+                                                    <p>Вероятно скоро появится тариф, на уровень выше вашего, и вы
+                                                        сможете
+                                                        его
+                                                        приобрести</p>
+                                                </div>
+                                            {% endif %}
                                         {% else %}
                                             <div class="uk-margin">
-                                                <p>Вы купили самый последний тариф, можете наслаждаться и зарабатывать
-                                                    деньги</p>
-                                                <p>Вероятно скоро появится тариф, на уровень выше вашего, и вы сможете
-                                                    его
-                                                    приобрести</p>
+                                                <p>Вы пока еще не приобрели тариф, вы можете его приобрести у компании,
+                                                    или у вашего спонсора</p>
+                                                <a class="uk-button uk-button-default"
+                                                   href="{% url 'get_tariff' %}">Заказать
+                                                    тариф</a>
                                             </div>
                                         {% endif %}
                                     </div>

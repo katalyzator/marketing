@@ -24,12 +24,12 @@
                                         <td>{{ item.handler }}</td>
                                         <td>{{ item.handler.phone }}</td>
                                         <td>{{ item.product.price }} рублей</td>
-                                        <td>{{ item.key }}</td>
+                                        <td>{{ item.key_for_user }}</td>
                                         <td>
                                             <form action="{% url 'confirm-transaction' %}" method="POST"
                                                   id="transaction_form">
                                                 {% csrf_token %}
-                                                <input type="hidden" name="transaction_key" value="{{ item.key }}">
+                                                <input type="hidden" name="transaction_key" value="{{ item.key_for_user }}">
                                                 <button class="uk-button uk-button-primary">Подтвердить</button>
                                             </form>
                                         </td>

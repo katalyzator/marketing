@@ -8,8 +8,8 @@
                 {% for slider in sliders %}
                     <li><img src="{{ slider.image.url }}" alt="" uk-cover="">
                         <div class="uk-overlay uk-overlay-primary uk-position-center uk-text-center">
-                            <h3>The new <br> ONLINE BUSINESS</h3>
-                            <p class="uk-margin-remove">Жизнь ярче. Денег больше.</p>
+                            <h3>{{ slider.title }}</h3>
+                            <p class="uk-margin-remove">{{ slider.description }}</p>
                         </div>
                     </li>
                 {% endfor %}

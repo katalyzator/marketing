@@ -38,22 +38,22 @@ def activate(request, url):
 
 def get_parent_user(user, real_user):
     try:
-        parent_user = User.objects.get(level__gt=user.level.level, related_users=user)
+        if real_user.level:
+            parent_user = User.objects.get(level__gt=user.level.level, related_users=user)
+        else:
+            parent_user = User.objects.get(related_users=user)
+
         if parent_user and TransactionKeys.objects.filter(handler=real_user, used_by=parent_user,
-                                                          is_confirmed=True).first():
+                                                          is_confirmed_by_user=True).first():
             return get_parent_user(parent_user, real_user)
         return parent_user
     except:
-        parent_user = User.objects.filter(level__gte=user.level.level, related_users=user).order_by(
-            'level__level').last()
-        if parent_user and TransactionKeys.objects.filter(handler=real_user, used_by=parent_user, is_confirmed=True).first():
-            return get_parent_user(parent_user, real_user)
-        return parent_user
+        return False
 
 
 def confirm_transaction(request):
     if request.POST:
-        transaction = TransactionKeys.objects.get(key=request.POST.get('transaction_key'))
-        transaction.is_confirmed = True
+        transaction = TransactionKeys.objects.get(key_for_user=request.POST.get('transaction_key'))
+        transaction.is_confirmed_by_user = True
         transaction.save()
         return JsonResponse(dict(success=True, message='Успешно подтвержено'))

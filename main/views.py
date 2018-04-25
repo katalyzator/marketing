@@ -131,11 +131,11 @@ class UserDetailView(UpdateView):
         current_site = get_current_site(self.request)
         context = super(UserDetailView, self).get_context_data(**kwargs)
         context['domain'] = current_site.domain
-        context['products'] = Products.objects.all()
+        context['products'] = Products.objects.order_by('level')
         context['transaction_form'] = TransactionForm(self.request.POST)
         context['parent_user'] = get_parent_user(self.request.user, self.request.user)
         context['password_change_form'] = PasswordChangeForm(self.request.POST)
-        context['user_requests'] = TransactionKeys.objects.filter(used_by=self.request.user, is_confirmed=False)
+        context['user_requests'] = TransactionKeys.objects.filter(used_by=self.request.user, is_confirmed_by_user=False)
         return context
 
     def form_valid(self, form):

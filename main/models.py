@@ -34,17 +34,24 @@ class TransactionKeys(models.Model):
     handler = models.ForeignKey("User", verbose_name='Владелец ключа', related_name='handler')
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
     product = models.ForeignKey("Products", verbose_name='За товар', null=True)
-    key = models.CharField(verbose_name='ID транзакции', null=True, max_length=255)
-    is_confirmed = models.BooleanField(verbose_name='Подтвержден', default=False)
+    key_for_user = models.CharField(verbose_name='ID транзакции для пользователя', null=True, max_length=255)
+    key_for_admin = models.CharField(verbose_name='ID транзакции для компании', max_length=255, null=True)
+    is_confirmed_by_user = models.BooleanField(verbose_name='Подтвержден пользователем', default=False)
+    is_confirmed_by_admin = models.BooleanField(verbose_name='Подтвержден админом', default=False)
 
     def __unicode__(self):
         return smart_unicode(self.handler)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        if self.is_confirmed:
+        if self.is_confirmed_by_user and self.is_confirmed_by_admin:
             self.handler.level = self.product
-            self.handler.save()
+        else:
+            try:
+                self.handler.level = Products.objects.get(level__lt=self.product.level)
+            except:
+                self.handler.level = None
+        self.handler.save()
         super(TransactionKeys, self).save()
 
 
@@ -81,9 +88,25 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         return smart_unicode(self.email)
 
     @property
+    def get_all_parents(self):
+        parents_array = []
+        user = self
+        for i in range(User.objects.count()):
+            try:
+                user = User.objects.get(related_users=user)
+                parents_array.append(user)
+            except:
+                pass
+        return parents_array
+
+    @property
     def get_earned_money(self):
-        summ = TransactionKeys.objects.filter(used_by=self, is_confirmed=True).count()
-        return summ * self.level.price
+        if self.level:
+            summ = TransactionKeys.objects.filter(used_by=self, is_confirmed_by_user=True,
+                                                  is_confirmed_by_admin=True).count()
+            return summ * self.level.price
+        else:
+            return 0
 
 
 class SocialLinks(models.Model):
