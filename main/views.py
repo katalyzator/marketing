@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import base64
 import json
 
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, login
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
@@ -13,10 +14,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_text
 from django.views.generic import *
-from django.contrib.auth.forms import PasswordChangeForm
 
 from main.forms import *
-from main.helpers import get_parent_user
 from main.models import *
 
 
@@ -46,7 +45,7 @@ class UserCreateView(CreateView):
         if self.request.session['ref']:
             ref_user = User.objects.get(username=self.request.session['ref'])
         else:
-            ref_user = False
+            ref_user = User.objects.get(username='admin6')
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password1'])
         user.is_active = False
@@ -134,7 +133,6 @@ class UserDetailView(UpdateView):
         context['domain'] = current_site.domain
         context['products'] = Products.objects.order_by('level')
         context['transaction_form'] = TransactionForm(self.request.POST)
-        context['parent_user'] = get_parent_user(self.request.user, self.request.user)
         context['password_change_form'] = PasswordChangeForm(self.request.POST)
         context['user_requests'] = TransactionKeys.objects.filter(used_by=self.request.user, is_confirmed_by_user=False)
         return context
@@ -185,6 +183,14 @@ class UserPasswordChangeView(PasswordChangeView):
         for item in form.errors:
             message += form.errors[item]
         return JsonResponse(dict(succcess=False, message=message))
+
+
+class ReferalsListView(DetailView):
+    model = User
+    template_name = 'profile/personal-referals.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 def aggreement_view(request):

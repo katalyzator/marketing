@@ -12,9 +12,29 @@ def get_refs_count(request, product):
 
 
 @register.simple_tag
-def has_transaction(parent_user, user):
+def has_transaction(user):
     try:
-        TransactionKeys.objects.get(handler=user, used_by=parent_user, is_confirmed_by_user=False)
+        TransactionKeys.objects.get(handler=user, is_confirmed_by_user=False,
+                                    is_confirmed_by_admin=False)
         return True
     except:
         return False
+
+
+@register.simple_tag
+def get_parent_user(user, count):
+    parent = user
+    counter = 0
+    for i in range(count):
+        parent = parent.get_parent
+        if parent.level.level > user.level.level:
+            counter = i
+            break
+    return dict(parent=parent, counter=counter)
+
+
+@register.simple_tag
+def set_flag(flag):
+    if flag == "true":
+        return True
+    return False

@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 
+from marketing import settings
 from .forms import *
 
 
@@ -36,24 +37,27 @@ def activate(request, url):
         return HttpResponse('Link is invalid')
 
 
-def get_parent_user(user, real_user):
-    try:
-        if real_user.level:
-            parent_user = User.objects.get(level__gt=user.level.level, related_users=user)
-        else:
-            parent_user = User.objects.get(related_users=user)
-
-        if parent_user and TransactionKeys.objects.filter(handler=real_user, used_by=parent_user,
-                                                          is_confirmed_by_user=True).first():
-            return get_parent_user(parent_user, real_user)
-        return parent_user
-    except:
-        return False
-
-
 def confirm_transaction(request):
     if request.POST:
         transaction = TransactionKeys.objects.get(key_for_user=request.POST.get('transaction_key'))
         transaction.is_confirmed_by_user = True
         transaction.save()
         return JsonResponse(dict(success=True, message='Успешно подтвержено'))
+
+
+def register_seven_admins(request):
+    for i in range(7):
+        user = User()
+        user.email = "admin" + str(i) + "@localhost"
+        user.username = "admin" + str(i)
+        if settings.MOBILNIK:
+            user.mobilnik = settings.MOBILNIK
+        else:
+            user.mobilnik = "123456789"
+        if settings.ADMIN_PHONE:
+            user.phone = settings.ADMIN_PHONE
+        else:
+            user.phone = "123456789"
+        user.set_password(settings.DEFAULT_PASSWORD)
+        user.save()
+    return JsonResponse(dict(success=True, message='Все пользователи успешно зарегистрированы'))

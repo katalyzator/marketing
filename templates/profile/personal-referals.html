@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="personal-area">
+        <div class="uk-container-expand uk-container">
+            <div class="uk-grid uk-grid-small" uk-grid="">
+                <div class="uk-width-expand@m">
+                    <div class="uk-card-default uk-card-body">
+                        <h1>ВАШИ СПОНСОРЫ</h1>
+                        <div class="uk-overflow-auto">
+                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                <thead>
+                                <tr>
+                                    <th>Спонсор</th>
+                                    <th>Уровень спонсора</th>
+                                    <th>Контакты</th>
+                                    <th>Мобильник-кошелек</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in request.user.get_all_parents %}
+                                    <tr>
+                                        <td>{{ item.username }}</td>
+                                        <td>{{ item.level }}</td>
+                                        <td>{{ item.phone }}</td>
+                                        <td>{{ item.mobilnik }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

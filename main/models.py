@@ -87,17 +87,20 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         if self.username:
             return smart_unicode(self.username)
         return smart_unicode(self.email)
-
+    @property
+    def get_parent(self):
+        return User.objects.get(related_users=self)
     @property
     def get_all_parents(self):
         parents_array = []
         user = self
-        for i in range(User.objects.count()):
+        for i in range(7):
             try:
-                user = User.objects.get(related_users=user)
+                user = User.objects.get(level__gte=user, related_users=user)
                 parents_array.append(user)
             except:
-                pass
+                user = User.objects.get(related_users=user)
+                parents_array.append(user)
         return parents_array
 
     @property

@@ -173,3 +173,7 @@ CKEDITOR_CONFIGS = {
         'width': 800,
     },
 }
+
+MOBILNIK = "123"
+ADMIN_PHONE = "123"
+DEFAULT_PASSWORD = "admin112358"

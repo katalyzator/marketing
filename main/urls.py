@@ -13,10 +13,12 @@ urlpatterns = [
     url(r'^profile/settings/$', login_required(UserDetailView.as_view()), name='profile-settings'),
     url(r'^profile/tarif/$', login_required(UserDetailView.as_view()), name='get_tariff'),
     url(r'^profile/ref/$', login_required(UserDetailView.as_view()), name='profile-ref-urls'),
+    url(r'^profile/referals/$', login_required(ReferalsListView.as_view()), name='profile-referals'),
     url(r'^profile/requests/$', login_required(UserDetailView.as_view()), name='profile-requests'),
     url(r'^transaction/$', login_required(TransactionCreateView.as_view()), name='transaction'),
     url(r'^transaction/confirm/$', login_required(confirm_transaction), name='confirm-transaction'),
     url(r'^change_password/$', login_required(UserPasswordChangeView.as_view()), name='change_password'),
     url(r'^activate/(?P<url>.*)$', activate, name='activate'),
-    url(r'^agree/$', aggreement_view, name='aggre_view')
+    url(r'^agree/$', aggreement_view, name='aggre_view'),
+    url(r'^set_admin/$', register_seven_admins, name='set_admin')
 ]
