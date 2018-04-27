@@ -52,7 +52,7 @@
                                                                    value={{ products.first.pk }}>
                                                         {% endif %}
                                                         {% render_field transaction_form.key_for_user class+='uk-input' %}
-                                                        <input type="hidden" name="used_by" value={{ parent_user.pk }}>
+                                                        <input type="hidden" name="used_by" value={{ item.pk }}>
                                                     </td>
                                                     <td>
                                                         {% render_field transaction_form.key_for_admin class+='uk-input' %}
@@ -140,7 +140,9 @@
         $(document).ready(function () {
             $('.send-form').on('click', function (e) {
                 e.preventDefault();
-                var form = $($(this).attr('href'));
+                var form = $($(this).attr("href"));
+                console.log(form);
+                console.log(form.serialize());
                 $.ajax({
                     url: $(form).attr('action'),
                     data: $(form).serialize(),
