@@ -27,7 +27,7 @@ def get_parent_user(user, count):
     counter = 0
     for i in range(count):
         parent = parent.get_parent
-        if parent and parent.level.level > user.level.level:
+        if parent.level.level > user.level.level:
             counter = i
             break
     return dict(parent=parent, counter=counter)
