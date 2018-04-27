@@ -6,10 +6,12 @@ from main.models import *
 class SignUpForm(forms.ModelForm):
     password1 = forms.CharField(max_length=30, widget=forms.PasswordInput(), required=True)
     password2 = forms.CharField(max_length=30, widget=forms.PasswordInput(), required=True)
+    sponsor = forms.CharField()
+    is_agree = forms.BooleanField()
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'email', 'first_name')
+        fields = ('username', 'password1', 'password2', 'email', 'first_name', 'sponsor', 'is_agree')
 
 
 class TransactionForm(forms.ModelForm):

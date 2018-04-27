@@ -79,16 +79,6 @@
                     <p>Copyright © 2018</p>
                 </div>
             </div>
-            {#            <div>#}
-            {#                <div class="item">#}
-            {#                    <p>Copyright © 2018</p>#}
-            {#                </div>#}
-            {#            </div>#}
-            {#            <div>#}
-            {#                <div class="item">#}
-            {#                    <p>Copyright © 2018</p>#}
-            {#                </div>#}
-            {#            </div>#}
         </div>
     </div>
 </footer>
@@ -133,6 +123,15 @@
                 </div>
                 <div class="uk-margin">
                     {% render_field signup_form.password2 class+='uk-input' placeholder='Повторите пароль' %}
+                </div>
+                <div class="uk-margin">
+                    {% render_field signup_form.sponsor class+='uk-input' placeholder='Введите логин спонсора' %}
+                </div>
+                <div class="uk-margin">
+                    <label>
+                        {% render_field signup_form.is_agree class+='uk-checkbox uk-margin-right' %}
+                        Я согласен с условиями
+                    </label>
                 </div>
                 <button class="uk-button uk-button-primary" type="submit">Регистрация</button>
             </fieldset>
@@ -201,6 +200,18 @@
 <!-- {/literal} END JIVOSITE CODE -->
 
 {% block custom_scripts %}
+    <script type="text/javascript">
+        function get(name) {
+            if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
+                return decodeURIComponent(name[1]);
+        }
+
+        $(document).ready(function () {
+            if (get('ref')) {
+                $('#id_sponsor').addClass('uk-disabled').val(get('ref'));
+            }
+        })
+    </script>
 {% endblock %}
 </body>
 </html>

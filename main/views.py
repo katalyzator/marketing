@@ -45,7 +45,7 @@ class UserCreateView(CreateView):
         if self.request.session['ref']:
             ref_user = User.objects.get(username=self.request.session['ref'])
         else:
-            ref_user = User.objects.get(pk=15)
+            ref_user = User.objects.get(username=form.cleaned_data['sponsor'])
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password1'])
         user.is_active = False
@@ -76,6 +76,7 @@ class UserCreateView(CreateView):
 
     def form_invalid(self, form):
         message = ''
+        print(form.errors)
         for item in form.errors:
             message += form.errors.get(item)
         return JsonResponse(dict(success=False, message=message))
