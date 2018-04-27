@@ -37,10 +37,10 @@
                                                     <td>{{ item.phone }}</td>
                                                     <td>{{ item.mobilnik }}</td>
                                                     {% if request.user.level %}
-                                                        <td>{{ request.user.level.get_highest_product.price }} рублей
+                                                        <td>{{ request.user.level.get_highest_product.price }} сом
                                                         </td>
                                                     {% else %}
-                                                        <td>{{ products.first.price }} рублей</td>
+                                                        <td>{{ products.first.price }} сом</td>
                                                     {% endif %}
                                                     <td>
                                                         <input type="hidden" name="handler" value={{ request.user.pk }}>
@@ -69,7 +69,7 @@
                                         <div class="uk-placeholder uk-margin-medium">
                                             <p>У вас тариф: Красный, и сейчас вы можете заказать тариф: Жёлтый.</p>
                                             <p>Для заказа тарифа совершите перевод на
-                                                сумму: {{ request.user.level.get_highest_product.price }}рублей через
+                                                сумму: {{ request.user.level.get_highest_product.price }} сом через
                                                 платежную
                                                 систему
                                                 w.qiwi.com на вышеуказанный номер.</p>
@@ -91,7 +91,7 @@
                                         <div class="uk-placeholder uk-margin-medium">
                                             <p>У вас пока нет тарифа, вы можете приобрести его у вашего спонсора</p>
                                             <p>Для заказа тарифа совершите перевод на сумму: {{ products.first.price }}
-                                                рублей через платежную
+                                                сом через платежную
                                                 систему
                                                 w.qiwi.com на вышеуказанный номер.</p>
                                             <p>В комментарии к переводу укажите: От {{ request.user }}, Gamma
