@@ -194,9 +194,18 @@ class ReferalsListView(DetailView):
         return self.request.user
 
 
-def aggreement_view(request):
-    agree = Agree.objects.last()
-    context = {"agree": agree}
-    template = 'aggrement.html'
+class SponsorsLitView(DetailView):
+    model = User
+    template_name = 'profile/personal-area-sponsor.html'
 
-    return render(request, template, context)
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class AgreementDetailView(DetailView):
+    model = Agree
+    context_object_name = 'agree'
+    template_name = 'agreement.html'
+
+    def get_object(self, queryset=None):
+        return Agree.objects.first()

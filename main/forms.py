@@ -11,7 +11,7 @@ class SignUpForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'email', 'first_name', 'sponsor', 'is_agree')
+        fields = ('username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'sponsor', 'is_agree')
 
 
 class TransactionForm(forms.ModelForm):

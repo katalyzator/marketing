@@ -87,9 +87,11 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         if self.username:
             return smart_unicode(self.username)
         return smart_unicode(self.email)
+
     @property
     def get_parent(self):
         return User.objects.get(related_users=self)
+
     @property
     def get_all_parents(self):
         parents_array = []
@@ -138,3 +140,12 @@ class Agree(models.Model):
     class Meta:
         verbose_name_plural = 'Соглашение'
         verbose_name = 'соглашение'
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(Agree, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
