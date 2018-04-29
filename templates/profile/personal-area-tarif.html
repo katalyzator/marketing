@@ -7,126 +7,177 @@
             <div class="uk-grid uk-grid-small" uk-grid="">
                 <div class="uk-width-expand@m">
                     <div class="uk-card-default uk-card-body">
-                        {% has_transaction parent_user request.user as user_transactions %}
+                        {% has_transaction request.user as user_transactions %}
                         <h1>ЗАКАЗАТЬ ТАРИФ</h1>
                         <div class="uk-overflow-auto">
-                            {% if parent_user %}
-                                {% if not user_transactions %}
-                                    <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
-                                        <thead>
-                                        <tr>
-                                            <th>Спонсор</th>
-                                            <th>Уровень спонсора</th>
-                                            <th>Контакты</th>
-                                            <th>Мобильник-кошелек</th>
-                                            <th>Сумма</th>
-                                            <th>ID транзакции</th>
-                                            <th>ID транзакции для компании</th>
-                                            <th>Отправить запрос</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for item in request.user.get_all_parents %}
-                                            <tr class="product-row">
-                                                <form action="{% url 'transaction' %}"
-                                                      id="transaction_form_{{ forloop.counter }}"
-                                                      method="POST">
-                                                    {% csrf_token %}
-                                                    <td>{{ item }}</td>
-                                                    <td>{{ item.level.level }}</td>
-                                                    <td>{{ item.phone }}</td>
-                                                    <td>{{ item.mobilnik }}</td>
-                                                    {% if request.user.level %}
-                                                        <td>{{ request.user.level.get_highest_product.price }} сом
-                                                        </td>
-                                                    {% else %}
-                                                        <td>{{ products.first.price }} сом</td>
-                                                    {% endif %}
-                                                    <td>
-                                                        <input type="hidden" name="handler" value={{ request.user.pk }}>
-                                                        {% if request.user.level %}
-                                                            <input type="hidden" name="product"
-                                                                   value={{ request.user.level.get_highest_product.pk }}>
-                                                        {% else %}
-                                                            <input type="hidden" name="product"
-                                                                   value={{ products.first.pk }}>
-                                                        {% endif %}
-                                                        {% render_field transaction_form.key_for_user class+='uk-input' %}
-                                                        <input type="hidden" name="used_by" value={{ item.pk }}>
-                                                    </td>
-                                                    <td>
-                                                        {% render_field transaction_form.key_for_admin class+='uk-input' %}
-                                                    </td>
-                                                    <td>
-                                                        <a href="#transaction_form_{{ forloop.counter }}"
-                                                           class="send-form uk-button uk-button-primary">Отправить</a>
-                                                    </td>
-                                                </form>
-                                            </tr>
-                                        {% endfor %}
-                                    </table>
+                            {% if not user_transactions %}
+                                <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                    <thead>
+                                    <tr>
+                                        <th>Спонсор</th>
+                                        <th>Уровень спонсора</th>
+                                        <th>Контакты</th>
+                                        <th>Мобильник-кошелек</th>
+                                        <th>Сумма</th>
+                                        <th>ID транзакции</th>
+                                        <th>ID транзакции для компании</th>
+                                        <th>Отправить запрос</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
                                     {% if request.user.level %}
-                                        <div class="uk-placeholder uk-margin-medium">
-                                            <p>У вас тариф: Красный, и сейчас вы можете заказать тариф: Жёлтый.</p>
-                                            <p>Для заказа тарифа совершите перевод на
-                                                сумму: {{ request.user.level.get_highest_product.price }} сом через
-                                                платежную
-                                                систему
-                                                w.qiwi.com на вышеуказанный номер.</p>
-                                            <p>В комментарии к переводу укажите: От {{ request.user }}, Gamma
-                                                Finance</p>
-                                            <p>После совершения перевода, в QIWI-кошельке в верхнем правом углу
-                                                переходим в
-                                                раздел
-                                                "История".</p>
-                                            <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
-                                            <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать
-                                                тариф"</p>
-                                            <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой
-                                                QIWI-кошелек,
-                                                если
-                                                платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
-                                        </div>
+                                        {% for item in request.user.get_all_parents %}
+                                            {% get_parent_user request.user forloop.counter as parent_dict %}
+                                            {% if item.level.level > request.user.level.level and item == parent_dict.parent %}
+                                                {% set_flag "true" as flag %}
+                                                {% if flag and forloop.counter == parent_dict.counter %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <form action="{% url 'transaction' %}"
+                                                              id="transaction_form_{{ forloop.counter }}" method="POST">
+                                                            {% csrf_token %}
+                                                            <td>{{ item }}</td>
+                                                            <td>{{ item.level }}</td>
+                                                            <td>{{ item.phone }}</td>
+                                                            <td>{{ item.mobilnik }}</td>
+                                                            {% if request.user.level %}
+                                                                <td>{{ request.user.level.get_highest_product.price }}
+                                                                    сом
+                                                                </td>
+                                                            {% else %}
+                                                                <td>{{ products.first.price }} сом</td>
+                                                            {% endif %}
+                                                            <td>
+                                                                <input type="hidden" name="handler"
+                                                                       value={{ request.user.pk }}>
+                                                                {% if request.user.level %}
+                                                                    <input type="hidden" name="product"
+                                                                           value={{ request.user.level.get_highest_product.pk }}>
+                                                                {% else %}
+                                                                    <input type="hidden" name="product"
+                                                                           value={{ products.first.pk }}>
+                                                                {% endif %}
+                                                                {% render_field transaction_form.key_for_user class+='uk-input' %}
+                                                                <input type="hidden" name="used_by" value={{ item.pk }}>
+                                                            </td>
+                                                            <td>
+                                                                {% render_field transaction_form.key_for_admin class+='uk-input' %}
+                                                            </td>
+                                                            <td>
+                                                                <a href="#transaction_form_{{ forloop.counter }}"
+                                                                   class="send-form uk-button uk-button-primary">Отправить</a>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
                                     {% else %}
-                                        <div class="uk-placeholder uk-margin-medium">
-                                            <p>У вас пока нет тарифа, вы можете приобрести его у вашего спонсора</p>
-                                            <p>Для заказа тарифа совершите перевод на сумму: {{ products.first.price }}
-                                                сом через платежную
-                                                систему
-                                                w.qiwi.com на вышеуказанный номер.</p>
-                                            <p>В комментарии к переводу укажите: От {{ request.user }}, Gamma
-                                                Finance</p>
-                                            <p>После совершения перевода, в QIWI-кошельке в верхнем правом углу
-                                                переходим в
-                                                раздел
-                                                "История".</p>
-                                            <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
-                                            <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать
-                                                тариф"</p>
-                                            <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой
-                                                QIWI-кошелек,
-                                                если
-                                                платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
-                                        </div>
+                                        <tr>
+                                            <form action="{% url 'transaction' %}"
+                                                  id="transaction_form_{{ forloop.counter }}" method="POST">
+                                                {% csrf_token %}
+                                                <td>{{ request.user.get_parent }}</td>
+                                                <td>{{ request.user.get_parent.level }}</td>
+                                                <td>{{ request.user.get_parent.phone }}</td>
+                                                <td>{{ request.user.get_parent.mobilnik }}</td>
+                                                {% if request.user.level %}
+                                                    <td>{{ request.user.level.get_highest_product.price }}
+                                                        сом
+                                                    </td>
+                                                {% else %}
+                                                    <td>{{ products.first.price }} сом</td>
+                                                {% endif %}
+                                                <td>
+                                                    <input type="hidden" name="handler"
+                                                           value={{ request.user.pk }}>
+                                                    {% if request.user.level %}
+                                                        <input type="hidden" name="product"
+                                                               value={{ request.user.level.get_highest_product.pk }}>
+                                                    {% else %}
+                                                        <input type="hidden" name="product"
+                                                               value={{ products.first.pk }}>
+                                                    {% endif %}
+                                                    {% render_field transaction_form.key_for_user class+='uk-input' %}
+                                                    <input type="hidden" name="used_by"
+                                                           value={{ request.user.get_parent.pk }}>
+                                                </td>
+                                                <td>
+                                                    {% render_field transaction_form.key_for_admin class+='uk-input' %}
+                                                </td>
+                                                <td>
+                                                    <a href="#transaction_form_{{ forloop.counter }}"
+                                                       class="send-form uk-button uk-button-primary">Отправить</a>
+                                                </td>
+                                            </form>
+                                        </tr>
                                     {% endif %}
-                                {% elif request.user.level == products.last.level %}
-                                    <div class="uk-placeholder uk-margin medium uk-text-center">
-                                        <p>Вы купили самый последний тариф, можете наслаждаться и зарабатывать
-                                            деньги</p>
-                                        <p>Вероятно скоро появится тариф, на уровень выше вашего, и вы сможете его
-                                            приобрести</p>
+                                </table>
+                                {% if request.user.level %}
+                                    <div class="uk-placeholder uk-margin-medium">
+                                        <p>У вас тариф: Красный, и сейчас вы можете заказать
+                                            тариф: {{ request.user.level }}.</p>
+                                        <p>Для заказа тарифа совершите перевод на
+                                            сумму: {{ request.user.level.get_highest_product.price }} сом через
+                                            платежную
+                                            систему
+                                            mobilnik.kg на вышеуказанный номер.</p>
+                                        <p>В комментарии к переводу укажите: От {{ request.user }}, Newlife</p>
+                                        <p>После совершения перевода, в mobilnik-кошельке в верхнем правом углу
+                                            переходим в
+                                            раздел
+                                            "История".</p>
+                                        <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
+                                        <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать
+                                            тариф"</p>
+                                        <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой
+                                            mobilnik-кошелек,
+                                            если
+                                            платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
                                     </div>
                                 {% else %}
-                                    <legend class="uk-text-center uk-legend uk-text-success">Ваш запрос еще
-                                        обрабатывается
-                                    </legend>
+                                    <div class="uk-placeholder uk-margin-medium">
+                                        <p>У вас пока нет тарифа, вы можете приобрести его у вашего спонсора</p>
+                                        <p>Для заказа тарифа совершите перевод на сумму: {{ products.first.price }}
+                                            сом через платежную
+                                            систему
+                                            mobilnik на вышеуказанный номер.</p>
+                                        <p>В комментарии к переводу укажите: От {{ request.user }}, Newlife</p>
+                                        <p>После совершения перевода, в mobilnik-кошельке в верхнем правом углу
+                                            переходим в
+                                            раздел
+                                            "История".</p>
+                                        <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>
+                                        <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Заказать
+                                            тариф"</p>
+                                        <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой
+                                            mobilnik-кошелек,
+                                            если
+                                            платеж поступил на его счет, то сразу подтвердит Ваш заказ.</p>
+                                    </div>
                                 {% endif %}
-                            {% else %}
-                                <div class="uk-placeholder uk-text-center">
-                                    <p>У вас нет спонсоров, вы можете приобрести продукт у компании</p>
+                            {% elif request.user.level == products.last.level %}
+                                <div class="uk-placeholder uk-margin medium uk-text-center">
+                                    <p>Вы купили самый последний тариф, можете наслаждаться и зарабатывать
+                                        деньги</p>
+                                    <p>Вероятно скоро появится тариф, на уровень выше вашего, и вы сможете его
+                                        приобрести</p>
                                 </div>
+                            {% else %}
+                                <legend class="uk-text-center uk-legend uk-text-success">Ваш запрос еще
+                                    обрабатывается
+                                </legend>
                             {% endif %}
-
                         </div>
                     </div>
                 </div>

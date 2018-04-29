@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="personal-area">
+        <div class="uk-container">
+            <h1 class="uk-text-center" style="font-size: 32px">{{ agree.title }}</h1>
+            {{ agree.text|safe }}
+        </div>
+    </section>
+{% endblock %}

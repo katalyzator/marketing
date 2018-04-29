@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
@@ -89,15 +91,20 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         return smart_unicode(self.email)
 
     @property
+    def get_parent(self):
+        return User.objects.get(related_users=self)
+
+    @property
     def get_all_parents(self):
         parents_array = []
         user = self
-        for i in range(User.objects.count()):
+        for i in range(7):
             try:
-                user = User.objects.get(related_users=user)
+                user = User.objects.get(level__gte=user, related_users=user)
                 parents_array.append(user)
             except:
-                pass
+                user = User.objects.get(related_users=user)
+                parents_array.append(user)
         return parents_array
 
     @property
@@ -135,3 +142,14 @@ class Agree(models.Model):
     class Meta:
         verbose_name_plural = 'Соглашение'
         verbose_name = 'соглашение'
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(Agree, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+

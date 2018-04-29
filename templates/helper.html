@@ -1,0 +1,96 @@
+{% if item == request.get_parent %}
+    {% if request.user.get_parent.level > request.user.level %}
+        <tr class="product-row">
+            <form action="{% url 'transaction' %}"
+                  id="transaction_form_{{ forloop.counter }}" method="POST">
+                {% csrf_token %}
+                <td>{{ item }}</td>
+                <td>{{ item.level.level }}</td>
+                <td>{{ item.phone }}</td>
+                <td>{{ item.mobilnik }}</td>
+                {% if request.user.level %}
+                    <td>{{ request.user.level.get_highest_product.price }} сом
+                    </td>
+                {% else %}
+                    <td>{{ products.first.price }} сом</td>
+                {% endif %}
+                <td>
+                    <input type="hidden" name="handler"
+                           value={{ request.user.pk }}>
+                    {% if request.user.level %}
+                        <input type="hidden" name="product"
+                               value={{ request.user.level.get_highest_product.pk }}>
+                    {% else %}
+                        <input type="hidden" name="product"
+                               value={{ products.first.pk }}>
+                    {% endif %}
+                    {% render_field transaction_form.key_for_user class+='uk-input' %}
+                    <input type="hidden" name="used_by" value={{ item.pk }}>
+                </td>
+                <td>
+                    {% render_field transaction_form.key_for_admin class+='uk-input' %}
+                </td>
+                <td>
+                    <a href="#transaction_form_{{ forloop.counter }}"
+                       class="send-form uk-button uk-button-primary">Отправить</a>
+                </td>
+            </form>
+        </tr>
+    {% else %}
+        <tr class="product-row">
+            {% csrf_token %}
+            <td>{{ item }}</td>
+            <td>{{ item.level.level }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.mobilnik }}</td>
+            {% if request.user.level %}
+                <td>{{ request.user.level.get_highest_product.price }} сом
+                </td>
+            {% else %}
+                <td>{{ products.first.price }} сом</td>
+            {% endif %}
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    {% endif %}
+{% else %}
+    {% if item.get_parent.level > request.user.level %}
+        <tr class="product-row">
+            <form action="{% url 'transaction' %}"
+                  id="transaction_form_{{ forloop.counter }}" method="POST">
+                {% csrf_token %}
+                <td>{{ item }}</td>
+                <td>{{ item.level.level }}</td>
+                <td>{{ item.phone }}</td>
+                <td>{{ item.mobilnik }}</td>
+                {% if request.user.level %}
+                    <td>{{ request.user.level.get_highest_product.price }} сом
+                    </td>
+                {% else %}
+                    <td>{{ products.first.price }} сом</td>
+                {% endif %}
+                <td>
+                    <input type="hidden" name="handler"
+                           value={{ request.user.pk }}>
+                    {% if request.user.level %}
+                        <input type="hidden" name="product"
+                               value={{ request.user.level.get_highest_product.pk }}>
+                    {% else %}
+                        <input type="hidden" name="product"
+                               value={{ products.first.pk }}>
+                    {% endif %}
+                    {% render_field transaction_form.key_for_user class+='uk-input' %}
+                    <input type="hidden" name="used_by" value={{ item.pk }}>
+                </td>
+                <td>
+                    {% render_field transaction_form.key_for_admin class+='uk-input' %}
+                </td>
+                <td>
+                    <a href="#transaction_form_{{ forloop.counter }}"
+                       class="send-form uk-button uk-button-primary">Отправить</a>
+                </td>
+            </form>
+        </tr>
+    {% endif %}
+{% endif %}

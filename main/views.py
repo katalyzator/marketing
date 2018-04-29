@@ -4,19 +4,18 @@ from __future__ import unicode_literals
 import base64
 import json
 
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, login
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.encoding import force_text
+from django.utils.encoding import force_text, force_bytes
 from django.views.generic import *
-from django.contrib.auth.forms import PasswordChangeForm
 
 from main.forms import *
-from main.helpers import get_parent_user
 from main.models import *
 
 
@@ -46,7 +45,7 @@ class UserCreateView(CreateView):
         if self.request.session['ref']:
             ref_user = User.objects.get(username=self.request.session['ref'])
         else:
-            ref_user = False
+            ref_user = User.objects.get(username=form.cleaned_data['sponsor'])
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password1'])
         user.is_active = False
@@ -77,6 +76,7 @@ class UserCreateView(CreateView):
 
     def form_invalid(self, form):
         message = ''
+        print(form.errors)
         for item in form.errors:
             message += form.errors.get(item)
         return JsonResponse(dict(success=False, message=message))
@@ -111,6 +111,11 @@ class UserDetailView(UpdateView):
     form_class = UserUpdateForm
     template_name = 'profile/personal-area.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(reverse('main'))
+        return super(UserDetailView, self).dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
         return self.request.path
 
@@ -134,7 +139,6 @@ class UserDetailView(UpdateView):
         context['domain'] = current_site.domain
         context['products'] = Products.objects.order_by('level')
         context['transaction_form'] = TransactionForm(self.request.POST)
-        context['parent_user'] = get_parent_user(self.request.user, self.request.user)
         context['password_change_form'] = PasswordChangeForm(self.request.POST)
         context['user_requests'] = TransactionKeys.objects.filter(used_by=self.request.user, is_confirmed_by_user=False)
         return context
@@ -172,8 +176,13 @@ class TransactionCreateView(CreateView):
 class UserPasswordChangeView(PasswordChangeView):
     title = 'Изменить пароль'
 
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect(reverse('main'))
+        return super(UserPasswordChangeView, self).dispatch(*args, **kwargs)
+
     def get_success_url(self):
-        return self.request.path
+        return reverse('main')
 
     def form_valid(self, form):
         form.save()
@@ -187,9 +196,30 @@ class UserPasswordChangeView(PasswordChangeView):
         return JsonResponse(dict(succcess=False, message=message))
 
 
-def aggreement_view(request):
-    agree = Agree.objects.last()
-    context = {"agree": agree}
-    template = 'aggrement.html'
+class ReferalsListView(DetailView):
+    model = User
+    template_name = 'profile/personal-referals.html'
 
-    return render(request, template, context)
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class SponsorsLitView(DetailView):
+    model = User
+    template_name = 'profile/personal-area-sponsor.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class AgreementDetailView(DetailView):
+    model = Agree
+    context_object_name = 'agree'
+    template_name = 'agreement.html'
+
+    def get_object(self, queryset=None):
+        return Agree.objects.first()
+
+
+def auth_handler(request):
+    return redirect(reverse('main'))
