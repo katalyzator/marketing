@@ -22,6 +22,18 @@ def has_transaction(user):
 
 
 @register.simple_tag
+def get_parent_user(user, count):
+    parent = user
+    counter = 0
+    for i in range(count):
+        parent = parent.get_parent
+        if parent.level.level > user.level.level:
+            counter = i
+            break
+    return dict(parent=parent, counter=counter)
+
+
+@register.simple_tag
 def get_ref_by_line(user, line):
     ref = user
     refs = []
