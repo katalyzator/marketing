@@ -24,3 +24,4 @@ urlpatterns = [
     url(r'^agree/$', AgreementDetailView.as_view(), name='agreement'),
     url(r'^set_admin/$', register_seven_admins, name='set_admin')
 ]
+handler404 = 'myapp.views.view_404'
