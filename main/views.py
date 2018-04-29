@@ -112,7 +112,7 @@ class UserDetailView(UpdateView):
     template_name = 'profile/personal-area.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user:
+        if not request.user.is_authenticated:
             return redirect(reverse('main'))
         return super(UserDetailView, self).dispatch(request, *args, **kwargs)
 
@@ -177,8 +177,8 @@ class UserPasswordChangeView(PasswordChangeView):
     title = 'Изменить пароль'
 
     def dispatch(self, *args, **kwargs):
-        if not self.request.user:
-            return redirect(reverse('mian'))
+        if not self.request.user.is_authenticated:
+            return redirect(reverse('main'))
         return super(UserPasswordChangeView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
