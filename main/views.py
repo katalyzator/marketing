@@ -9,7 +9,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView,
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_text, force_bytes
@@ -110,6 +110,11 @@ class UserDetailView(UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'profile/personal-area.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user:
+            return redirect(reverse('main'))
+        return super(UserDetailView, self).dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return self.request.path
