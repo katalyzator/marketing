@@ -32,7 +32,10 @@ def base_context(request):
 
 
 def activate(request, url):
-    data = json.loads(base64.b64decode(force_bytes(url)))
+    try:
+        data = json.loads(base64.b64decode(force_bytes(url)))
+    except:
+        data = json.loads(base64.b64decode(force_bytes(url + '==')))
     user_id = data['user_id']
     user_confirmation = data['key']
     user = User.objects.get(pk=int(user_id))
