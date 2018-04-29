@@ -176,6 +176,11 @@ class TransactionCreateView(CreateView):
 class UserPasswordChangeView(PasswordChangeView):
     title = 'Изменить пароль'
 
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user:
+            return redirect(reverse('mian'))
+        return super(UserPasswordChangeView, self).dispatch(*args, **kwargs)
+
     def get_success_url(self):
         return reverse('main')
 
