@@ -219,3 +219,10 @@ class AgreementDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return Agree.objects.first()
+
+
+class AuthRequiredMiddleware(object):
+    def process_request(self, request):
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect(reverse('main'))  # or http response
+        return None
