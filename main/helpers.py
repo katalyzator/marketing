@@ -42,7 +42,7 @@ def activate(request, url):
         user.save()
         if user is not None:
             login(request, user)
-        return redirect(reverse('profile'))
+        return redirect(reverse('main'))
     else:
         return HttpResponse('Link is invalid')
 
