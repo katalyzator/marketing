@@ -19,7 +19,7 @@ class Products(models.Model):
     image = models.ImageField(upload_to='images/product_images', blank=True, null=True)
 
     def __unicode__(self):
-        return str(self.title)
+        return smart_unicode(self.title)
 
     @property
     def get_highest_product(self):
@@ -69,7 +69,7 @@ class Slider(models.Model):
         verbose_name_plural = 'Раздел слайдов'
 
     def __unicode__(self):
-        return smart_unicode(self.title)
+        return str(self.title)
 
 
 class User(SimpleEmailConfirmationUserMixin, AbstractUser):
