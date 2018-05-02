@@ -7,14 +7,16 @@
             <ul class="uk-slideshow-items">
                 {% for slider in sliders %}
                     <li><img src="{{ slider.image.url }}" alt="" uk-cover="">
-                        <div class="uk-overlay uk-overlay-primary uk-position-center uk-text-center">
-                            {% if slider.title %}
-                                <h3>{{ slider.title }}</h3>
-                            {% endif %}
-                            {% if slider.description %}
-                                <p class="uk-margin-remove">{{ slider.description }}</p>
-                            {% endif %}
-                        </div>
+                        {% if slider.title or slider.description %}
+                            <div class="uk-overlay uk-overlay-primary uk-position-center uk-text-center">
+                                {% if slider.title %}
+                                    <h3>{{ slider.title }}</h3>
+                                {% endif %}
+                                {% if slider.description %}
+                                    <p class="uk-margin-remove">{{ slider.description }}</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
