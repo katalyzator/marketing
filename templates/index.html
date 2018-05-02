@@ -8,8 +8,12 @@
                 {% for slider in sliders %}
                     <li><img src="{{ slider.image.url }}" alt="" uk-cover="">
                         <div class="uk-overlay uk-overlay-primary uk-position-center uk-text-center">
-                            <h3>{{ slider.title }}</h3>
-                            <p class="uk-margin-remove">{{ slider.description }}</p>
+                            {% if slider.title %}
+                                <h3>{{ slider.title }}</h3>
+                            {% endif %}
+                            {% if slider.description %}
+                                <p class="uk-margin-remove">{{ slider.description }}</p>
+                            {% endif %}
                         </div>
                     </li>
                 {% endfor %}
@@ -134,7 +138,7 @@
                             <h5 class="uk-text-center">Развитие и поддержка</h5>
                             <p class="uk-text-center">Профессиональная команда поддержки всегда поможет, и
                                 проконсультирует.
-                                </p>
+                            </p>
                         </div>
                     </div>
                 </div>
