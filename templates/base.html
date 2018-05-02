@@ -238,6 +238,17 @@
                 return decodeURIComponent(name[1]);
         }
 
+        {#function checkPasswordMatch() {#}
+        {#    var password = $("#id_password1").val();#}
+        {#    var confirmPassword = $("#id_password2").val();#}
+        {##}
+        {#    if (password != confirmPassword){#}
+        {#        #}
+        {#    }#}
+        {#    else#}
+        {#        $("#divCheckPasswordMatch").html("Passwords match.");#}
+        {#}#}
+
         $(document).ready(function () {
             if (get('ref')) {
                 $('#id_sponsor').addClass('uk-disabled').val(get('ref'));

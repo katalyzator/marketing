@@ -4,8 +4,6 @@ from __future__ import unicode_literals
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
@@ -59,8 +57,8 @@ class TransactionKeys(models.Model):
 
 
 class Slider(models.Model):
-    title = models.CharField(max_length=500, verbose_name='Заголовок')
-    description = models.TextField(max_length=400, verbose_name='Описание')
+    title = models.CharField(max_length=500, verbose_name='Заголовок', null=True, blank=True)
+    description = models.TextField(max_length=400, verbose_name='Описание', null=True, blank=True)
     image = models.ImageField(upload_to='images/slider', verbose_name='Картинка')
 
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -151,5 +149,3 @@ class Agree(models.Model):
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
-
-
