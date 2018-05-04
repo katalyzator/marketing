@@ -67,6 +67,7 @@ class Slider(models.Model):
     class Meta:
         verbose_name = 'Слайдер'
         verbose_name_plural = 'Раздел слайдов'
+        ordering = ['timestamp']
 
     def __unicode__(self):
         return str(self.title)
