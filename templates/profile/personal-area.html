@@ -58,7 +58,8 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Тариф</th>
-                                                    <th>Цена</th>
+                                                    <th>Цена лицензии(сом)</th>
+                                                    <th>Цена продукции(сом)</th>
                                                     <th>Продано</th>
                                                 </tr>
                                                 </thead>
@@ -66,7 +67,8 @@
                                                 {% for item in products %}
                                                     <tr>
                                                         <td>{{ item.title }}</td>
-                                                        <td>{{ item.price }} сом</td>
+                                                        <td>{{ item.price }} </td>
+                                                        <td>{{ item.price1 }}</td>
                                                         <td>{% get_refs_count request item %}</td>
                                                     </tr>
                                                 {% endfor %}
