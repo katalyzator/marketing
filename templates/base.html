@@ -47,8 +47,10 @@
                 </ul>
                 <ul class="uk-navbar-nav">
                     <li class="uk-active"><a href="{% url 'main' %}">Главная</a></li>
-                    <li><a href="{% url 'mark_view' %}">Маркетинг</a></li>
-{#                    <li><a href="#">Faq</a></li>#}
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'mark_view' %}">Маркетинг</a></li>
+                    {% endif %}
+                    {#                    <li><a href="#">Faq</a></li>#}
                     <li><a href="{% url 'agreement' %}">Соглашение</a></li>
                 </ul>
             </div>
@@ -77,34 +79,36 @@
             <div>
                 <button class="uk-button uk-button-default" type="button"><span uk-icon="icon: grid"></span></button>
                 <div class="uk-margin-remove"
-             uk-drop="pos: bottom-justify; boundary: .boundary-align; boundary-align: true; mode: click">
-            <div class="uk-card uk-card-body uk-card-default">
-                <nav class="uk-navbar" uk-navbar="">
-                    <div class="uk-navbar-center">
-                        <ul class="uk-navbar-nav">
-                            <li><a href="{% url 'main' %}">
-                                <img src="{% static 'img/logo_new_1.png' %}" width="50" height="50">
-                            </a></li>
-                        </ul>
-                        <ul class="uk-navbar-nav">
-                            <li class="uk-active"><a href="{% url 'main' %}">Главная</a></li>
-                            <li><a href="#">Маркетинг</a></li>
-                            <li><a href="#">Faq</a></li>
-                            <li><a href="{% url 'agreement' %}">Соглашение</a></li>
-                        </ul>
-                        <ul class="uk-navbar-nav reg uk-text-center uk-margin">
-                            {% if request.user.is_authenticated %}
-                                <li><a href="{% url 'profile' %}">Личный кабинет</a></li>
-                                <li><a href="{% url 'logout' %}">Выход</a></li>
-                            {% else %}
-                                <li><a href="#" uk-toggle="target: #enter">Вход</a></li>
-                                <li><a href="#" uk-toggle="target: #registration"> Регистрация</a></li>
-                            {% endif %}
-                        </ul>
+                     uk-drop="pos: bottom-justify; boundary: .boundary-align; boundary-align: true; mode: click">
+                    <div class="uk-card uk-card-body uk-card-default">
+                        <nav class="uk-navbar" uk-navbar="">
+                            <div class="uk-navbar-center">
+                                <ul class="uk-navbar-nav">
+                                    <li><a href="{% url 'main' %}">
+                                        <img src="{% static 'img/logo_new_1.png' %}" width="50" height="50">
+                                    </a></li>
+                                </ul>
+                                <ul class="uk-navbar-nav">
+                                    <li class="uk-active"><a href="{% url 'main' %}">Главная</a></li>
+                                    {% if request.user.is_authenticated %}
+                                        <li><a href="{% url 'mark_view' %}">Маркетинг</a></li>
+                                    {% endif %}
+                                    <li><a href="#">Faq</a></li>
+                                    <li><a href="{% url 'agreement' %}">Соглашение</a></li>
+                                </ul>
+                                <ul class="uk-navbar-nav reg uk-text-center uk-margin">
+                                    {% if request.user.is_authenticated %}
+                                        <li><a href="{% url 'profile' %}">Личный кабинет</a></li>
+                                        <li><a href="{% url 'logout' %}">Выход</a></li>
+                                    {% else %}
+                                        <li><a href="#" uk-toggle="target: #enter">Вход</a></li>
+                                        <li><a href="#" uk-toggle="target: #registration"> Регистрация</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </nav>
                     </div>
-                </nav>
-            </div>
-        </div>
+                </div>
             </div>
         </div>
 
