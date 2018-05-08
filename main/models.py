@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
+from colorfield.fields import ColorField
 
 
 class Products(models.Model):
@@ -18,7 +19,7 @@ class Products(models.Model):
     price = models.PositiveIntegerField(verbose_name='Цена продукта')
     price1 = models.PositiveIntegerField(verbose_name='Цена продукции', default=150)
     image = models.ImageField(upload_to='images/product_images', blank=True, null=True)
-
+    color = ColorField(default='#FF0000')
     def __unicode__(self):
         return smart_unicode(self.title)
 

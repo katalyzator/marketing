@@ -18,6 +18,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'jet',
+    'colorfield',
     'widget_tweaks',
     'simple_email_confirmation',
     'django.contrib.admin',

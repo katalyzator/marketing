@@ -50,22 +50,22 @@
                             </div>
                         </div>
                         <div>
-                            <div class="uk-card uk-card-default uk-card-body uk-light" style=" color: #fff;   background-color: #f3c753;">
+                            <div class="uk-card uk-card-default uk-card-body">
                                 <div>
                                     <div>
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover">
                                                 <thead>
                                                 <tr >
-                                                    <th style="color: #fff">Тариф</th>
-                                                    <th style="color: #fff">Цена лицензии</th>
-                                                    <th style="color: #fff">Цена продукции</th>
-                                                    <th style="color: #fff">Продано</th>
+                                                    <th>Тариф</th>
+                                                    <th>Цена лицензии</th>
+                                                    <th>Цена продукции</th>
+                                                    <th>Продано</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 {% for item in products %}
-                                                    <tr>
+                                                    <tr style="background-color: {{ item.color }};">
                                                         <td>{{ item.title }}</td>
                                                         <td>{{ item.price }} </td>
                                                         <td>{{ item.price1 }}</td>
