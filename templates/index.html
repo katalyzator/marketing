@@ -3,7 +3,7 @@
     {% load staticfiles %}
     <section class="slider">
         <div class="uk-position-relative uk-visible-toggle"
-             uk-slideshow="animation: push; min-height: 300; max-height: 700">
+             uk-slideshow="animation: push; min-height: 300; max-height: 700; autoplay: true">
             <ul class="uk-slideshow-items">
                 {% for slider in sliders %}
                     <li><img src="{{ slider.image.url }}" alt="" uk-cover="">
