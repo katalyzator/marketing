@@ -116,7 +116,10 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
             summ = TransactionKeys.objects.filter(used_by=self, is_confirmed_by_user=True,
                                                   is_confirmed_by_admin=True).aggregate(
                 Sum('product__price')).get('product__price__sum')
-            return summ
+            if summ:
+                return summ
+            else:
+                return 0
         else:
             return 0
 
