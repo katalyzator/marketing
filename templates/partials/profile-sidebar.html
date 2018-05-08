@@ -2,14 +2,23 @@
 
     <div>
         <ul class="uk-list uk-card uk-card-default uk-card-body">
-            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i class="uk-margin-small-right fa fa-user"
-                                                                    aria-hidden="true"></i>Пользователь: {{ request.user.username }}
+            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
+                    class="uk-margin-small-right fa fa-user"
+                    aria-hidden="true"></i>login: {{ request.user.username }}
             </a></li>
 
-            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i class="uk-margin-small-right fa fa-info-circle" aria-hidden="true"></i>Имя: {{ request.user.first_name }}
+            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
+                    class="uk-margin-small-right fa fa-info-circle"
+                    aria-hidden="true"></i>Имя: {{ request.user.first_name }}
             </a></li>
 
-            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i class="uk-margin-small-right fa fa-info-circle" aria-hidden="true"></i>Фамилия: {{ request.user.last_name }}
+            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
+                    class="uk-margin-small-right fa fa-info-circle"
+                    aria-hidden="true"></i>Фамилия: {{ request.user.last_name }}
+            </a></li>
+            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
+                    class="uk-margin-small-right fa fa-info-circle"
+                    aria-hidden="true"></i>Лицевой счет: {{ request.user.mobilnik }}
             </a></li>
 
         </ul>
