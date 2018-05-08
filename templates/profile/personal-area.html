@@ -57,7 +57,7 @@
                                 <div>
                                     <div>
                                         <div class="uk-overflow-auto">
-                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-light">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover">
                                                 <thead>
                                                 <tr>
                                                     <th>Тариф</th>
@@ -66,10 +66,13 @@
                                                     <th>Продано</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody style="color: white;">
+                                                <tbody>
                                                 {% for item in products %}
-                                                    <tr style="background-color: {{ item.color }};">
-                                                        <td>{{ item.title }}</td>
+                                                    <tr>
+                                                        <td class="uk-position-relative">
+                                                            <span class="uk-display-inline-block uk-position-absolute"
+                                                                  style="top: 0;left: 0; width: 5px;height: 100%;background-color: {{ item.color }};"></span>{{ item.title }}
+                                                        </td>
                                                         <td>{{ item.price }} </td>
                                                         <td>{{ item.price1 }}</td>
                                                         <td>{% get_refs_count request item %}</td>
