@@ -149,25 +149,41 @@
     </section>
     <section class="tarif">
         <div class="uk-container">
-            <h2>Тарифы и стоимость</h2>
-            <p></p>
-            <div class="uk-grid uk-margin-large uk-child-width-1-5@m" uk-grid="">
-                {% for product in products %}
-                    <div>
-                        <div class="item">
-                            <div class="uk-margin">
-                                <h5 class="uk-text-center">{{ product.title }}</h5>
-                            </div>
-                            {% if product.image %}
-                                <div class="uk-cover-container uk-height-small">
-                                    <img src="{{ product.image.url }}" alt="" uk-cover="">
-                                </div>
-                            {% endif %}
-                            <p class="uk-text-center">{{ product.price }} Сом</p>
-                        </div>
-                    </div>
-                {% endfor %}
+            {#            <h2>Тарифы и стоимость</h2>#}
+            {#            <p></p>#}
+            {#            <div class="uk-grid uk-margin-large uk-child-width-1-5@m" uk-grid="">#}
+            {#                {% for product in products %}#}
+            {#                    <div>#}
+            {#                        <div class="item">#}
+            {#                            <div class="uk-margin">#}
+            {#                                <h5 class="uk-text-center">{{ product.title }}</h5>#}
+            {#                            </div>#}
+            {#                            {% if product.image %}#}
+            {#                                <div class="uk-cover-container uk-height-small">#}
+            {#                                    <img src="{{ product.image.url }}" alt="" uk-cover="">#}
+            {#                                </div>#}
+            {#                            {% endif %}#}
+            {#                            <p class="uk-text-center">{{ product.price }} Сом</p>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                {% endfor %}#}
+            {#            </div>#}
+            <div class="uk-h3">Галерея</div>
+            <div class="uk-child-width-1-5@m uk-grid-small" uk-grid uk-lightbox="animation: slide">
+                <div>
+                    <a class="uk-cover-container uk-height-small uk-flex-inline uk-width-1-1" href="{% static 'img/slider.jpg' %}"
+                       data-caption="Caption 1">
+                        <img src="{% static 'img/slider.jpg' %}" alt="" uk-cover>
+                    </a>
+                </div>
+                <div>
+                    <a class="uk-cover-container uk-height-small uk-flex-inline uk-width-1-1" href="{% static 'img/slider.jpg' %}"
+                       data-caption="Caption 1">
+                        <img src="{% static 'img/slider.jpg' %}" alt="" uk-cover>
+                    </a>
+                </div>
             </div>
+
         </div>
     </section>
     <section class="text-block" style="background-color: #25cfab; ;">

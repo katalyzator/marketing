@@ -16,6 +16,7 @@ class Products(models.Model):
     title = models.CharField(verbose_name='Название продукта', max_length=255)
     level = models.PositiveIntegerField(verbose_name='Уровень продукта', unique=True)
     price = models.PositiveIntegerField(verbose_name='Цена продукта')
+    price1 = models.PositiveIntegerField(verbose_name='Цена продукции', default=150)
     image = models.ImageField(upload_to='images/product_images', blank=True, null=True)
 
     def __unicode__(self):
@@ -67,6 +68,7 @@ class Slider(models.Model):
     class Meta:
         verbose_name = 'Слайдер'
         verbose_name_plural = 'Раздел слайдов'
+        ordering = ['timestamp']
 
     def __unicode__(self):
         return str(self.title)

@@ -223,3 +223,7 @@ class AgreementDetailView(DetailView):
 
 def auth_handler(request):
     return redirect(reverse('main'))
+
+
+class MarcetingView(TemplateView):
+    template_name = 'marketing-plan.html'

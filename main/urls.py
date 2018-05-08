@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^activate/(?P<url>.*)$', activate, name='activate'),
     url(r'^reset_password/$', reset_password, name='reset_password'),
     url(r'^agree/$', AgreementDetailView.as_view(), name='agreement'),
-    url(r'^set_admin/$', register_seven_admins, name='set_admin')
+    url(r'^set_admin/$', register_seven_admins, name='set_admin'),
+    url(r'^marketing/$', MarcetingView.as_view(), name='mark_view'),
 ]
 # handler404 = 'myapp.views.view_404'
