@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 from colorfield.fields import ColorField
+from django.db.models import *
 
 
 class Products(models.Model):
@@ -113,8 +114,9 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     def get_earned_money(self):
         if self.level:
             summ = TransactionKeys.objects.filter(used_by=self, is_confirmed_by_user=True,
-                                                  is_confirmed_by_admin=True).count()
-            return summ * self.level.price
+                                                  is_confirmed_by_admin=True).aggregate(
+                Sum('product__price')).get('product__price__sum')
+            return summ
         else:
             return 0
 
