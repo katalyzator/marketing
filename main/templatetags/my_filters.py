@@ -22,23 +22,10 @@ def has_transaction(user):
 
 
 @register.simple_tag
-def get_parent_user(user, count=0):
+def get_parent_user(user):
     for pos, obj in enumerate(user.get_all_parents):
         if obj.level.level > user.level.level and pos == user.level.level:
             return obj
-        # elif obj.level.level > user.level.level and count > pos:
-        #     return obj
-    # counter = 0
-    # for i in range(count):
-    #     parent = parent.get_parent
-    #     print(parent)
-    #     print(i)
-    #     print(user.level.level)
-    #     print(i == user.level.level)
-    #     if i == user.level.level and parent.level.level > user.level.level:
-    #         counter = i
-    #         break
-    # return dict(parent=parent, counter=counter)
 
 
 @register.simple_tag
