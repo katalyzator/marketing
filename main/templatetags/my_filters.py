@@ -34,15 +34,20 @@ def get_parent_user(user, count):
 
 
 @register.simple_tag
-def get_ref_by_line(user, line):
-    ref = user
-    refs = []
+def get_ref_by_line(user, refs=None, line=None):
+    if not refs:
+        refs = list()
+    if not line:
+        line = 1
     if user.related_users:
-        for i in range(line):
-            ref = ref.related_users
-        for i in ref.all():
-            refs.append(i)
-    return refs
+        for item in user.related_users.all():
+            refs.append(item)
+            if item.related_users:
+                line += 1
+                get_ref_by_line(item, refs, line)
+        return refs
+    else:
+        return False
 
 
 @register.simple_tag

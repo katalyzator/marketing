@@ -7,25 +7,25 @@
                 <div class="uk-width-expand@m">
                     <div class="uk-card-default uk-card-body">
                         <h1>ВАША КОМАНДА</h1>
-                        {% if request.user.related_users.count %}
+                        {% get_ref_by_line request.user as referals %}
+                        {% if referals %}
                             <div class="uk-overflow-auto">
                                 <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                     <thead>
                                     <tr>
                                         <th>Спонсор</th>
-                                        <th>Уровень спонсора</th>
+                                        <th>Уровень реферала</th>
                                         <th>Контакты</th>
                                         <th>Мобильник-кошелек</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for item in "x"|ljust:7 %}
-                                        {% get_ref_by_line request.user forloop.counter as ref %}
+                                    {% for item in referals %}
                                         <tr>
-                                            <td>{{ ref.username }}</td>
-                                            <td>{{ ref.level }}</td>
-                                            <td>{{ ref.phone }}</td>
-                                            <td>{{ ref.mobilnik }}</td>
+                                            <td>{{ item.username }}</td>
+                                            <td>{{ item.level }}</td>
+                                            <td>{{ item.phone }}</td>
+                                            <td>{{ item.mobilnik }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
