@@ -92,7 +92,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
 
     @property
     def get_parent(self):
-        return User.objects.get(related_users=self)
+        return User.objects.filter(related_users=self).first()
 
     @property
     def get_all_parents(self):
@@ -103,7 +103,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
                 user = User.objects.get(level__gte=user, related_users=user)
                 parents_array.append(user)
             except:
-                user = User.objects.get(related_users=user)
+                user = User.objects.filter(related_users=user).first()
                 parents_array.append(user)
         return parents_array
 
