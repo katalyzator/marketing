@@ -9,13 +9,13 @@
 
             <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
                     class="uk-margin-small-right fa fa-info-circle"
-                    aria-hidden="true"></i>Имя: {{ request.user.first_name }}
+                    aria-hidden="true"></i>{{ request.user.first_name }} {{ request.user.last_name }}
             </a></li>
 
-            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
-                    class="uk-margin-small-right fa fa-info-circle"
-                    aria-hidden="true"></i>Фамилия: {{ request.user.last_name }}
-            </a></li>
+            {#            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i#}
+            {#                    class="uk-margin-small-right fa fa-info-circle"#}
+            {#                    aria-hidden="true"></i>Фамилия: {{ request.user.last_name }}#}
+            {#            </a></li>#}
             <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
                     class="uk-margin-small-right fa fa-info-circle"
                     aria-hidden="true"></i>Лицевой счет: {{ request.user.mobilnik }}
