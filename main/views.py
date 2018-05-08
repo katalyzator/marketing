@@ -227,3 +227,7 @@ def auth_handler(request):
 
 class MarcetingView(TemplateView):
     template_name = 'marketing-plan.html'
+
+
+class PromoView(TemplateView):
+    template_name = 'profile/personal-education.html'

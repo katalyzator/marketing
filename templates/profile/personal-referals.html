@@ -8,34 +8,247 @@
                     <div class="uk-card-default uk-card-body">
                         <h1>ВАША КОМАНДА</h1>
                         {% get_ref_by_line request.user as referals %}
-                        {% if referals %}
-                            <div class="uk-overflow-auto">
-                                <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
-                                    <thead>
-                                    <tr>
-                                        <th>Спонсор</th>
-                                        <th>Уровень реферала</th>
-                                        <th>Контакты</th>
-                                        <th>Мобильник-кошелек</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for item in referals %}
-                                        <tr>
-                                            <td>{{ item.username }}</td>
-                                            <td>{{ item.level }}</td>
-                                            <td>{{ item.phone }}</td>
-                                            <td>{{ item.mobilnik }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            </div>
-                        {% else %}
-                            <div class="uk-placeholder uk-margin uk-text-center">
-                                <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных пользователей
-                                </legend>
-                            </div>
-                        {% endif %}
+                        <ul uk-accordion>
+                            <li class="uk-open">
+                                <a class="uk-accordion-title" href="#">Первая линия</a>
+                                <div class="uk-accordion-content">
+                                    {% if referals %}
+                                        <div class="uk-overflow-auto">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th>Спонсор</th>
+                                                    <th>Уровень реферала</th>
+                                                    <th>Контакты</th>
+                                                    <th>Мобильник-кошелек</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in referals %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="uk-placeholder uk-margin uk-text-center">
+                                            <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных
+                                                пользователей
+                                            </legend>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <a class="uk-accordion-title" href="#">Вторая линия</a>
+                                <div class="uk-accordion-content">
+                                    {% if referals %}
+                                        <div class="uk-overflow-auto">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th>Спонсор</th>
+                                                    <th>Уровень реферала</th>
+                                                    <th>Контакты</th>
+                                                    <th>Мобильник-кошелек</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in referals %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="uk-placeholder uk-margin uk-text-center">
+                                            <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных
+                                                пользователей
+                                            </legend>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <a class="uk-accordion-title" href="#">Третья линия</a>
+                                <div class="uk-accordion-content">
+                                    {% if referals %}
+                                        <div class="uk-overflow-auto">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th>Спонсор</th>
+                                                    <th>Уровень реферала</th>
+                                                    <th>Контакты</th>
+                                                    <th>Мобильник-кошелек</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in referals %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="uk-placeholder uk-margin uk-text-center">
+                                            <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных
+                                                пользователей
+                                            </legend>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <a class="uk-accordion-title" href="#">Четвертая линия</a>
+                                <div class="uk-accordion-content">
+                                    {% if referals %}
+                                        <div class="uk-overflow-auto">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th>Спонсор</th>
+                                                    <th>Уровень реферала</th>
+                                                    <th>Контакты</th>
+                                                    <th>Мобильник-кошелек</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in referals %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="uk-placeholder uk-margin uk-text-center">
+                                            <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных
+                                                пользователей
+                                            </legend>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <a class="uk-accordion-title" href="#">Пятая линия</a>
+                                <div class="uk-accordion-content">
+                                    {% if referals %}
+                                        <div class="uk-overflow-auto">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th>Спонсор</th>
+                                                    <th>Уровень реферала</th>
+                                                    <th>Контакты</th>
+                                                    <th>Мобильник-кошелек</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in referals %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="uk-placeholder uk-margin uk-text-center">
+                                            <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных
+                                                пользователей
+                                            </legend>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <a class="uk-accordion-title" href="#">Шестая линия</a>
+                                <div class="uk-accordion-content">
+                                    {% if referals %}
+                                        <div class="uk-overflow-auto">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th>Спонсор</th>
+                                                    <th>Уровень реферала</th>
+                                                    <th>Контакты</th>
+                                                    <th>Мобильник-кошелек</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in referals %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="uk-placeholder uk-margin uk-text-center">
+                                            <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных
+                                                пользователей
+                                            </legend>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <a class="uk-accordion-title" href="#">Седьмая линия</a>
+                                <div class="uk-accordion-content">
+                                    {% if referals %}
+                                        <div class="uk-overflow-auto">
+                                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                                <thead>
+                                                <tr>
+                                                    <th>Спонсор</th>
+                                                    <th>Уровень реферала</th>
+                                                    <th>Контакты</th>
+                                                    <th>Мобильник-кошелек</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in referals %}
+                                                    <tr>
+                                                        <td>{{ item.username }}</td>
+                                                        <td>{{ item.level }}</td>
+                                                        <td>{{ item.phone }}</td>
+                                                        <td>{{ item.mobilnik }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="uk-placeholder uk-margin uk-text-center">
+                                            <legend class="uk-legend uk-text-danger">У вас пока нет приглашенных
+                                                пользователей
+                                            </legend>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        </ul>
+
                     </div>
                 </div>
                 {% include 'partials/profile-sidebar.html' %}

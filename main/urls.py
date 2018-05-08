@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^profile/referals/$', login_required(ReferalsListView.as_view(), login_url='/'), name='profile-referals'),
     url(r'^profile/sponsors/$', login_required(SponsorsLitView.as_view(), login_url='/'), name='profile-sponsors'),
     url(r'^profile/requests/$', login_required(UserDetailView.as_view(), login_url='/'), name='profile-requests'),
+    url(r'^profile/promo-materials/$', login_required(PromoView.as_view(), login_url='/'), name='profile-education'),
     url(r'^transaction/$', login_required(TransactionCreateView.as_view(), login_url='/'), name='transaction'),
     url(r'^transaction/confirm/$', login_required(confirm_transaction, login_url='/'), name='confirm-transaction'),
     url(r'^change_password/$', login_required(UserPasswordChangeView.as_view(), login_url='/'), name='change_password'),
