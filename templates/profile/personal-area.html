@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load my_filters %}
+{% load mathfilters %}
 {% block content %}
     <section class="personal-area">
         <div class="uk-container-expand uk-container">
@@ -8,19 +9,21 @@
                     <div class="uk-grid uk-grid-small uk-child-width-1-2@m  " uk-grid=""
                          uk-height-match="target: &gt; div &gt; .uk-card">
                         <div>
-                            <div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-middle uk-light" style="    background-color: rgba(62, 189, 249, 0.9);">
+                            <div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-middle uk-light"
+                                 style="    background-color: rgba(62, 189, 249, 0.9);">
                                 <div class="uk-flex uk-width-1-1">
                                     <div class="uk-width-1-1">
                                         {% if request.user.level %}
-                                            <h3 class="uk-card-title uk-light" style="color: #fff">Ваш тариф: {{ request.user.level }}</h3>
+                                            <h3 class="uk-card-title uk-light" style="color: #fff">Ваш
+                                                тариф: {{ request.user.level }}</h3>
                                             {% if request.user.level.get_highest_product %}
                                                 <div class="uk-margin">
-                                                    <p  style="color: #fff">Сейчас Вы можете заказать
+                                                    <p style="color: #fff">Сейчас Вы можете заказать
                                                         тариф {{ request.user.level.get_highest_product }}. Для этого
                                                         вам
                                                         нужно иметь на
                                                         своем Мобильник-кошельке не
-                                                        менее {{ request.user.level.get_highest_product.price }}
+                                                        менее {{ request.user.level.get_highest_product.price |add:request.user.level.get_highest_product.price1 }}
                                                         сомов.</p>
                                                 </div>
                                                 <a class="uk-button uk-button-default" href="{% url 'get_tariff' %}">Заказать
@@ -56,7 +59,7 @@
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-light">
                                                 <thead>
-                                                <tr >
+                                                <tr>
                                                     <th>Тариф</th>
                                                     <th>Цена лицензии</th>
                                                     <th>Цена продукции</th>
@@ -80,21 +83,25 @@
                             </div>
                         </div>
                         <div>
-                            <div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-middle uk-light" style="    background-color: #25cfab;">
+                            <div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-middle uk-light"
+                                 style="    background-color: #25cfab;">
                                 <div class="uk-flex uk-width-1-1">
                                     <div class="uk-width-1-1">
                                         <h2 style="color: #fff" class="uk-text-center">ПАРТНЕРСКАЯ ССЫЛКА</h2>
                                         <div class="uk-margin">
-                                            <h3 style="color: #fff" class="uk-card-title uk-margin-remove">Главная страница:</h3>
+                                            <h3 style="color: #fff" class="uk-card-title uk-margin-remove">Главная
+                                                страница:</h3>
                                             <a href="{% url 'main' %}?ref={{ request.user.username }}">{{ domain }}?ref={{ request.user.username }}</a>
 
                                         </div>
                                         <div class="uk-margin">
-                                            <h3 style="color: #fff" class="uk-card-title uk-margin-remove">Страница регистрации:</h3>
+                                            <h3 style="color: #fff" class="uk-card-title uk-margin-remove">Страница
+                                                регистрации:</h3>
                                             <a href="{% url 'main' %}?ref={{ request.user.username }}">{{ domain }}?ref={{ request.user.username }}</a>
 
                                         </div>
-                                        <p><a class="uk-button uk-button-default" style="color: #fff" href="{% url 'profile-ref-urls' %}">Сделать
+                                        <p><a class="uk-button uk-button-default" style="color: #fff"
+                                              href="{% url 'profile-ref-urls' %}">Сделать
                                             редирект ссылки</a>
                                         </p>
                                     </div>
@@ -102,7 +109,8 @@
                             </div>
                         </div>
                         <div>
-                            <div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-middle uk-light" style="    background-color: rgb(73, 135, 239);">
+                            <div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-middle uk-light"
+                                 style="    background-color: rgb(73, 135, 239);">
                                 <div class="uk-flex uk-width-1-1">
                                     <div class="uk-width-1-1">
                                         <h2 class="uk-text-center">СТАТИСТИКА</h2>
@@ -111,7 +119,8 @@
                                                 команде: {{ request.user.related_users.count }}</h3>
                                         </div>
                                         <div class="uk-margin">
-                                            <h3 style="color: #fff" class="uk-card-title">Заработано: {{ request.user.get_earned_money }}
+                                            <h3 style="color: #fff" class="uk-card-title">
+                                                Заработано: {{ request.user.get_earned_money }}
                                                 сом</h3>
                                         </div>
                                     </div>

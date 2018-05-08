@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'jet',
     'colorfield',
     'widget_tweaks',
+    'mathfilters',
     'simple_email_confirmation',
     'django.contrib.admin',
     'django.contrib.auth',
