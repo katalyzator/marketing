@@ -7,11 +7,13 @@ import string
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage, send_mail
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.encoding import force_bytes
 
 from marketing import settings
 from .forms import *
@@ -109,9 +111,3 @@ def reset_password(request):
             return JsonResponse(dict(success=False, message='Такой Email не используется нашими пользователями'))
     else:
         return JsonResponse(dict(success=False, message='Это не пост запрос'))
-
-
-def return_refs(user, related_users_list=list()):
-    for i in user.related_users.all():
-        related_users_list.append(i)
-    return related_users_list
