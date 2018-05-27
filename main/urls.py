@@ -27,6 +27,6 @@ urlpatterns = [
     url(r'^set_admin/$', register_seven_admins, name='set_admin'),
     url(r'^marketing/$', MarcetingView.as_view(), name='mark_view'),
     url(r'^mobilnik/$', MobilnikPayEvent.as_view(), name='mobilnik'),
-    url(r'^mobilnik/response$', mobilnik_response, name='mobilnik-response')
+    url(r'^mobilnik/response/$', mobilnik_response, name='mobilnik-response')
 ]
 # handler404 = 'myapp.views.view_404'
