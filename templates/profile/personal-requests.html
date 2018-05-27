@@ -29,13 +29,20 @@
                                             <form action="{% url 'confirm-transaction' %}" method="POST"
                                                   id="transaction_form">
                                                 {% csrf_token %}
-                                                <input type="hidden" name="transaction_key" value="{{ item.key_for_user }}">
+                                                <input type="hidden" name="transaction_key"
+                                                       value="{{ item.key_for_user }}">
                                                 <button class="uk-button uk-button-primary">Подтвердить</button>
                                             </form>
                                         </td>
                                     </tr>
                                 {% endfor %}
                             </table>
+                        </div>
+                        <div class="uk-placeholder uk-text-danger uk-text-center">
+                            <span uk-icon="icon: warning; ratio: 4" class="uk-margin"></span>
+                            <legend class="uk-legend">Прежде чем подтверждать транзакции, пожалуйста проверьте,
+                                поступили ли средства на ваш счет!
+                            </legend>
                         </div>
                     </div>
                 </div>
