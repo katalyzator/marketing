@@ -96,6 +96,7 @@ class MobilnikPayEvent(View):
         return JsonResponse(dict(token=token.decode('utf-8'), seller_id=SELLER_ID))
 
 
+@csrf_exempt
 def mobilnik_response(request):
     data = request.body.decode('utf-8')
     mobilnik = MobilnikPaymentService({'seller_id': SELLER_ID,
