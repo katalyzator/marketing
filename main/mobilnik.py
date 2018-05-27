@@ -106,6 +106,9 @@ def mobilnik_response(request):
     request_info = decode_response['request']['sellerData']
 
     response_info = decode_response['response']
-    transaction = TransactionKeys.objects.get(pk=request_info['transaction_id'])
-    transaction.confirm_as_admin()
+    try:
+        transaction = TransactionKeys.objects.get(pk=request_info['transaction_id'])
+        transaction.confirm_as_admin()
+    except:
+        pass
     return HttpResponse(response_info['orderId'], status=200)
