@@ -2,6 +2,7 @@
 import json
 
 import requests
+import simplejson
 from django import template
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
@@ -75,5 +76,5 @@ def return_mobilnik_params(request, transaction):
     current_site = get_current_site(request)
     r = requests.post("http://" + current_site.domain + reverse('mobilnik'),
                       data={'transaction_id': transaction.pk})
-    json_ = json.loads(str(r.content).decode(), encoding='utf-8')
+    json_ = simplejson.loads(r.content)
     return json_
