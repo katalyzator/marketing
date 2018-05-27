@@ -19,7 +19,7 @@ class SignUpForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = TransactionKeys
-        exclude = ('is_confirmed',)
+        exclude = ('is_confirmed_by_user', 'is_confirmed_by_admin')
 
 
 class UserUpdateForm(forms.ModelForm):

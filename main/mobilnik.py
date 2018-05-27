@@ -79,8 +79,11 @@ class MobilnikPaymentService(object):
         return jwt.decode(post_body, self.seller_secret_key, audience=self.Payload.AUDIENCE)
 
 
-@csrf_exempt
 class MobilnikPayEvent(View):
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        return super(MobilnikPayEvent, self).dispatch(request, *args, **kwargs)
+
     def get(self, request):
         data = request.body.decode('utf-8')
         mobilnik = MobilnikPaymentService({'seller_id': SELLER_ID,
@@ -90,15 +93,17 @@ class MobilnikPayEvent(View):
         request_info = decode_response['request']['sellerData']
 
         response_info = decode_response['response']
-
+        transaction = TransactionKeys.objects.get(pk=request_info['transaction_id'])
+        transaction.confirm_as_admin()
         return HttpResponse(response_info['orderId'], status=200)
 
     def post(self, request):
-        transaction = TransactionKeys(id=request.POST.get('transaction_id'))
+        transaction = TransactionKeys.objects.get(id=request.POST.get('transaction_id'))
         mobilnik = MobilnikPaymentService({'seller_id': SELLER_ID,
                                            'seller_secret_key': SELLER_SECRET})
-        token = mobilnik.generate_token(transaction.handler,
+        token = mobilnik.generate_token(transaction.handler.first_name,
                                         {'transaction_id': transaction.pk, 'user_id': request.user.pk},
-                                        [{'name': transaction.handler, 'price': transaction.product.price1}], False)
+                                        [{'name': transaction.handler.first_name, 'price': transaction.product.price1}],
+                                        False)
 
         return JsonResponse(dict(token=token.decode('utf-8'), seller_id=SELLER_ID))

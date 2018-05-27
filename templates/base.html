@@ -34,6 +34,8 @@
     <link rel="apple-touch-icon" href="{% static 'img/logo_new.png' %}" sizes="256x256">
     <link rel="apple-touch-icon" href="{% static 'img/logo_new.png' %}" sizes="512x512">
     <link rel="manifest" href="{% static 'manifest.json' %}">
+    {% block mobilnik_script %}
+    {% endblock %}
 </head>
 <body class="uk-animation-fade">
 <header uk-sticky="top: 500; animation: uk-animation-slide-top; bottom: #sticky-on-scroll-up">

@@ -1,5 +1,10 @@
 # coding=utf-8
+import json
+
+import requests
 from django import template
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
 
 from main.models import *
 
@@ -15,7 +20,17 @@ def get_refs_count(request, product):
 @register.simple_tag
 def has_transaction(user):
     try:
-        TransactionKeys.objects.get(handler=user, is_confirmed_by_user=False,
+        transaction = TransactionKeys.objects.get(Q(is_confirmed_by_user=False) | Q(is_confirmed_by_admin=False),
+                                                  handler=user)
+        return transaction
+    except:
+        return False
+
+
+@register.simple_tag
+def need_to_activate(user):
+    try:
+        TransactionKeys.objects.get(handler=user, is_confirmed_by_user=True,
                                     is_confirmed_by_admin=False)
         return True
     except:
@@ -53,3 +68,12 @@ def set_flag(flag):
     if flag == "true":
         return True
     return False
+
+
+@register.simple_tag
+def return_mobilnik_params(request, transaction):
+    current_site = get_current_site(request)
+    r = requests.post("http://" + current_site.domain + reverse('mobilnik'),
+                      data={'transaction_id': transaction.pk})
+    json_ = json.loads(r.content)
+    return json_

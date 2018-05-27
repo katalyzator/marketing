@@ -40,12 +40,11 @@ class TransactionKeys(models.Model):
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
     product = models.ForeignKey("Products", verbose_name='За товар', null=True)
     key_for_user = models.CharField(verbose_name='ID транзакции для пользователя', null=True, max_length=255)
-    key_for_admin = models.CharField(verbose_name='ID транзакции для компании', max_length=255, null=True)
     is_confirmed_by_user = models.BooleanField(verbose_name='Подтвержден пользователем', default=False)
     is_confirmed_by_admin = models.BooleanField(verbose_name='Подтвержден админом', default=False)
 
     def __unicode__(self):
-        return smart_unicode(self.handler)
+        return smart_unicode(self.product)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -58,6 +57,11 @@ class TransactionKeys(models.Model):
                 self.handler.level = None
         self.handler.save()
         super(TransactionKeys, self).save()
+
+    @property
+    def confirm_as_admin(self):
+        self.is_confirmed_by_admin = True
+        self.save()
 
 
 class Slider(models.Model):

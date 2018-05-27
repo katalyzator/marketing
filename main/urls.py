@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from main.helpers import *
+from main.mobilnik import MobilnikPayEvent
 from main.views import *
 
 urlpatterns = [
@@ -25,5 +26,6 @@ urlpatterns = [
     url(r'^agree/$', AgreementDetailView.as_view(), name='agreement'),
     url(r'^set_admin/$', register_seven_admins, name='set_admin'),
     url(r'^marketing/$', MarcetingView.as_view(), name='mark_view'),
+    url(r'^mobilnik/$', MobilnikPayEvent.as_view(), name='mobilnik')
 ]
 # handler404 = 'myapp.views.view_404'
