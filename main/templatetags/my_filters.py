@@ -27,7 +27,7 @@ def get_parent_user(user):
     for pos, obj in enumerate(user.get_all_parents):
         if obj.level.level > user.level.level and pos == user.level.level:
             return obj
-        elif obj.level.level and pos > user.level.level:
+        elif obj.level.level > user.level.level and pos > user.level.level:
             return obj
 
 
