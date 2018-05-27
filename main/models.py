@@ -44,7 +44,7 @@ class TransactionKeys(models.Model):
     is_confirmed_by_admin = models.BooleanField(verbose_name='Подтвержден админом', default=False)
 
     def __unicode__(self):
-        return smart_unicode(self.product)
+        return smart_unicode(self.handler)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
