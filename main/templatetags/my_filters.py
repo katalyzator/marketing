@@ -29,8 +29,6 @@ def get_parent_user(user):
             return obj
         elif obj.level.level > user.level.level and pos > user.level.level:
             return obj
-        else:
-            return False
 
 
 @register.simple_tag
