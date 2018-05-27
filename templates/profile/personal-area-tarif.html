@@ -168,7 +168,6 @@
                                 </div>
                             {% endif %}
                         {% else %}
-                            {% return_mobilnik_params request user_transactions as mobilnik_params %}
                             <div class="uk-overflow-auto">
                                 {% if not user_transactions.is_confirmed_by_user %}
                                     <div class="uk-placeholder uk-text-center uk-text-success">
@@ -184,8 +183,8 @@
                                             </legend>
                                         </div>
                                         <a href="#" class="uk-button uk-button-primary" id="mobilnik_button"
-                                           data-token="{{ mobilnik_params.token }}"
-                                           data-seller-id="{{ mobilnik_params.seller_id }}">АКТИВИРОВАТЬ
+                                           data-token=""
+                                           data-seller-id="">АКТИВИРОВАТЬ
                                             ПРОДУКТ</a>
                                     </div>
                                 {% elif request.user.level == products.last.level %}
@@ -233,7 +232,21 @@
                         }
                     }
                 })
-            })
+            });
+            {% has_transaction request.user as user_transactions %}
+            $.ajax({
+                url: '{% url 'mobilnik' %}',
+                method: 'POST',
+                data: {'transaction_id':{{ user_transactions.pk }}},
+                success: function (response) {
+                    console.log(response)
+                    $('#mobilnik_button').attr('data-token', response.token);
+                    $('#mobilnik_button').attr('data-seller-id', response.seller_id)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            });
             $('#mobilnik_button').on('click', function (e) {
                 e.preventDefault();
                 DemoButton($(this).attr('data-token'), $(this).attr('data-seller-id'))

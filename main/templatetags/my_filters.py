@@ -70,10 +70,10 @@ def set_flag(flag):
     return False
 
 
-@register.simple_tag
-def return_mobilnik_params(request, transaction):
-    current_site = get_current_site(request)
-    r = requests.post("http://" + current_site.domain + reverse('mobilnik'),
-                      data={'transaction_id': transaction.pk})
-    # json_ = json.loads(r.content)
-    return type(r.content)
+# @register.simple_tag
+# def return_mobilnik_params(request, transaction):
+#     current_site = get_current_site(request)
+#     r = requests.post("http://" + current_site.domain + reverse('mobilnik'),
+#                       data={'transaction_id': transaction.pk})
+#     # json_ = json.loads(r.content)
+#     return type(r.content)
