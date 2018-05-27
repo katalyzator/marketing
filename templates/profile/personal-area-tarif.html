@@ -234,23 +234,25 @@
                 })
             });
             {% has_transaction request.user as user_transactions %}
-            $.ajax({
-                url: '{% url 'mobilnik' %}',
-                method: 'POST',
-                data: {'transaction_id':{{ user_transactions.pk }}},
-                success: function (response) {
-                    console.log(response)
-                    $('#mobilnik_button').attr('data-token', response.token);
-                    $('#mobilnik_button').attr('data-seller-id', response.seller_id)
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            });
-            $('#mobilnik_button').on('click', function (e) {
-                e.preventDefault();
-                DemoButton($(this).attr('data-token'), $(this).attr('data-seller-id'))
-            })
+            {% if user_transactions %}
+                $.ajax({
+                    url: '{% url 'mobilnik' %}',
+                    method: 'POST',
+                    data: {'transaction_id':{{ user_transactions.pk }}},
+                    success: function (response) {
+                        console.log(response)
+                        $('#mobilnik_button').attr('data-token', response.token);
+                        $('#mobilnik_button').attr('data-seller-id', response.seller_id)
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    }
+                });
+                $('#mobilnik_button').on('click', function (e) {
+                    e.preventDefault();
+                    DemoButton($(this).attr('data-token'), $(this).attr('data-seller-id'))
+                })
+            {% endif %}
         });
     </script>
 {% endblock %}
