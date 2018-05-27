@@ -109,7 +109,7 @@
                                 {% if request.user.level %}
                                     <div class="uk-placeholder uk-margin-medium">
                                         <p>Сейчас вы можете заказать
-                                            тариф: {{ request.user.level }}.</p>
+                                            тариф: {{ request.user.level.get_highest_product }}.</p>
                                         <p>Для заказа тарифа совершите перевод на
                                             сумму:
                                             {{ request.user.level.get_highest_product.price |add:request.user.level.get_highest_product.price1 }}
@@ -142,7 +142,7 @@
                                             переходим в
                                             раздел
                                             "История".</p>
-{#                                        <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>#}
+                                        {#                                        <p>Далее в левом блоке выбираем период отчетов "Сегодня".</p>#}
                                         <p>Далее копируем и вставляем ID транзакцию перевода и нажимаем "Отправить"</p>
                                         <p>Ваш спонсор получит уведомление о покупке тарифа, зайдет в свой
                                             mobilnik-кошелек,
