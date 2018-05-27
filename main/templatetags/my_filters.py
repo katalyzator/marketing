@@ -76,4 +76,4 @@ def return_mobilnik_params(request, transaction):
     r = requests.post("http://" + current_site.domain + reverse('mobilnik'),
                       data={'transaction_id': transaction.pk})
     json_ = json.loads(r.content.decode())
-    return json_
+    return r.content
