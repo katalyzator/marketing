@@ -88,7 +88,7 @@ class MobilnikPayEvent(View):
         transaction = TransactionKeys.objects.get(id=request.POST.get('transaction_id'))
         mobilnik = MobilnikPaymentService({'seller_id': SELLER_ID,
                                            'seller_secret_key': SELLER_SECRET})
-        token = mobilnik.generate_token(transaction.handler.first_name,
+        token = mobilnik.generate_token(transaction.product.title,
                                         {'transaction_id': transaction.pk, 'user_id': request.user.pk},
                                         [{'name': transaction.handler.first_name, 'price': transaction.product.price1}],
                                         False)
