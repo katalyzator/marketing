@@ -7,12 +7,18 @@
                 <div class="uk-width-expand@m">
                     <div class="uk-card-default uk-card-body">
                         <h1>ВАША КОМАНДА</h1>
-                        {% get_ref_by_line request.user as referals %}
+                        {% get_ref_by_line request.user 1 as first_referals %}
+                        {% get_ref_by_line request.user 2 as second_referals %}
+                        {% get_ref_by_line request.user 3 as third_referals %}
+                        {% get_ref_by_line request.user 4 as fourth_referals %}
+                        {% get_ref_by_line request.user 5 as fifth_referals %}
+                        {% get_ref_by_line request.user 6 as sixth_referals %}
+                        {% get_ref_by_line request.user 7 as seventh_referals %}
                         <ul uk-accordion>
                             <li class="uk-open">
                                 <a class="uk-accordion-title" href="#">Первая линия</a>
                                 <div class="uk-accordion-content">
-                                    {% if referals %}
+                                    {% if first_referals %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -24,7 +30,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in referals %}
+                                                {% for item in first_referals %}
                                                     <tr>
                                                         <td>{{ item.username }}</td>
                                                         <td>{{ item.level }}</td>
@@ -46,7 +52,7 @@
                             <li>
                                 <a class="uk-accordion-title" href="#">Вторая линия</a>
                                 <div class="uk-accordion-content">
-                                    {% if referals %}
+                                    {% if second_referals %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -58,7 +64,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in referals %}
+                                                {% for item in second_referals %}
                                                     <tr>
                                                         <td>{{ item.username }}</td>
                                                         <td>{{ item.level }}</td>
@@ -80,7 +86,7 @@
                             <li>
                                 <a class="uk-accordion-title" href="#">Третья линия</a>
                                 <div class="uk-accordion-content">
-                                    {% if referals %}
+                                    {% if third_referals %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -92,7 +98,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in referals %}
+                                                {% for item in third_referals %}
                                                     <tr>
                                                         <td>{{ item.username }}</td>
                                                         <td>{{ item.level }}</td>
@@ -114,7 +120,7 @@
                             <li>
                                 <a class="uk-accordion-title" href="#">Четвертая линия</a>
                                 <div class="uk-accordion-content">
-                                    {% if referals %}
+                                    {% if fourth_referals %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -126,7 +132,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in referals %}
+                                                {% for item in fourth_referals %}
                                                     <tr>
                                                         <td>{{ item.username }}</td>
                                                         <td>{{ item.level }}</td>
@@ -148,7 +154,7 @@
                             <li>
                                 <a class="uk-accordion-title" href="#">Пятая линия</a>
                                 <div class="uk-accordion-content">
-                                    {% if referals %}
+                                    {% if fifth_referals %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -160,7 +166,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in referals %}
+                                                {% for item in fifth_referals %}
                                                     <tr>
                                                         <td>{{ item.username }}</td>
                                                         <td>{{ item.level }}</td>
@@ -182,7 +188,7 @@
                             <li>
                                 <a class="uk-accordion-title" href="#">Шестая линия</a>
                                 <div class="uk-accordion-content">
-                                    {% if referals %}
+                                    {% if sixth_referals %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -194,7 +200,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in referals %}
+                                                {% for item in sixth_referals %}
                                                     <tr>
                                                         <td>{{ item.username }}</td>
                                                         <td>{{ item.level }}</td>
@@ -216,7 +222,7 @@
                             <li>
                                 <a class="uk-accordion-title" href="#">Седьмая линия</a>
                                 <div class="uk-accordion-content">
-                                    {% if referals %}
+                                    {% if seventh_referals %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -228,7 +234,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% for item in referals %}
+                                                {% for item in seventh_referals %}
                                                     <tr>
                                                         <td>{{ item.username }}</td>
                                                         <td>{{ item.level }}</td>

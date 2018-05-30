@@ -47,20 +47,15 @@ def get_parent_user(user):
 
 
 @register.simple_tag
-def get_ref_by_line(user, refs=None, line=None):
-    if not refs:
-        refs = list()
-    if not line:
-        line = 1
-    if user.related_users:
-        for item in user.related_users.all():
-            refs.append(item)
-            if item.related_users:
-                line += 1
-                get_ref_by_line(item, refs, line)
-        return refs
-    else:
-        return False
+def get_ref_by_line(user, line, counter=0):
+    refs = list()
+    counter += 1
+    for item in user.related_users.all():
+        refs.append(item)
+        if int(line) == int(counter):
+            return refs
+        else:
+            return get_ref_by_line(item, line, counter)
 
 
 @register.simple_tag
@@ -68,12 +63,3 @@ def set_flag(flag):
     if flag == "true":
         return True
     return False
-
-
-# @register.simple_tag
-# def return_mobilnik_params(request, transaction):
-#     current_site = get_current_site(request)
-#     r = requests.post("http://" + current_site.domain + reverse('mobilnik'),
-#                       data={'transaction_id': transaction.pk})
-#     # json_ = json.loads(r.content)
-#     return type(r.content)
