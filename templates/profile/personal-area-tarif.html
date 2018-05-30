@@ -27,104 +27,106 @@
         <div class="uk-container-expand uk-container">
             <div class="uk-grid uk-grid-small" uk-grid="">
                 <div class="uk-width-expand@m">
-                    <div class="uk-card-default uk-card-body uk-overflow-auto">
+                    <div class="uk-card-default uk-card-body ">
                         {% has_transaction request.user as user_transactions %}
                         <h1>ЗАКАЗАТЬ ТАРИФ</h1>
                         {% if not user_transactions %}
-                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle uk-margin">
-                                <thead>
-                                <tr>
-                                    <th>Спонсор</th>
-                                    <th>Уровень спонсора</th>
-                                    <th>Контакты</th>
-                                    <th>Мобильник-кошелек</th>
-                                    <th>Сумма</th>
-                                    <th>ID транзакции для спонсора</th>
-                                    {#                                        <th>ID транзакции для компании</th>#}
-                                    <th>Отправить запрос</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% if request.user.level %}
-                                    {% get_parent_user request.user as parent %}
+                            <div class="table uk-width-1-1 uk-overflow-auto">
+                                <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle uk-margin">
+                                    <thead>
                                     <tr>
-                                        <form action="{% url 'transaction' %}"
-                                              id="transaction_form_1" method="POST">
-                                            {% csrf_token %}
-                                            <td>{{ parent }}</td>
-                                            <td>{{ parent.level }}</td>
-                                            <td>{{ parent.phone }}</td>
-                                            <td>{{ parent.mobilnik }}</td>
-                                            {% if request.user.level %}
-                                                <td>{{ request.user.level.get_highest_product.price }}
-                                                    сом
-                                                </td>
-                                            {% else %}
-                                                <td>{{ products.first.price }} сом</td>
-                                            {% endif %}
-                                            <td>
-                                                <input type="hidden" name="handler"
-                                                       value={{ request.user.pk }}>
-                                                {% if request.user.level %}
-                                                    <input type="hidden" name="product"
-                                                           value={{ request.user.level.get_highest_product.pk }}>
-                                                {% else %}
-                                                    <input type="hidden" name="product"
-                                                           value={{ products.first.pk }}>
-                                                {% endif %}
-                                                {% render_field transaction_form.key_for_user class+='uk-input' %}
-                                                <input type="hidden" name="used_by" value={{ parent.pk }}>
-                                            </td>
-                                            {#                                                <td>#}
-                                            {#                                                    {% render_field transaction_form.key_for_admin class+='uk-input' %}#}
-                                            {#                                                </td>#}
-                                            <td>
-                                                <a href="#transaction_form_1"
-                                                   class="send-form uk-button uk-button-primary">Отправить</a>
-                                            </td>
-                                        </form>
+                                        <th>Спонсор</th>
+                                        <th>Уровень спонсора</th>
+                                        <th>Контакты</th>
+                                        <th>Мобильник-кошелек</th>
+                                        <th>Сумма</th>
+                                        <th>ID транзакции для спонсора</th>
+                                        {#                                        <th>ID транзакции для компании</th>#}
+                                        <th>Отправить запрос</th>
                                     </tr>
-                                {% else %}
-                                    <tr>
-                                        <form action="{% url 'transaction' %}"
-                                              id="transaction_form_{{ forloop.counter }}" method="POST">
-                                            {% csrf_token %}
-                                            <td>{{ request.user.get_parent }}</td>
-                                            <td>{{ request.user.get_parent.level }}</td>
-                                            <td>{{ request.user.get_parent.phone }}</td>
-                                            <td>{{ request.user.get_parent.mobilnik }}</td>
-                                            {% if request.user.level %}
-                                                <td>{{ request.user.level.get_highest_product.price }}
-                                                    сом
-                                                </td>
-                                            {% else %}
-                                                <td>{{ products.first.price }} сом</td>
-                                            {% endif %}
-                                            <td>
-                                                <input type="hidden" name="handler"
-                                                       value={{ request.user.pk }}>
+                                    </thead>
+                                    <tbody>
+                                    {% if request.user.level %}
+                                        {% get_parent_user request.user as parent %}
+                                        <tr>
+                                            <form action="{% url 'transaction' %}"
+                                                  id="transaction_form_1" method="POST">
+                                                {% csrf_token %}
+                                                <td>{{ parent }}</td>
+                                                <td>{{ parent.level }}</td>
+                                                <td>{{ parent.phone }}</td>
+                                                <td>{{ parent.mobilnik }}</td>
                                                 {% if request.user.level %}
-                                                    <input type="hidden" name="product"
-                                                           value={{ request.user.level.get_highest_product.pk }}>
+                                                    <td>{{ request.user.level.get_highest_product.price }}
+                                                        сом
+                                                    </td>
                                                 {% else %}
-                                                    <input type="hidden" name="product"
-                                                           value={{ products.first.pk }}>
+                                                    <td>{{ products.first.price }} сом</td>
                                                 {% endif %}
-                                                {% render_field transaction_form.key_for_user class+='uk-input' %}
-                                                <input type="hidden" name="used_by"
-                                                       value={{ request.user.get_parent.pk }}>
-                                            </td>
-                                            {#                                                <td>#}
-                                            {#                                                    {% render_field transaction_form.key_for_admin class+='uk-input' %}#}
-                                            {#                                                </td>#}
-                                            <td>
-                                                <a href="#transaction_form_{{ forloop.counter }}"
-                                                   class="send-form uk-button uk-button-primary">Отправить</a>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                {% endif %}
-                            </table>
+                                                <td>
+                                                    <input type="hidden" name="handler"
+                                                           value={{ request.user.pk }}>
+                                                    {% if request.user.level %}
+                                                        <input type="hidden" name="product"
+                                                               value={{ request.user.level.get_highest_product.pk }}>
+                                                    {% else %}
+                                                        <input type="hidden" name="product"
+                                                               value={{ products.first.pk }}>
+                                                    {% endif %}
+                                                    {% render_field transaction_form.key_for_user class+='uk-input' %}
+                                                    <input type="hidden" name="used_by" value={{ parent.pk }}>
+                                                </td>
+                                                {#                                                <td>#}
+                                                {#                                                    {% render_field transaction_form.key_for_admin class+='uk-input' %}#}
+                                                {#                                                </td>#}
+                                                <td>
+                                                    <a href="#transaction_form_1"
+                                                       class="send-form uk-button uk-button-primary">Отправить</a>
+                                                </td>
+                                            </form>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <form action="{% url 'transaction' %}"
+                                                  id="transaction_form_{{ forloop.counter }}" method="POST">
+                                                {% csrf_token %}
+                                                <td>{{ request.user.get_parent }}</td>
+                                                <td>{{ request.user.get_parent.level }}</td>
+                                                <td>{{ request.user.get_parent.phone }}</td>
+                                                <td>{{ request.user.get_parent.mobilnik }}</td>
+                                                {% if request.user.level %}
+                                                    <td>{{ request.user.level.get_highest_product.price }}
+                                                        сом
+                                                    </td>
+                                                {% else %}
+                                                    <td>{{ products.first.price }} сом</td>
+                                                {% endif %}
+                                                <td>
+                                                    <input type="hidden" name="handler"
+                                                           value={{ request.user.pk }}>
+                                                    {% if request.user.level %}
+                                                        <input type="hidden" name="product"
+                                                               value={{ request.user.level.get_highest_product.pk }}>
+                                                    {% else %}
+                                                        <input type="hidden" name="product"
+                                                               value={{ products.first.pk }}>
+                                                    {% endif %}
+                                                    {% render_field transaction_form.key_for_user class+='uk-input' %}
+                                                    <input type="hidden" name="used_by"
+                                                           value={{ request.user.get_parent.pk }}>
+                                                </td>
+                                                {#                                                <td>#}
+                                                {#                                                    {% render_field transaction_form.key_for_admin class+='uk-input' %}#}
+                                                {#                                                </td>#}
+                                                <td>
+                                                    <a href="#transaction_form_{{ forloop.counter }}"
+                                                       class="send-form uk-button uk-button-primary">Отправить</a>
+                                                </td>
+                                            </form>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                            </div>
                             {% if request.user.level %}
                                 <div class="uk-placeholder uk-margin-medium">
                                     <p>Сейчас вы можете заказать
