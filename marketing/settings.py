@@ -122,12 +122,12 @@ STATICFILES_DIRS = (
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 
-EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST = 'smtp.gmail.com'
 
 EMAIL_PORT = 587
 
-EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'new_life_kg@mail.ru'
-EMAIL_HOST_PASSWORD = '1311maa_2018'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'newlifekgholding@gmail.com'
+EMAIL_HOST_PASSWORD = '124358911nurs'
 
 JET_DEFAULT_THEME = 'default'
 
