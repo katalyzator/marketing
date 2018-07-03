@@ -26,7 +26,7 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['sliders'] = Slider.objects.all()
         context['products'] = Products.objects.all()
-
+        context['users'] = User.objects.filter(is_active=True).distinct().count()
         return context
 
     def dispatch(self, request, *args, **kwargs):
