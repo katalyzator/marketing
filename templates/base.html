@@ -222,6 +222,9 @@
         </form>
     </div>
 </div>
+<div class="scroll-top">
+    <i class="fa fa-angle-up"></i>
+</div>
 <script src="{% static 'js/libs.min.js' %}"></script>
 <script src="{% static 'js/common.min.js' %}"></script>
 <script type="text/javascript">
@@ -250,8 +253,20 @@
     }
 
     $(document).ready(function () {
+        $('.scroll-top').on('click', function () {
+            $('body,html').animate({scrollTop: 0}, 700, 'swing');
+        });
         ajax_request($('#user-form'));
         ajax_request($('#login-form'));
+    })
+    $(document).scroll(function () {
+        var y = $(this).scrollTop();
+        if (y > 100) {
+            $('.scroll-top').fadeIn();
+        }
+        else {
+            $('.scroll-top').fadeOut();
+        }
     })
 </script>
 
@@ -291,6 +306,7 @@
         }
 
         $(document).ready(function () {
+            $('body,html').scrollTop(0);
             if (get('ref')) {
                 $('#id_sponsor').addClass('uk-disabled').val(get('ref'));
             }
