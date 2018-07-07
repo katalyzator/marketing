@@ -39,7 +39,8 @@ class TransactionKeys(models.Model):
     handler = models.ForeignKey("User", verbose_name='Владелец ключа', related_name='handler')
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
     product = models.ForeignKey("Products", verbose_name='За товар', null=True)
-    key_for_user = models.CharField(verbose_name='ID транзакции для пользователя', null=True, max_length=255)
+    key_for_user = models.CharField(verbose_name='ID транзакции для пользователя', null=True, unique=True,
+                                    max_length=255)
     is_confirmed_by_user = models.BooleanField(verbose_name='Подтвержден пользователем', default=False)
     is_confirmed_by_admin = models.BooleanField(verbose_name='Подтвержден админом', default=False)
 
