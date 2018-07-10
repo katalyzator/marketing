@@ -43,12 +43,15 @@ class UserCreateView(CreateView):
 
     def form_valid(self, form):
         if self.request.session['ref']:
-            ref_user = User.objects.get(username=self.request.session['ref'])
+            try:
+                ref_user = User.objects.get(username=self.request.session['ref'])
+            except:
+                return JsonResponse(dict(success=False, message='Нет такого пользователя'))
         else:
             try:
                 ref_user = User.objects.get(username=form.cleaned_data['sponsor'])
             except:
-                ref_user = User.objects.get(username='newlife_1')
+                return JsonResponse(dict(success=False, message='Нет такого пользователя'))
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password1'])
         user.is_active = False
