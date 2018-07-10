@@ -45,7 +45,10 @@ class UserCreateView(CreateView):
         if self.request.session['ref']:
             ref_user = User.objects.get(username=self.request.session['ref'])
         else:
-            ref_user = User.objects.get(username=form.cleaned_data['sponsor'])
+            try:
+                ref_user = User.objects.get(username=form.cleaned_data['sponsor'])
+            except:
+                ref_user = User.objects.get(username='newlife_1')
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password1'])
         user.is_active = False
