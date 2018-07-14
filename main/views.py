@@ -82,7 +82,6 @@ class UserCreateView(CreateView):
 
     def form_invalid(self, form):
         message = ''
-        print(form.errors)
         for item in form.errors:
             message += form.errors.get(item)
         return JsonResponse(dict(success=False, message=message))
