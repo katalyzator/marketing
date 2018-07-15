@@ -17,6 +17,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
     'jet',
     'colorfield',
     'widget_tweaks',
@@ -42,6 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'google_analytics.middleware.GoogleAnalyticsMiddleware',
 ]
 
 ROOT_URLCONF = 'marketing.urls'
@@ -182,3 +184,5 @@ ADMIN_PHONE = "5696685"
 DEFAULT_PASSWORD = "admin112358"
 SELLER_ID = '5e8282966e95c5ab7b69f01ae92cf05a5ca2756b'
 SELLER_SECRET = 'a77dc6e335130378f05109f2f78e9dcc88a52bb2bda1f493942b65301111c55e'
+JET_INDEX_DASHBOARD = 'main.dashboard.CustomIndexDashboard'
+JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = os.path.join(BASE_DIR, 'client_id.json')

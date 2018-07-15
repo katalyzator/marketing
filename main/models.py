@@ -2,12 +2,22 @@
 from __future__ import unicode_literals
 
 from ckeditor_uploader.fields import RichTextUploadingField
+from colorfield.fields import ColorField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import *
 from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
-from colorfield.fields import ColorField
-from django.db.models import *
+
+region_choices = (
+    ('1', 'Чуй'),
+    ('2', 'Ош'),
+    ('3', 'Баткен'),
+    ('4', 'Джалал-Абад'),
+    ('5', 'Иссык-Куль'),
+    ('6', 'Нарын'),
+    ('6', 'Талас'),
+)
 
 
 class Products(models.Model):
@@ -91,6 +101,8 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     email = models.EmailField(verbose_name='Email', unique=True)
     phone = models.CharField(verbose_name='Номер телефона', max_length=255, null=True)
     mobilnik = models.CharField(verbose_name='Мобильник кошелек', max_length=255, null=True)
+    region = models.CharField(verbose_name='Область', choices=region_choices, max_length=255, null=True)
+    city = models.CharField(verbose_name='Город', max_length=255, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
 
     def __unicode__(self):
