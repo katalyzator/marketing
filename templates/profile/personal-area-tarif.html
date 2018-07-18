@@ -213,8 +213,6 @@
             $('.send-form').on('click', function (e) {
                 e.preventDefault();
                 var form = $($(this).attr("href"));
-                console.log(form);
-                console.log(form.serialize());
                 $.ajax({
                     url: $(form).attr('action'),
                     data: $(form).serialize(),
@@ -229,7 +227,7 @@
                         }
                         else {
                             UIkit.notification.closeAll();
-                            UIkit.notification('Заполните обязательные поля', 'danger');
+                            UIkit.notification(response.message, 'danger');
                         }
                     }
                 })
