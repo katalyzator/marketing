@@ -20,9 +20,14 @@ class UserAdmin(admin.ModelAdmin):
         return "\n".join([p.username for p in obj.related_users.all()])
 
 
+class TransactionKeysAdmin(admin.ModelAdmin):
+    list_display = ('handler', 'used_by', 'key_for_user')
+    list_filter = ('handler', 'used_by', 'key_for_user')
+
+
 admin.site.register(Agree)
 admin.site.register(Slider)
 admin.site.register(User, UserAdmin)
 admin.site.register(Products)
-admin.site.register(TransactionKeys)
+admin.site.register(TransactionKeys, TransactionKeysAdmin)
 admin.site.register(SocialLinks)
