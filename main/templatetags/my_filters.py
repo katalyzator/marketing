@@ -55,7 +55,7 @@ def get_ref_by_line(user, line, counter=0):
     if int(line) == int(counter):
         return refs
     else:
-        return get_ref_by_line
+        return get_ref_by_line(user, line, counter)
 
 
 @register.simple_tag
