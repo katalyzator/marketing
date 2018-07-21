@@ -47,15 +47,16 @@ def get_parent_user(user):
 
 
 @register.simple_tag
-def get_ref_by_line(user, line, counter=0):
-    refs = list()
+def get_ref_by_line(user, line, counter=0, refs=list()):
     counter += 1
     for item in user.related_users.all():
         refs.append(item)
     if int(line) == int(counter):
         return refs
     else:
-        return get_ref_by_line(user, line, counter)
+        refs = list()
+        for item in user.related_users.all():
+            return get_ref_by_line(item, line, counter, refs)
 
 
 @register.simple_tag
