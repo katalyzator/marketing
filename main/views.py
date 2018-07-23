@@ -42,44 +42,43 @@ class UserCreateView(CreateView):
     form_class = SignUpForm
 
     def form_valid(self, form):
-        return JsonResponse(dict(success=False,message='Идут технические работы...'))
-        # if self.request.session['ref']:
-        #     try:
-        #         ref_user = User.objects.get(username=self.request.session['ref'])
-        #     except:
-        #         return JsonResponse(dict(success=False, message='Нет такого пользователя'))
-        # else:
-        #     try:
-        #         ref_user = User.objects.get(username=form.cleaned_data['sponsor'])
-        #     except:
-        #         return JsonResponse(dict(success=False, message='Нет такого пользователя'))
-        # user = form.save(commit=False)
-        # user.set_password(form.cleaned_data['password1'])
-        # user.is_active = False
-        # user.save()
-        # current_site = get_current_site(self.request)
-        # mail_subject = 'Активация аккаунта'
-        # message = render_to_string('partials/confirm_email.html', {
-        #     'user': user,
-        #     'domain': current_site.domain,
-        #     'url': force_text(base64.b64encode(json.dumps({
-        #         'user_id': user.pk,
-        #         'key': user.confirmation_key
-        #     }).encode()))
-        # })
-        # to_email = form.cleaned_data.get('email')
-        # try:
-        #     email = EmailMessage(
-        #         mail_subject, message, to=[to_email]
-        #     )
-        #     email.send()
-        # except:
-        #     send_mail(mail_subject, message, 'wowtsty@gmail.com', [to_email], auth_password='124358911',
-        #               fail_silently=False)
-        #
-        # if ref_user:
-        #     ref_user.related_users.add(user)
-        # return JsonResponse(dict(success=True, message='Вы успешно зарегистрированы, пожалуйста проверьте почту'))
+        # return JsonResponse(dict(success=False,message='Идут технические работы...'))
+        if self.request.session['ref']:
+            try:
+                ref_user = User.objects.get(username=self.request.session['ref'])
+            except:
+                return JsonResponse(dict(success=False, message='Нет такого пользователя'))
+        else:
+            try:
+                ref_user = User.objects.get(username=form.cleaned_data['sponsor'])
+            except:
+                return JsonResponse(dict(success=False, message='Нет такого пользователя'))
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password1'])
+        user.is_active = False
+        user.save()
+        current_site = get_current_site(self.request)
+        mail_subject = 'Активация аккаунта'
+        message = render_to_string('partials/confirm_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'url': force_text(base64.b64encode(json.dumps({
+                'user_id': user.pk,
+                'key': user.confirmation_key
+            }).encode()))
+        })
+        to_email = form.cleaned_data.get('email')
+        try:
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+        except:
+            send_mail(mail_subject, message, 'wowtsty@gmail.com', [to_email], auth_password='124358911',
+                      fail_silently=False)
+        if ref_user:
+            ref_user.related_users.add(user)
+        return JsonResponse(dict(success=True, message='Вы успешно зарегистрированы, пожалуйста проверьте почту'))
 
     def form_invalid(self, form):
         message = ''
