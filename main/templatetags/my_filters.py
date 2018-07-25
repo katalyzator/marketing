@@ -47,14 +47,19 @@ def get_parent_user(user):
 
 
 @register.simple_tag
-def get_ref_by_line(user, line, counter=0, refs=list()):
-    if int(line) == int(counter):
-        return refs
-    else:
-        counter += 1
-        for item in user.related_users.all():
-            refs.append(item)
-    return refs
+def get_ref_by_line(parents_ids, level, curr_level=1):
+    child_ids = []
+    if type(parents_ids) == int:
+        parents_ids = [parents_ids]
+    for i in User.objects.filter(pk__in=parents_ids):
+        for j in i.related_users.all():
+            child_ids.append(j.pk)
+    if curr_level == level:
+        return User.objects.filter(pk__in=child_ids)
+    curr_level += 1
+    parents_ids = child_ids
+    return get_ref_by_line(parents_ids, level, curr_level)
+
 
 @register.simple_tag
 def set_flag(flag):

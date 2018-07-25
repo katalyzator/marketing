@@ -7,13 +7,13 @@
                 <div class="uk-width-expand@m">
                     <div class="uk-card-default uk-card-body">
                         <h1>ВАША КОМАНДА</h1>
-                        {% get_ref_by_line request.user 1 as first_referals %}
-                        {% get_ref_by_line request.user 2 as second_referals %}
-                        {% get_ref_by_line request.user 3 as third_referals %}
-                        {% get_ref_by_line request.user 4 as fourth_referals %}
-                        {% get_ref_by_line request.user 5 as fifth_referals %}
-                        {% get_ref_by_line request.user 6 as sixth_referals %}
-                        {% get_ref_by_line request.user 7 as seventh_referals %}
+                        {% get_ref_by_line request.user.pk 1 as first_referals %}
+                        {% get_ref_by_line request.user.pk 2 as second_referals %}
+                        {% get_ref_by_line request.user.pk 3 as third_referals %}
+                        {% get_ref_by_line request.user.pk 4 as fourth_referals %}
+                        {% get_ref_by_line request.user.pk 5 as fifth_referals %}
+                        {% get_ref_by_line request.user.pk 6 as sixth_referals %}
+                        {% get_ref_by_line request.user.pk 7 as seventh_referals %}
                         <ul uk-accordion>
                             <li class="uk-open">
                                 <a class="uk-accordion-title" href="#">Первая линия</a>
