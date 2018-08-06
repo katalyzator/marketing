@@ -175,3 +175,27 @@ class Agree(models.Model):
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
+
+
+class Gallery(models.Model):
+    class Meta:
+        verbose_name = 'Галерея'
+        verbose_name_plural = 'Галерея'
+
+    image = models.ImageField(verbose_name='Картинка', upload_to='gallery/')
+    caption = models.CharField(verbose_name='Описание', max_length=255)
+
+    def __str__(self):
+        return str(self.caption)
+
+
+class Video(models.Model):
+    class Meta:
+        verbose_name = 'Видео'
+        verbose_name_plural = 'Видео'
+
+    video = models.ImageField(verbose_name='Картинка', upload_to='gallery/')
+    caption = models.CharField(verbose_name='Описание', max_length=255)
+
+    def __str__(self):
+        return str(self.caption)

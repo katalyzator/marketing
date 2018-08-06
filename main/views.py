@@ -236,3 +236,7 @@ class MarcetingView(TemplateView):
 
 class PromoView(TemplateView):
     template_name = 'profile/personal-education.html'
+
+
+def page_not_found(request):
+    return render(request, 'banner.html')
