@@ -192,6 +192,8 @@
         <button class="uk-modal-close-default" type="button" uk-close=""></button>
         <form action="{% url 'create_user' %}" method="POST" id="user-form">
             {% csrf_token %}
+            <p class="uk-text-danger">Просьба указывать данные с паспорта, т.к в псоледующем ваши данные будут
+                сипользованы для уплаты налогов</p>
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Регистрация</legend>
                 <div class="uk-margin">
