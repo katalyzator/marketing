@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import os
 from django.contrib import admin
 
 # Register your models here.
 from main.models import *
-from marketing.settings import BASE_DIR
+from marketing import settings
 
 admin.site.site_header = 'Панель управления'
 
@@ -15,6 +14,12 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ['username', 'first_name', 'last_name', 'email', ]
     list_display = ['username', 'first_name', 'email', 'is_active', 'level', 'date_joined']
     list_filter = ['is_active', ]
+
+    class Media:
+        js = [
+            'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
+            settings.STATIC_URL + 'admin/js/export_to_excel.js'
+        ]
 
     def get_products(self, obj):
         return "\n".join([p.username for p in obj.related_users.all()])

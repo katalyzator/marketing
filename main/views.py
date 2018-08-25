@@ -4,11 +4,12 @@ from __future__ import unicode_literals
 import base64
 import json
 
+import xlwt as xlwt
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, login
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -226,10 +227,6 @@ class AgreementDetailView(DetailView):
         return Agree.objects.first()
 
 
-def auth_handler(request):
-    return redirect(reverse('main'))
-
-
 class MarcetingView(TemplateView):
     template_name = 'marketing-plan.html'
 
@@ -240,3 +237,27 @@ class PromoView(TemplateView):
 
 def page_not_found(request):
     return render(request, 'banner.html')
+
+
+class ExportToXLS(View):
+    def get(self, request):
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="Users.xls"'
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Пользователи')
+        row_num = 0
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+        columns = ['Логин', 'Имя', 'Фамилия', 'Область', 'Город', 'Телефон', 'Email']
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+        rows = [(i.username, i.first_name, i.last_name, i.get_region_display(), i.city, i.phone, i.email)
+                for i in
+                User.objects.all()]
+        print(rows)
+        for row in rows:
+            row_num += 1
+            for col_num in range(len(row)):
+                ws.write(row_num, col_num, row[col_num], font_style)
+        wb.save(response)
+        return response

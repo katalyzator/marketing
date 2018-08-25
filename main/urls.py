@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^set_admin/$', register_seven_admins, name='set_admin'),
     url(r'^marketing/$', MarcetingView.as_view(), name='mark_view'),
     url(r'^mobilnik/$', MobilnikPayEvent.as_view(), name='mobilnik'),
+    url(r'^export_to_xls/$', ExportToXLS.as_view(), name='export_to_xls'),
     url(r'^mobilnik/response/$', mobilnik_response, name='mobilnik-response')
 ]
 handler404 = 'myapp.views.page_not_found'

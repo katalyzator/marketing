@@ -111,6 +111,10 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         return smart_unicode(self.email)
 
     @property
+    def get_region(self):
+        return self.get_region_display().encode()
+
+    @property
     def get_parent(self):
         return User.objects.filter(related_users=self).first()
 
