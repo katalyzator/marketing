@@ -5,69 +5,70 @@
             <div class="uk-grid uk-grid-small" uk-grid="">
                 <div class="uk-width-expand@m">
                     <div class="uk-card-default uk-card-body">
-                        <h1>
-                            <div class="uk-placeholder uk-margin-medium-top">
-                                <div class="uk-margin-large">
-                                    <h4>Маркетинг</h4>
-                                    <div class="uk-width-1-1@m uk-margin-auto">
-                                        <iframe width="100%" height="500"
-                                                src="https://www.youtube.com/embed/P9wt2gARofU"
-                                                frameborder="0" allow="autoplay; encrypted-media"
-                                                allowfullscreen></iframe>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </h1>
+                        {% if levels %}
+                            {% for item in levels %}
+                                <h1>{{ item.title }}</h1>
+                                {% for video in item.lessons.all %}
+                                    <video src="{{ video.video.url }}" poster="{{ video.preview.url }}" controls
+                                           width="100%" height="auto" >
+                                        <source src="{{ video.video.url }}" type="video/mp4">
+                                        Ваш браузер не поддерживает видеформат
+                                    </video>
+                                {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            <h1 class="uk-text-danger">Вам пока не досупны видеоуроки</h1>
+                        {% endif %}
                     </div>
-{#                    <div class="uk-card-default uk-card-body">#}
-{#                        <h1>Как пригласить в себе команду человека#}
-{#                            <div class="uk-placeholder uk-margin-medium-top">#}
-{#                                <div class="uk-margin-large">#}
-{#                                    <h4>Видео инструкция - Как сделать редирект реф-ссылки</h4>#}
-{#                                    <div class="uk-width-1-1@m uk-margin-auto">#}
-{#                                        <iframe width="100%" height="500"#}
-{#                                                src="https://www.youtube.com/embed/LgWVSDNWFD0"#}
-{#                                                frameborder="0" allow="autoplay; encrypted-media"#}
-{#                                                allowfullscreen></iframe>#}
-{#                                    </div>#}
-{##}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </h1>#}
-{#                    </div>#}
-{#                    <div class="uk-card-default uk-card-body">#}
-{#                        <h1>Дополнительные материалы#}
-{#                            <div class="uk-placeholder uk-margin-medium-top">#}
-{#                                <div class="uk-margin-large">#}
-{#                                    <h4>Видео инструкция - Как сделать редирект реф-ссылки</h4>#}
-{#                                    <div class="uk-width-1-1@m uk-margin-auto">#}
-{#                                        <iframe width="100%" height="500"#}
-{#                                                src="https://www.youtube.com/embed/LgWVSDNWFD0"#}
-{#                                                frameborder="0" allow="autoplay; encrypted-media"#}
-{#                                                allowfullscreen></iframe>#}
-{#                                    </div>#}
-{##}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </h1>#}
-{#                    </div>#}
-{#                    <div class="uk-card-default uk-card-body">#}
-{#                        <h1>Промо Материалы#}
-{#                            <div class="uk-placeholder uk-margin-medium-top">#}
-{#                                <div class="uk-margin-large">#}
-{#                                    <h4>Видео инструкция - Как сделать редирект реф-ссылки</h4>#}
-{#                                    <div class="uk-width-1-1@m uk-margin-auto">#}
-{#                                        <iframe width="100%" height="500"#}
-{#                                                src="https://www.youtube.com/embed/LgWVSDNWFD0"#}
-{#                                                frameborder="0" allow="autoplay; encrypted-media"#}
-{#                                                allowfullscreen></iframe>#}
-{#                                    </div>#}
-{##}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </h1>#}
-{#                    </div>#}
+
+                    {#                    <div class="uk-card-default uk-card-body">#}
+                    {#                        <h1>Как пригласить в себе команду человека#}
+                    {#                            <div class="uk-placeholder uk-margin-medium-top">#}
+                    {#                                <div class="uk-margin-large">#}
+                    {#                                    <h4>Видео инструкция - Как сделать редирект реф-ссылки</h4>#}
+                    {#                                    <div class="uk-width-1-1@m uk-margin-auto">#}
+                    {#                                        <iframe width="100%" height="500"#}
+                    {#                                                src="https://www.youtube.com/embed/LgWVSDNWFD0"#}
+                    {#                                                frameborder="0" allow="autoplay; encrypted-media"#}
+                    {#                                                allowfullscreen></iframe>#}
+                    {#                                    </div>#}
+                    {##}
+                    {#                                </div>#}
+                    {#                            </div>#}
+                    {#                        </h1>#}
+                    {#                    </div>#}
+                    {#                    <div class="uk-card-default uk-card-body">#}
+                    {#                        <h1>Дополнительные материалы#}
+                    {#                            <div class="uk-placeholder uk-margin-medium-top">#}
+                    {#                                <div class="uk-margin-large">#}
+                    {#                                    <h4>Видео инструкция - Как сделать редирект реф-ссылки</h4>#}
+                    {#                                    <div class="uk-width-1-1@m uk-margin-auto">#}
+                    {#                                        <iframe width="100%" height="500"#}
+                    {#                                                src="https://www.youtube.com/embed/LgWVSDNWFD0"#}
+                    {#                                                frameborder="0" allow="autoplay; encrypted-media"#}
+                    {#                                                allowfullscreen></iframe>#}
+                    {#                                    </div>#}
+                    {##}
+                    {#                                </div>#}
+                    {#                            </div>#}
+                    {#                        </h1>#}
+                    {#                    </div>#}
+                    {#                    <div class="uk-card-default uk-card-body">#}
+                    {#                        <h1>Промо Материалы#}
+                    {#                            <div class="uk-placeholder uk-margin-medium-top">#}
+                    {#                                <div class="uk-margin-large">#}
+                    {#                                    <h4>Видео инструкция - Как сделать редирект реф-ссылки</h4>#}
+                    {#                                    <div class="uk-width-1-1@m uk-margin-auto">#}
+                    {#                                        <iframe width="100%" height="500"#}
+                    {#                                                src="https://www.youtube.com/embed/LgWVSDNWFD0"#}
+                    {#                                                frameborder="0" allow="autoplay; encrypted-media"#}
+                    {#                                                allowfullscreen></iframe>#}
+                    {#                                    </div>#}
+                    {##}
+                    {#                                </div>#}
+                    {#                            </div>#}
+                    {#                        </h1>#}
+                    {#                    </div>#}
 
                 </div>
 

@@ -22,12 +22,12 @@
                                                         вам
                                                         нужно иметь на
                                                         своем Мобильник-кошельке не
-                                                        менее {{ request.user.level.get_highest_product.price |add:request.user.level.get_highest_product.price1 }}
+                                                        менее {{ request.user.level.get_highest_product.price }}
                                                         сомов.</p>
                                                 </div>
                                                 <a class="uk-button uk-button-default" href="{% url 'get_tariff' %}">Заказать
                                                     тариф</a>
-                                            {% else %}
+                                            {% else %}§
                                                 <div class="uk-margin">
                                                     <p>Вы купили самый последний тариф, можете наслаждаться и
                                                         зарабатывать
@@ -61,7 +61,6 @@
                                                 <tr>
                                                     <th>Тариф</th>
                                                     <th>Цена тарифа</th>
-                                                    <th>Цена продукции</th>
                                                     <th>Продано</th>
                                                 </tr>
                                                 </thead>
@@ -73,7 +72,6 @@
                                                                   style="top: 0;left: 0; width: 5px;height: 100%;background-color: {{ item.color }};"></span>{{ item.title }}
                                                         </td>
                                                         <td>{{ item.price }} </td>
-                                                        <td>{{ item.price1 }}</td>
                                                         <td>{% get_refs_count request item %}</td>
                                                     </tr>
                                                 {% endfor %}

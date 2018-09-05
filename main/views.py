@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 import base64
 import json
 
+import pyrebase as pyrebase
 import xlwt as xlwt
+from dicttoxml import dicttoxml
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, login
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.encoding import force_text, force_bytes
 from django.views.generic import *
 
 from main.forms import *
 from main.models import *
+
+from django.utils.encoding import force_bytes, force_text
 
 
 class IndexView(TemplateView):
@@ -146,7 +148,7 @@ class UserDetailView(UpdateView):
         context['products'] = Products.objects.order_by('level')
         context['transaction_form'] = TransactionForm(self.request.POST)
         context['password_change_form'] = PasswordChangeForm(self.request.POST)
-        context['user_requests'] = TransactionKeys.objects.filter(used_by=self.request.user, is_confirmed_by_user=False)
+        context['transfer_form'] = TransferForm(self.request.POST)
         return context
 
     def form_valid(self, form):
@@ -169,8 +171,10 @@ class TransactionCreateView(CreateView):
         return self.request.path
 
     def form_valid(self, form):
-        form.save()
-        return JsonResponse(dict(success=True, message='Запрос успешно отправлен, ожидайте подтверждения от спонсора'))
+        if form.cleaned_data['product'].price < self.request.user.points:
+            form.save()
+            return JsonResponse(dict(success=True, message='Вы успешно получили следующий уровень!'))
+        return JsonResponse(dict(succes=False, message='У вас не хватает баллов'))
 
     def form_invalid(self, form):
         message = ''
@@ -196,7 +200,6 @@ class UserPasswordChangeView(PasswordChangeView):
 
     def form_invalid(self, form):
         message = ''
-        print(form.errors)
         for item in form.errors:
             message += form.errors[item]
         return JsonResponse(dict(succcess=False, message=message))
@@ -227,16 +230,38 @@ class AgreementDetailView(DetailView):
         return Agree.objects.first()
 
 
-class MarcetingView(TemplateView):
+class MarketingView(TemplateView):
     template_name = 'marketing-plan.html'
 
 
-class PromoView(TemplateView):
+class PromoView(ListView):
+    model = Products
     template_name = 'profile/personal-education.html'
+    context_object_name = 'levels'
+
+    def get_queryset(self):
+        if self.request.user.level:
+            return super(PromoView, self).get_queryset().filter(level__lte=self.request.user.level.level)
+        return super(PromoView, self).get_queryset()
 
 
-def page_not_found(request):
-    return render(request, 'banner.html')
+class SendPoints(CreateView):
+    model = Transfer
+    form_class = TransferForm
+    template_name = 'profile/personal-settings.html'
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.to_user = form.get_user()
+        instance.save()
+        return JsonResponse(
+            dict(success=True, message=('Вы успешно передали %s баллов' % (form.cleaned_data['amount']))))
+
+    def form_invalid(self, form):
+        message = ''
+        for item in form.errors:
+            message += form.errors[item]
+        return JsonResponse(dict(succcess=False, message=message))
 
 
 class ExportToXLS(View):
@@ -261,3 +286,38 @@ class ExportToXLS(View):
                 ws.write(row_num, col_num, row[col_num], font_style)
         wb.save(response)
         return response
+
+
+class MobilnikResponse(View):
+    def get(self, request):
+        command = request.GET.get('command')
+        account = request.GET.get('account')
+        user = User.objects.filter(wallet_id=account).exists()
+        print(command)
+        if command == 'check':
+            if user:
+                return HttpResponse(dicttoxml({"result": "0"}), content_type='application/xml')
+            return HttpResponse(dicttoxml({"result": "1"}))
+        elif command == 'pay':
+            if user:
+                txn_id = request.GET.get('txn_id')
+                sum = request.GET.get('sum')
+                Payments.objects.create(user=user, txn_id=txn_id, sum=sum)
+                return HttpResponse(dicttoxml({"result": "0"}), content_type='application/xml')
+            else:
+                return HttpResponse(dicttoxml({"result": "1"}), content_type='application/xml')
+
+
+class SendSMSNotification(View):
+    def get(self, request):
+        config = {
+            "apiKey": "AIzaSyB0uP3Amj2LDZv5c3tfcVDDHuYTiM7I4UY",
+            "authDomain": "newlife-dffd4.firebaseapp.com",
+            "databaseURL": "https://newlife-dffd4.firebaseio.com",
+            "projectId": "newlife-dffd4",
+            "storageBucket": "newlife-dffd4.appspot.com",
+            "messagingSenderId": "1082354059018"
+        }
+        firebase = pyrebase.initialize_app(config)
+        auth = firebase.auth()
+        auth.sign_in_with_phone_number()

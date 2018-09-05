@@ -1,5 +1,6 @@
 # coding=utf-8
 from django import forms
+from django.core.exceptions import ValidationError
 
 from main.models import *
 
@@ -21,10 +22,28 @@ class SignUpForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = TransactionKeys
-        exclude = ('is_confirmed_by_user', 'is_confirmed_by_admin')
+        fields = '__all__'
 
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'mobilnik', 'phone', 'email')
+
+
+class TransferForm(forms.ModelForm):
+    wallet_id = forms.CharField(widget=forms.TextInput())
+
+    class Meta:
+        model = Transfer
+        exclude = ('to_user',)
+
+    def clean_wallet_id(self):
+        walled_id = self.cleaned_data['wallet_id']
+
+        if User.objects.filter(wallet_id=walled_id).exists():
+            return walled_id
+        raise ValidationError("Пользователя с таки лицевым счетом, не найдено")
+
+    def get_user(self):
+        return User.objects.get(wallet_id=self.cleaned_data['wallet_id'])

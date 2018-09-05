@@ -26,8 +26,8 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class TransactionKeysAdmin(admin.ModelAdmin):
-    list_display = ('handler', 'used_by', 'key_for_user')
-    list_filter = ('handler', 'used_by', 'key_for_user')
+    list_display = ('handler', 'used_by',)
+    list_filter = ('handler', 'used_by',)
 
 
 admin.site.register(Agree)
@@ -36,3 +36,5 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Products)
 admin.site.register(TransactionKeys, TransactionKeysAdmin)
 admin.site.register(SocialLinks)
+admin.site.register(Transfer)
+admin.site.register(Video)

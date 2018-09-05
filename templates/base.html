@@ -193,7 +193,7 @@
         <form action="{% url 'create_user' %}" method="POST" id="user-form">
             {% csrf_token %}
             <p class="uk-text-danger">Просьба указывать данные с паспорта, т.к в псоледующем ваши данные будут
-                сипользованы для уплаты налогов</p>
+                использованы для уплаты налогов</p>
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Регистрация</legend>
                 <div class="uk-margin">
@@ -280,7 +280,7 @@
         });
         ajax_request($('#user-form'));
         ajax_request($('#login-form'));
-    })
+    });
     $(document).scroll(function () {
         var y = $(this).scrollTop();
         if (y > 100) {
@@ -292,7 +292,6 @@
     })
 </script>
 
-<!-- BEGIN JIVOSITE CODE {literal} -->
 <!-- BEGIN JIVOSITE CODE {literal} -->
 <script type='text/javascript'>
     (function () {

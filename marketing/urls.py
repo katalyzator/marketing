@@ -1,9 +1,8 @@
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from jet.dashboard.dashboard_modules import google_analytics_views
 
-from main.views import page_not_found
+from main.helpers import page_not_found
 from marketing import settings
 
 urlpatterns = [

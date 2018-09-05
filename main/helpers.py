@@ -10,13 +10,17 @@ from django.contrib.auth.views import login
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage, send_mail
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 
 from marketing import settings
 from .forms import *
+
+
+def page_not_found(request):
+    return render(request, 'banner.html')
 
 
 def id_generator(size=8, chars=string.ascii_uppercase + string.digits):

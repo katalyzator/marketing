@@ -2,23 +2,22 @@
 
     <div>
         <ul class="uk-list uk-card uk-card-default uk-card-body">
+            {#            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i#}
+            {#                    class="uk-margin-small-right fa fa-user"#}
+            {#                    aria-hidden="true"></i>login: {{ request.user.username }}#}
+            {#            </a></li>#}
+
             <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
                     class="uk-margin-small-right fa fa-user"
-                    aria-hidden="true"></i>login: {{ request.user.username }}
-            </a></li>
-
-            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
-                    class="uk-margin-small-right fa fa-info-circle"
                     aria-hidden="true"></i>{{ request.user.first_name }} {{ request.user.last_name }}
             </a></li>
-
-            {#            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i#}
-            {#                    class="uk-margin-small-right fa fa-info-circle"#}
-            {#                    aria-hidden="true"></i>Фамилия: {{ request.user.last_name }}#}
-            {#            </a></li>#}
             <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
-                    class="uk-margin-small-right fa fa-info-circle"
-                    aria-hidden="true"></i>Лицевой счет: {{ request.user.mobilnik }}
+                    class="uk-margin-small-right fa fa-money-bill-alt"
+                    aria-hidden="true"></i> Ваш баланс: {{ request.user.points }} баллов
+            </a></li>
+            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
+                    class="uk-margin-small-right fa fa-credit-card"
+                    aria-hidden="true"></i>Лицевой счет: {{ request.user.wallet_id }}
             </a></li>
 
         </ul>
@@ -26,29 +25,33 @@
 
     <div>
         <ul class="uk-list uk-card uk-card-default uk-card-body">
-            <li class="active"><a class="uk-flex-middle" href=""><i class="uk-margin-small-right fa fa-home"
-                                                                    aria-hidden="true"></i>Главная</a></li>
-            <li><a class="uk-flex-middle" href="{% url 'get_tariff' %}"><i
-                    class="uk-margin-small-right fa fa-shopping-cart" aria-hidden="true"></i>Заказать тариф</a></li>
-            <li><a class="uk-flex-middle" href="{% url 'profile-ref-urls' %}"><i
-                    class="uk-margin-small-right fa fa-link" aria-hidden="true"></i>Реф-ссылки</a></li>
-            <li><a class="uk-flex-middle" href="{% url 'profile-sponsors' %}"><i
-                    class="uk-margin-small-right fa fa-users" aria-hidden="true"></i>Спонсоры</a></li>
-            <li><a class="uk-flex-middle" href="{% url 'profile-referals' %}"><i
-                    class="uk-margin-small-right fa fa-user-circle" aria-hidden="true"></i>Команда</a></li>
-            <li><a class="uk-flex-middle" href="{% url 'profile-education' %}"><i
-                    class="uk-margin-small-right fa fa-bookmark" aria-hidden="true"></i>Промо-материалы</a></li>
-            <li><a class="uk-flex-middle" href="{% url 'profile-settings' %}"><i
-                    class="uk-margin-small-right fa fa-user" aria-hidden="true"></i>Профиль</a></li>
+            <li class="active"><a class="uk-flex-middle" href="">
+                <i class="uk-margin-small-right fa fa-home"
+                   aria-hidden="true"></i>Главная</a>
+            </li>
             <li>
-                <a class="uk-flex-middle" href="{% url 'profile-requests' %}"><i
-                        class="uk-margin-small-right fa fa-question-circle" aria-hidden="true"></i>
-                    Запросы
-                    {% if user_requests %}
-                        <span class="uk-badge uk-margin-left"
-                              style="background-color: darkred">{{ user_requests.count }}</span>
-                    {% endif %}
-                </a>
+                <a class="uk-flex-middle" href="{% url 'get_tariff' %}"><i
+                        class="uk-margin-small-right fa fa-shopping-cart" aria-hidden="true"></i>Заказать тариф</a>
+            </li>
+            <li>
+                <a class="uk-flex-middle" href="{% url 'profile-ref-urls' %}"><i
+                        class="uk-margin-small-right fa fa-link" aria-hidden="true"></i>Реф-ссылки</a>
+            </li>
+            <li>
+                <a class="uk-flex-middle" href="{% url 'profile-sponsors' %}"><i
+                        class="uk-margin-small-right fa fa-users" aria-hidden="true"></i>Спонсоры</a>
+            </li>
+            <li>
+                <a class="uk-flex-middle" href="{% url 'profile-referals' %}"><i
+                        class="uk-margin-small-right fa fa-user-circle" aria-hidden="true"></i>Команда</a>
+            </li>
+            <li>
+                <a class="uk-flex-middle" href="{% url 'profile-education' %}"><i
+                        class="uk-margin-small-right fa fa-bookmark" aria-hidden="true"></i>Промо-материалы</a>
+            </li>
+            <li>
+                <a class="uk-flex-middle" href="{% url 'profile-settings' %}"><i
+                        class="uk-margin-small-right fa fa-user" aria-hidden="true"></i>Профиль</a>
             </li>
         </ul>
     </div>
