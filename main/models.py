@@ -247,7 +247,17 @@ class Payments(models.Model):
         return str(self.user)
 
 
-# class PaymentRequests(models.Model):
+class CashRequests(models.Model):
+    class Meta:
+        verbose_name_plural = 'Запросы на обналичивание'
+        verbose_name = 'Запрос на обналичивание'
+
+    points = models.PositiveIntegerField(choices=((1000, '1000'), (2000, '2000')))
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    is_payed = models.BooleanField(verbose_name='Деньги переведены')
+
+    def __str__(self):
+        return str(self.points)
 
 
 @receiver(post_save, sender=Transfer, dispatch_uid="update_stock_count")

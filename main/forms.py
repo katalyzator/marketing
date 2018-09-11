@@ -47,3 +47,15 @@ class TransferForm(forms.ModelForm):
 
     def get_user(self):
         return User.objects.get(wallet_id=self.cleaned_data['wallet_id'])
+
+
+class CashRequestsForm(forms.ModelForm):
+    class Meta:
+        model = CashRequests
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CashRequestsForm, self).__init__(*args, **kwargs)
+        # self.fields['points'].empty_label = 'Выберите количество баллов'
+        self.fields['points'].choices = ((1000, '1000'), (2000, '2000'))
+        # self.fields['points'].widget = forms.RadioSelect

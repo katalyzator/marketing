@@ -59,24 +59,6 @@
                                 </div>
                             </fieldset>
                         </form>
-                        <hr>
-                        <h2 class="uk-text-center">Перевод баллов</h2>
-                        <form action="{% url 'send_points' %}" method="POST" class="uk-width-1-2@m uk-margin-auto"
-                              id="send-points">
-                            {% csrf_token %}
-                            <input type="hidden" name="from_user" value="{{ request.user.pk }}">
-                            <div class="uk-margin">
-                                <label for="">Лицевой счет получателя</label>
-                                {% render_field transfer_form.wallet_id class+='uk-input' %}
-                            </div>
-                            <div class="uk-margin">
-                                <label for="">Сколько хотите перевести</label>
-                                {% render_field transfer_form.amount class+='uk-input' %}
-                            </div>
-                            <div class="uk-margin">
-                                <button class="uk-button-primary uk-button" type="submit">Отправить</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
                 {% include 'partials/profile-sidebar.html' %}

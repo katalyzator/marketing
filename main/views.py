@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import base64
-import json
 
-import pyrebase as pyrebase
+import base64
+
 import xlwt as xlwt
 from dicttoxml import dicttoxml
 from django.contrib.auth.forms import PasswordChangeForm
@@ -18,8 +17,8 @@ from django.views.generic import *
 
 from main.forms import *
 from main.models import *
-
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_text
+import json
 
 
 class IndexView(TemplateView):
@@ -134,8 +133,6 @@ class UserDetailView(UpdateView):
             return 'profile/personal-area-tarif.html'
         if self.request.path == reverse('profile-ref-urls'):
             return 'profile/personal-area-ref.html'
-        if self.request.path == reverse('profile-requests'):
-            return 'profile/personal-requests.html'
         return super(UserDetailView, self).get_template_names()
 
     def get_object(self, queryset=None):
@@ -248,7 +245,7 @@ class PromoView(ListView):
 class SendPoints(CreateView):
     model = Transfer
     form_class = TransferForm
-    template_name = 'profile/personal-settings.html'
+    template_name = 'profile/profile-transactions.html'
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -308,16 +305,12 @@ class MobilnikResponse(View):
                 return HttpResponse(dicttoxml({"result": "1"}), content_type='application/xml')
 
 
-class SendSMSNotification(View):
-    def get(self, request):
-        config = {
-            "apiKey": "AIzaSyB0uP3Amj2LDZv5c3tfcVDDHuYTiM7I4UY",
-            "authDomain": "newlife-dffd4.firebaseapp.com",
-            "databaseURL": "https://newlife-dffd4.firebaseio.com",
-            "projectId": "newlife-dffd4",
-            "storageBucket": "newlife-dffd4.appspot.com",
-            "messagingSenderId": "1082354059018"
-        }
-        firebase = pyrebase.initialize_app(config)
-        auth = firebase.auth()
-        auth.sign_in_with_phone_number()
+class TransactionsTemplateView(CreateView):
+    model = Transfer
+    form_class = TransferForm
+    template_name = 'profile/profile-transactions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
+        context['cash_request_form'] = CashRequestsForm
+        return context

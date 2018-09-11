@@ -2,11 +2,6 @@
 
     <div>
         <ul class="uk-list uk-card uk-card-default uk-card-body">
-            {#            <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i#}
-            {#                    class="uk-margin-small-right fa fa-user"#}
-            {#                    aria-hidden="true"></i>login: {{ request.user.username }}#}
-            {#            </a></li>#}
-
             <li><a class="uk-flex-middle" href="" style="background-color: indianred;"><i
                     class="uk-margin-small-right fa fa-user"
                     aria-hidden="true"></i>{{ request.user.first_name }} {{ request.user.last_name }}
@@ -32,6 +27,10 @@
             <li>
                 <a class="uk-flex-middle" href="{% url 'get_tariff' %}"><i
                         class="uk-margin-small-right fa fa-shopping-cart" aria-hidden="true"></i>Заказать тариф</a>
+            </li>
+            <li>
+                <a class="uk-flex-middle" href="{% url 'profile-transactions' %}"><i
+                        class="uk-margin-small-right fa fa-dollar-sign" aria-hidden="true"></i>Транзакции</a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="{% url 'profile-ref-urls' %}"><i
