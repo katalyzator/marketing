@@ -288,7 +288,6 @@ class MobilnikResponse(View):
         command = request.GET.get('command')
         account = request.GET.get('account')
         user_exists = User.objects.filter(wallet_id=account).exists()
-        user = User.objects.get(wallet_id=account)
         if command == 'check':
             if user_exists:
                 return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
@@ -297,6 +296,7 @@ class MobilnikResponse(View):
                                 content_type='application/xhtml+xml')
         elif command == 'pay':
             if user_exists:
+                user = User.objects.get(wallet_id=account)
                 txn_id = request.GET.get('txn_id')
                 sum = request.GET.get('sum')
                 Payments.objects.create(user=user, txn_id=txn_id, sum=sum)
