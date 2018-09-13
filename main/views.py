@@ -154,7 +154,6 @@ class UserDetailView(UpdateView):
 
     def form_invalid(self, form):
         message = ''
-        print(form.errors)
         for item in form.errors:
             message += form.errors[item]
         return JsonResponse(dict(succcess=False, message=message))
@@ -276,7 +275,6 @@ class ExportToXLS(View):
         rows = [(i.username, i.first_name, i.last_name, i.get_region_display(), i.city, i.phone, i.email)
                 for i in
                 User.objects.all()]
-        print(rows)
         for row in rows:
             row_num += 1
             for col_num in range(len(row)):
@@ -290,19 +288,22 @@ class MobilnikResponse(View):
         command = request.GET.get('command')
         account = request.GET.get('account')
         user = User.objects.filter(wallet_id=account).exists()
-        print(command)
         if command == 'check':
             if user:
-                return HttpResponse(dicttoxml({"result": "0"}), content_type='application/xml')
-            return HttpResponse(dicttoxml({"result": "1"}))
+                return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
+                                    content_type='application/xhtml+xml')
+            return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
+                                content_type='application/xhtml+xml')
         elif command == 'pay':
             if user:
                 txn_id = request.GET.get('txn_id')
                 sum = request.GET.get('sum')
                 Payments.objects.create(user=user, txn_id=txn_id, sum=sum)
-                return HttpResponse(dicttoxml({"result": "0"}), content_type='application/xml')
-            else:
-                return HttpResponse(dicttoxml({"result": "1"}), content_type='application/xml')
+                return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
+                                    content_type='application/xml')
+            return HttpResponse(dicttoxml({"result": 1}, custom_root="response", attr_type=False),
+                                content_type='application/xml')
+        return HttpResponse(status=400)
 
 
 class TransactionsTemplateView(CreateView):
@@ -314,3 +315,19 @@ class TransactionsTemplateView(CreateView):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
         context['cash_request_form'] = CashRequestsForm
         return context
+
+
+class CashRequestsCreateView(CreateView):
+    model = CashRequests
+    form_class = CashRequestsForm
+    template_name = 'profile/profile-transactions.html'
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse(dict(success=True, message='Ваша заявка успешно оформлена'))
+
+    def form_invalid(self, form):
+        message = ''
+        for item in form.errors:
+            message += form.errors[item]
+        return JsonResponse(dict(succcess=False, message=message))

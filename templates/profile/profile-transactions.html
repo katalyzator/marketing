@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
+{% load widget_tweaks staticfiles %}
 {% block content %}
     <section class="personal-area">
         <div class="uk-container-expand uk-container">
@@ -31,6 +31,9 @@
                             {% csrf_token %}
                             <fieldset class="uk-fieldset">
                                 <div class="uk-margin">
+                                    {% render_field cash_request_form.user class='uk-select' %}
+                                </div>
+                                <div class="uk-margin">
                                     {% render_field cash_request_form.points class+='uk-select' %}
                                 </div>
                                 <div class="uk-margin" id="recaptcha-container"></div>
@@ -44,6 +47,7 @@
                             <fieldset class="uk-fieldset">
                                 <div class="uk-margin">
                                     <input type="text" id="code" class="uk-input">
+                                    <a href="#" class="uk-link" id="send_code_again">Мне не пришел код</a>
                                 </div>
                                 <div class="uk-margin">
                                     <button class="uk-button uk-button-primary" type="submit">Подтвердить</button>
@@ -60,87 +64,6 @@
 {% block custom_scripts %}
     <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
     <script type="text/javascript">
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyB0uP3Amj2LDZv5c3tfcVDDHuYTiM7I4UY",
-            authDomain: "newlife-dffd4.firebaseapp.com",
-            databaseURL: "https://newlife-dffd4.firebaseio.com",
-            projectId: "newlife-dffd4",
-            storageBucket: "newlife-dffd4.appspot.com",
-            messagingSenderId: "1082354059018"
-        };
-        firebase.initializeApp(config);
-        firebase.auth().useDeviceLanguage();
-        $(document).ready(function () {
-            ajax_request($('#send-points'));
-            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                'size': 'normal',
-                'callback': function (response) {
-                    // reCAPTCHA solved, allow signInWithPhoneNumber.
-                    // ...
-                },
-                'expired-callback': function () {
-                    // Response expired. Ask user to solve reCAPTCHA again.
-                    // ...
-                }
-            });
-            recaptchaVerifier.render().then(function (widgetId) {
-                window.recaptchaWidgetId = widgetId;
-                var recaptchaResponse = grecaptcha.getResponse(window.recaptchaWidgetId);
-            });
-
-            function getPhoneNumberFromUserInput() {
-                return '{{ request.user.phone }}';
-            }
-
-            var appVerifier = window.recaptchaVerifier;
-
-            function isPhoneNumberValid() {
-                var pattern = /^\+[0-9\s\-\(\)]+$/;
-                var phoneNumber = getPhoneNumberFromUserInput();
-                return phoneNumber.search(pattern) !== -1;
-            }
-
-            $('#cash-request').on('submit', function (e) {
-                e.preventDefault();
-                if (isPhoneNumberValid) {
-                    firebase.auth().signInWithPhoneNumber(getPhoneNumberFromUserInput(), appVerifier)
-                        .then(function (confirmationResult) {
-                            // SMS sent. Prompt user to type the code from the message, then sign the
-                            // user in with confirmationResult.confirm(code).
-                            window.confirmationResult = confirmationResult;
-                            $('#cash-request').fadeOut();
-                            $('#code-verification').fadeIn();
-                            $('#code-verification').on('submit', function (e) {
-                                e.preventDefault();
-                                confirmationResult.confirm($('#code').val()).then(function (result) {
-                                    UIkit.notification('Код подтвержден', 'success');
-                                    $.ajax({
-                                        url: '{% url 'profile-transactions' %}',
-                                        method: 'POST',
-                                        data: $('#cash-request').serialize(),
-                                        success: function (response) {
-                                            console.log(response)
-                                        }
-                                    })
-                                    // User signed in successfully.;
-                                    // ...
-                                }).catch(function (error) {
-                                    // User couldn't sign in (bad verification code?)
-                                    // ...
-                                });
-                            })
-                        }).catch(function (error) {
-                        console.log(error);
-                        grecaptcha.reset(window.recaptchaWidgetId);
-                        // Error; SMS not sent
-                        // ...
-                    });
-                }
-                else {
-                    $('form').prepend('<h1>Неправильный номер телефона</h1>')
-                }
-            })
-        });
+        {% include 'assets/static_files/js/phoneVerification.js' %}
     </script>
 {% endblock %}

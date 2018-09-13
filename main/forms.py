@@ -1,8 +1,15 @@
 # coding=utf-8
-from django import forms
 from django.core.exceptions import ValidationError
 
 from main.models import *
+
+from django import forms
+
+
+class CashRequestAmountSelect(forms.Select):
+    # template_name = 'widgets/select_option.html'
+    # pass
+    option_template_name = 'widgets/select_option.html'
 
 
 class SignUpForm(forms.ModelForm):
@@ -50,12 +57,8 @@ class TransferForm(forms.ModelForm):
 
 
 class CashRequestsForm(forms.ModelForm):
+    # points = forms.ChoiceField(choices=cash_request_choices, widget=CashRequestAmountSelect())
+
     class Meta:
         model = CashRequests
         fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super(CashRequestsForm, self).__init__(*args, **kwargs)
-        # self.fields['points'].empty_label = 'Выберите количество баллов'
-        self.fields['points'].choices = ((1000, '1000'), (2000, '2000'))
-        # self.fields['points'].widget = forms.RadioSelect

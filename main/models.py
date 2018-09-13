@@ -22,6 +22,8 @@ region_choices = (
     ('6', 'Талас'),
 )
 
+cash_request_choices = ((1000, '1000'), (2000, '2000'))
+
 
 class Products(models.Model):
     class Meta:
@@ -252,7 +254,7 @@ class CashRequests(models.Model):
         verbose_name_plural = 'Запросы на обналичивание'
         verbose_name = 'Запрос на обналичивание'
 
-    points = models.PositiveIntegerField(choices=((1000, '1000'), (2000, '2000')))
+    points = models.PositiveIntegerField(choices=cash_request_choices)
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     is_payed = models.BooleanField(verbose_name='Деньги переведены')
 

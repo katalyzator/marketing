@@ -16,7 +16,8 @@ urlpatterns = [
     url(r'^profile/ref/$', login_required(UserDetailView.as_view(), login_url='/'), name='profile-ref-urls'),
     url(r'^profile/referals/$', login_required(ReferalsListView.as_view(), login_url='/'), name='profile-referals'),
     url(r'^profile/sponsors/$', login_required(SponsorsLitView.as_view(), login_url='/'), name='profile-sponsors'),
-    url(r'^profile/transactions/$', login_required(TransactionsTemplateView.as_view(), login_url='/'), name='profile-transactions'),
+    url(r'^profile/transactions/$', login_required(TransactionsTemplateView.as_view(), login_url='/'),
+        name='profile-transactions'),
     url(r'^profile/education/$', login_required(PromoView.as_view(), login_url='/'),
         name='profile-education'),
     url(r'^transaction/$', login_required(TransactionCreateView.as_view(), login_url='/'), name='transaction'),
@@ -31,6 +32,7 @@ urlpatterns = [
     url(r'^mobilnik/$', MobilnikPayEvent.as_view(), name='mobilnik'),
     url(r'^mobilnik/terminal/response/$', MobilnikResponse.as_view(), name='mobilnik-terminal'),
     url(r'^export_to_xls/$', ExportToXLS.as_view(), name='export_to_xls'),
-    url(r'^mobilnik/response/$', mobilnik_response, name='mobilnik-response')
+    url(r'^cash-request/$', CashRequestsCreateView.as_view(), name='cash_request'),
+    url(r'^mobilnik/response/$', mobilnik_response, name='mobilnik-response'),
 ]
 handler404 = 'myapp.helpers.page_not_found'
