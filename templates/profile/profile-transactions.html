@@ -7,50 +7,54 @@
                 <div class="uk-width-expand@m">
                     <div class="uk-card-default uk-card-body">
                         <h2 class="uk-text-center">Перевод баллов</h2>
-                        <form action="{% url 'send_points' %}" method="POST" class="uk-width-1-2@m uk-margin-auto"
-                              id="send-points">
-                            {% csrf_token %}
-                            <fieldset class="uk-fieldset">
-                                <input type="hidden" name="from_user" value="{{ request.user.pk }}">
-                                <div class="uk-margin">
-                                    <label for="">Лицевой счет получателя</label>
-                                    {% render_field form.wallet_id class+='uk-input' %}
-                                </div>
-                                <div class="uk-margin">
-                                    <label for="">Сколько хотите перевести</label>
-                                    {% render_field form.amount class+='uk-input' %}
-                                </div>
-                                <div class="uk-margin">
-                                    <button class="uk-button-primary uk-button" type="submit">Отправить</button>
-                                </div>
-                            </fieldset>
-                        </form>
+                        <div class="uk-width-1-2@m uk-margin-auto">
+                            <form action="{% url 'send_points' %}" method="POST" id="send-points">
+                                {% csrf_token %}
+                                <fieldset class="uk-fieldset">
+                                    <input type="hidden" name="from_user" value="{{ request.user.pk }}">
+                                    <div class="uk-margin">
+                                        <label for="">Лицевой счет получателя</label>
+                                        {% render_field form.wallet_id class+='uk-input' %}
+                                    </div>
+                                    <div class="uk-margin">
+                                        <label for="">Сколько хотите перевести</label>
+                                        {% render_field form.amount class+='uk-input' %}
+                                    </div>
+                                    <div class="uk-margin">
+                                        <button class="uk-button-primary uk-button" type="submit">Отправить</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
                         <hr>
                         <h4 class="uk-text-center">Вывод баллов</h4>
-                        <form action="" class="uk-width-1-2@m uk-margin-auto" id="cash-request">
-                            {% csrf_token %}
-                            <fieldset class="uk-fieldset">
-                                <div class="uk-margin">
-                                    {% render_field cash_request_form.points class+='uk-select' %}
-                                </div>
-                                <div class="uk-margin" id="recaptcha-container"></div>
-                                <div class="uk-margin">
-                                    <button class="uk-button-primary uk-button" type="submit">Отправить</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <form action="" id="code-verification" class="uk-width-1-2@m uk-margin-auto"
-                              style="display: none">
-                            <fieldset class="uk-fieldset">
-                                <div class="uk-margin">
-                                    <input type="text" id="code" class="uk-input">
-                                    <a href="#" class="uk-link" id="send_code_again">Мне не пришел код</a>
-                                </div>
-                                <div class="uk-margin">
-                                    <button class="uk-button uk-button-primary" type="submit">Подтвердить</button>
-                                </div>
-                            </fieldset>
-                        </form>
+                        <div class="uk-width-1-2@m uk-margin-auto">
+                            <form action="" class="" id="cash-request">
+                                {% csrf_token %}
+                                <fieldset class="uk-fieldset">
+                                    <div class="uk-margin">
+                                        <input type="hidden" name="user" value="{{ request.user.pk }}">
+                                        {% render_field cash_request_form.points class+='uk-select' %}
+                                    </div>
+                                    <div class="uk-margin" id="recaptcha-container"></div>
+                                    <div class="uk-margin">
+                                        <button class="uk-button-primary uk-button" type="submit">Отправить</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <form action="" id="code-verification" class="uk-width-1-2@m uk-margin-auto"
+                                  style="display: none">
+                                <fieldset class="uk-fieldset">
+                                    <div class="uk-margin">
+                                        <input type="text" id="code" class="uk-input">
+                                        <a href="#" class="uk-link" id="send_code_again">Мне не пришел код</a>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <button class="uk-button uk-button-primary" type="submit">Подтвердить</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 {% include 'partials/profile-sidebar.html' %}

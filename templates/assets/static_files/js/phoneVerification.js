@@ -9,7 +9,7 @@ var config = {
 };
 var cashRequestForm = $('#cash-request');
 var verifyNumberForm = $('#code-verification');
-var sendPointsForm= $('#send-points');
+var sendPointsForm = $('#send-points');
 firebase.initializeApp(config);
 firebase.auth().useDeviceLanguage();
 
@@ -62,7 +62,19 @@ $(document).ready(function () {
                                 method: 'POST',
                                 data: cashRequestForm.serialize(),
                                 success: function (response) {
-                                    console.log(response)
+                                    verifyNumberForm.parent().fadeOut();
+                                    if (response.success) {
+                                        verifyNumberForm.prepend('<div class="uk-alert-success" uk-alert>\n' +
+                                            '    <a class="uk-alert-close" uk-close></a>\n' +
+                                            '    <p>' + response.message + '</p>\n' +
+                                            '</div>\n')
+                                    }
+                                    else {
+                                        verifyNumberForm.prepend('<div class="uk-alert-danger" uk-alert>\n' +
+                                            '    <a class="uk-alert-close" uk-close></a>\n' +
+                                            '    <p>' + response.message + '</p>\n' +
+                                            '</div>')
+                                    }
                                 }
                             })
                             // User signed in successfully.;

@@ -314,7 +314,7 @@ class TransactionsTemplateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
-        context['cash_request_form'] = CashRequestsForm(self.request.POST, request=self.request)
+        context['cash_request_form'] = CashRequestsForm(self.request.POST)
         return context
 
 
@@ -324,11 +324,15 @@ class CashRequestsCreateView(CreateView):
     template_name = 'profile/profile-transactions.html'
 
     def form_valid(self, form):
-        form.save()
-        return JsonResponse(dict(success=True, message='Ваша заявка успешно оформлена'))
+        if self.request.user.points > form.cleaned_data['points']:
+            form.save()
+            return JsonResponse(dict(success=True, message='Ваша заявка успешно оформлена'))
+        return self.form_invalid(form)
 
     def form_invalid(self, form):
         message = ''
-        for item in form.errors:
-            message += form.errors[item]
-        return JsonResponse(dict(succcess=False, message=message))
+        if form.errors:
+            for item in form.errors:
+                message += form.errors[item]
+            return JsonResponse(dict(succcess=False, message=message))
+        return JsonResponse(dict(success=False, message='Недостаточно баллов'))

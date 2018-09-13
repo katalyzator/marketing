@@ -59,10 +59,3 @@ class CashRequestsForm(forms.ModelForm):
     class Meta:
         model = CashRequests
         fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        request = kwargs.pop('request')
-        super(CashRequestsForm, self).__init__(*args, **kwargs)
-        self.fields['user'].initial = request.user
-        self.fields['points'].choices = cash_request_choices
-        self.fields['points'].empty_label = "Выберите количество баллов"
