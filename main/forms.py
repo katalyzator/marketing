@@ -47,7 +47,6 @@ class TransferForm(forms.ModelForm):
 
     def clean_wallet_id(self):
         walled_id = self.cleaned_data['wallet_id']
-
         if User.objects.filter(wallet_id=walled_id).exists():
             return walled_id
         raise ValidationError("Пользователя с таки лицевым счетом, не найдено")
@@ -57,8 +56,13 @@ class TransferForm(forms.ModelForm):
 
 
 class CashRequestsForm(forms.ModelForm):
-    # points = forms.ChoiceField(choices=cash_request_choices, widget=CashRequestAmountSelect())
-
     class Meta:
         model = CashRequests
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request')
+        super(CashRequestsForm, self).__init__(*args, **kwargs)
+        self.fields['user'].initial = request.user
+        self.fields['points'].choices = cash_request_choices
+        self.fields['points'].empty_label = "Выберите количество баллов"

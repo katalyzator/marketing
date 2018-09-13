@@ -31,9 +31,6 @@
                             {% csrf_token %}
                             <fieldset class="uk-fieldset">
                                 <div class="uk-margin">
-                                    {% render_field cash_request_form.user class='uk-select' %}
-                                </div>
-                                <div class="uk-margin">
                                     {% render_field cash_request_form.points class+='uk-select' %}
                                 </div>
                                 <div class="uk-margin" id="recaptcha-container"></div>

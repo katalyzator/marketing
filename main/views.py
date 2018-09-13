@@ -287,15 +287,16 @@ class MobilnikResponse(View):
     def get(self, request):
         command = request.GET.get('command')
         account = request.GET.get('account')
-        user = User.objects.filter(wallet_id=account).exists()
+        user_exists = User.objects.filter(wallet_id=account).exists()
+        user = User.objects.get(wallet_id=account)
         if command == 'check':
-            if user:
+            if user_exists:
                 return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
                                     content_type='application/xhtml+xml')
             return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
                                 content_type='application/xhtml+xml')
         elif command == 'pay':
-            if user:
+            if user_exists:
                 txn_id = request.GET.get('txn_id')
                 sum = request.GET.get('sum')
                 Payments.objects.create(user=user, txn_id=txn_id, sum=sum)
@@ -313,7 +314,7 @@ class TransactionsTemplateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
-        context['cash_request_form'] = CashRequestsForm
+        context['cash_request_form'] = CashRequestsForm(self.request.POST, request=self.request)
         return context
 
 
