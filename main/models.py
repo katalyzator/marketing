@@ -272,4 +272,4 @@ def transfer(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Payments, dispatch_uid="update_stock_count")
 def update_balance(sender, instance, created, **kwargs):
     if created:
-        instance.user.update_balance(instance.amount)
+        instance.user.update_balance(instance.sum)
