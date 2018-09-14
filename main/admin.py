@@ -31,6 +31,7 @@ class TransactionKeysAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Agree)
+admin.site.register(Payments)
 admin.site.register(Slider)
 admin.site.register(User, UserAdmin)
 admin.site.register(Products)
