@@ -6,6 +6,18 @@
             <div class="uk-grid uk-grid-small">
                 <div class="uk-width-expand@m">
                     <div class="uk-card uk-padding uk-card-default">
+                        <div class="uk-placeholder uk-text-center uk-text-danger">
+                            <span uk-icon="icon: warning; ratio: 2" class="uk-margin uk-display-block"></span>
+                            <legend class="uk-legend uk-text-danger uk-text-center">
+                                Внимание!
+                            </legend>
+                            <p>
+                                При любых изменениях важных для денежных операций, будет высылаться проверочный код, на
+                                ваш текущий номер телефона!
+                                Если вы хотите го сменить, код придет на старый номер телефона, после подтверждения
+                                которого, данные обновятся!
+                            </p>
+                        </div>
                         <h2 class="uk-text-center">РЕДАКТИРОВАНИЕ ДАННЫХ</h2>
                         <form class="uk-width-1-2@m uk-margin-auto" method="POST" action="{% url 'profile' %}"
                               id="user_form">
@@ -28,11 +40,27 @@
                                     {% render_field form.phone class+='uk-input' %}
                                 </div>
                                 <div class="uk-margin">
-                                    <label for="">Мобильник кошелек</label>
-                                    {% render_field form.mobilnik class+='uk-input' %}
+                                    <label for="">Расчетный счет</label>
+                                    {% render_field form.account class+='uk-input' %}
+                                </div>
+                                <div class="uk-margin">
+                                    <div id="recaptcha-container"></div>
                                 </div>
                                 <div class="uk-margin">
                                     <button class="uk-button-primary uk-button" type="submit"> Изменить</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <form action="" id="code-verification" class="uk-width-1-2@m uk-margin-auto"
+                              style="display: none">
+                            <fieldset class="uk-fieldset">
+                                <div class="uk-margin">
+                                    <input type="text" id="code" class="uk-input">
+                                    <a href="#" class="uk-link" id="send_code_again">Мне не пришел код</a>
+                                </div>
+                                <div class="uk-margin">
+                                    <button class="uk-button uk-button-primary" type="submit">Подтвердить
+                                    </button>
                                 </div>
                             </fieldset>
                         </form>
@@ -69,7 +97,7 @@
 {% block custom_scripts %}
     <script type="text/javascript">
         $(document).ready(function () {
-            ajax_request($('#user_form'));
+            verifyNumber($('#user_form'), $('#code-verification'), $('#code'), '{{ request.user.phone }}');
             ajax_request($('#user_password_form'));
             ajax_request($('#send-points'));
         });

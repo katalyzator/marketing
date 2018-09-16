@@ -29,32 +29,45 @@
                         <hr>
                         <h4 class="uk-text-center">Вывод баллов</h4>
                         <div class="uk-width-1-2@m uk-margin-auto">
-                            <form action="" class="" id="cash-request">
-                                {% csrf_token %}
-                                <fieldset class="uk-fieldset">
-                                    <div class="uk-margin">
-                                        <input type="hidden" name="user" value="{{ request.user.pk }}">
-                                        {% render_field cash_request_form.points class+='uk-select' %}
-                                    </div>
-                                    <div class="uk-margin" id="recaptcha-container"></div>
-                                    <div class="uk-margin">
-                                        <button class="uk-button-primary uk-button" type="submit">Отправить</button>
-                                    </div>
-                                </fieldset>
-                            </form>
-                            <form action="" id="code-verification" class="uk-width-1-2@m uk-margin-auto"
-                                  style="display: none">
-                                <fieldset class="uk-fieldset">
-                                    <div class="uk-margin">
-                                        <input type="text" id="code" class="uk-input">
-                                        <a href="#" class="uk-link" id="send_code_again">Мне не пришел код</a>
-                                    </div>
-                                    <div class="uk-margin">
-                                        <button class="uk-button uk-button-primary" type="submit">Подтвердить</button>
-                                    </div>
-                                </fieldset>
-                            </form>
+                            <p class="uk-text-danger">
+                                Мы вышлем на ваш номер телефона, верификационный код, после подтверждения которого, ваша
+                                заявка будет принята
+                            </p>
                         </div>
+                        {% if request.user.is_validate %}
+                            <div class="uk-width-1-2@m uk-margin-auto">
+                                <form action="" class="" id="cash-request">
+                                    {% csrf_token %}
+                                    <fieldset class="uk-fieldset">
+                                        <div class="uk-margin">
+                                            <input type="hidden" name="user" value="{{ request.user.pk }}">
+                                            {% render_field cash_request_form.points class+='uk-select' %}
+                                        </div>
+                                        <div class="uk-margin" id="recaptcha-container"></div>
+                                        <div class="uk-margin">
+                                            <button class="uk-button-primary uk-button" type="submit">Отправить</button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                                <form action="" id="code-verification" class="uk-width-1-2@m uk-margin-auto"
+                                      style="display: none">
+                                    <fieldset class="uk-fieldset">
+                                        <div class="uk-margin">
+                                            <input type="text" id="code" class="uk-input">
+                                            <a href="#" class="uk-link" id="send_code_again">Мне не пришел код</a>
+                                        </div>
+                                        <div class="uk-margin">
+                                            <button class="uk-button uk-button-primary" type="submit">Подтвердить
+                                            </button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        {% else %}
+                            <p class="uk-text-danger">
+                                Вы не полностью заполнили свой профиль, пожалуйста проверьте все
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
                 {% include 'partials/profile-sidebar.html' %}
@@ -63,8 +76,7 @@
     </section>
 {% endblock %}
 {% block custom_scripts %}
-    <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
     <script type="text/javascript">
-        {% include 'assets/static_files/js/phoneVerification.js' %}
+        verifyNumber()
     </script>
 {% endblock %}

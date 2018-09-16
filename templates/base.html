@@ -249,7 +249,22 @@
 </div>
 <script src="{% static 'js/libs.min.js' %}"></script>
 <script src="{% static 'js/common.min.js' %}"></script>
+<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 <script type="text/javascript">
+    var config = {
+        apiKey: "AIzaSyB0uP3Amj2LDZv5c3tfcVDDHuYTiM7I4UY",
+        authDomain: "newlife-dffd4.firebaseapp.com",
+        databaseURL: "https://newlife-dffd4.firebaseio.com",
+        projectId: "newlife-dffd4",
+        storageBucket: "newlife-dffd4.appspot.com",
+        messagingSenderId: "1082354059018"
+    };
+    var cashRequestForm = $('#cash-request');
+    var verifyNumberForm = $('#code-verification');
+    var sendPointsForm = $('#send-points');
+    firebase.initializeApp(config);
+    firebase.auth().useDeviceLanguage();
+
     function ajax_request(form) {
         $(form).on('submit', function (e) {
             e.preventDefault();
@@ -272,6 +287,71 @@
                 }
             })
         })
+    }
+
+    function isPhoneNumberValid(phone) {
+        var pattern = /^\+[0-9\s\-\(\)]+$/;
+        var phoneNumber = phone;
+        return phoneNumber.search(pattern) !== -1;
+    }
+
+    function verifyNumber(firstForm, secondForm, codeInput, phoneNumber) {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            'size': 'normal',
+            'callback': function (response) {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                // ...
+            },
+            'expired-callback': function () {
+                // Response expired. Ask user to solve reCAPTCHA again.
+                // ...
+            }
+        });
+        recaptchaVerifier.render().then(function (widgetId) {
+            window.recaptchaWidgetId = widgetId;
+            var recaptchaResponse = grecaptcha.getResponse(window.recaptchaWidgetId);
+        });
+        var appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then(function (confirmationResult) {
+                // SMS sent. Prompt user to type the code from the message, then sign the
+                // user in with confirmationResult.confirm(code).
+                window.confirmationResult = confirmationResult;
+                firstForm.fadeOut();
+                secondForm.fadeIn();
+                secondForm.on('submit', function (e) {
+                    e.preventDefault();
+                    confirmationResult.confirm(codeInput.val()).then(function (result) {
+                        $.ajax({
+                            url: firstForm.attr('action'),
+                            method: 'POST',
+                            data: firstForm.serialize(),
+                            success: function (response) {
+                                verifyNumberForm.fadeOut();
+                                if (response.success) {
+                                    secondForm.parent().prepend('<div class="uk-alert-success" uk-alert>\n' +
+                                        '    <a class="uk-alert-close" uk-close></a>\n' +
+                                        '    <p>' + response.message + '</p>\n' +
+                                        '</div>\n')
+                                }
+                                else {
+                                    secondForm.parent().prepend('<div class="uk-alert-danger" uk-alert>\n' +
+                                        '    <a class="uk-alert-close" uk-close></a>\n' +
+                                        '    <p>' + response.message + '</p>\n' +
+                                        '</div>')
+                                }
+                            }
+                        })
+                    }).catch(function (error) {
+                    });
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+                grecaptcha.reset(window.recaptchaWidgetId);
+                // Error; SMS not sent
+                // ...
+            });
     }
 
     $(document).ready(function () {
@@ -308,7 +388,7 @@
             ss.parentNode.insertBefore(s, ss);
         }
 
-        if (d.readyState == 'complete') {
+        if (d.readyState === 'complete') {
             l();
         } else {
             if (w.attachEvent) {
@@ -343,7 +423,7 @@
                     $(this).siblings('input').attr('type', 'password');
                     $(this).children().removeClass('fa-eye-slash').addClass('fa-eye');
                 }
-            })
+            });
             $('select[name="region"] option:first-child').attr('disabled', true);
         })
     </script>

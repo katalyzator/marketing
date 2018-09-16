@@ -30,13 +30,25 @@ class TransactionKeysAdmin(admin.ModelAdmin):
     list_filter = ('handler', 'used_by',)
 
 
+class PaymentsAdmin(admin.ModelAdmin):
+    list_display = ['user', 'date', ]
+
+
+class CashRequestsAdmin(admin.ModelAdmin):
+    list_display = ['points', 'user', 'user_account', 'is_payed']
+    list_editable = ['is_payed', ]
+
+    def user_account(self, obj):
+        return obj.user.account
+
+
 admin.site.register(Agree)
-admin.site.register(Payments)
+admin.site.register(Payments, PaymentsAdmin)
 admin.site.register(Slider)
 admin.site.register(User, UserAdmin)
 admin.site.register(Products)
 admin.site.register(TransactionKeys, TransactionKeysAdmin)
 admin.site.register(SocialLinks)
 admin.site.register(Transfer)
-admin.site.register(CashRequests)
+admin.site.register(CashRequests, CashRequestsAdmin)
 admin.site.register(Video)

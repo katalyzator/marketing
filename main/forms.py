@@ -22,7 +22,7 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
         fields = (
-            'username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'sponsor', 'is_agree', 'mobilnik',
+            'username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'sponsor', 'is_agree', 'account',
             'phone', 'region', 'city')
 
 
@@ -35,7 +35,7 @@ class TransactionForm(forms.ModelForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'mobilnik', 'phone', 'email')
+        fields = ('first_name', 'last_name', 'account', 'phone', 'email')
 
 
 class TransferForm(forms.ModelForm):

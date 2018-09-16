@@ -36,10 +36,8 @@ def get_parent_user(user):
             print(pos)
             # print(pos == user.level.level)
             if obj.level.level > user.level.level and pos == user.level.level:
-                print(obj)
                 return obj
             elif obj.level.level > user.level.level and pos > user.level.level:
-                print(obj)
                 return obj
             # else:
             #     return None

@@ -121,7 +121,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     level = models.ForeignKey(Products, verbose_name='Текущий уровень', on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField(verbose_name='Email', unique=True)
     phone = models.CharField(verbose_name='Номер телефона', max_length=255, null=True)
-    mobilnik = models.CharField(verbose_name='Мобильник кошелек', max_length=255, null=True)
+    account = models.CharField(verbose_name='Расчетный счет', max_length=255, null=True)
     region = models.CharField(verbose_name='Область', choices=region_choices, max_length=255, null=True)
     city = models.CharField(verbose_name='Город', max_length=255, null=True)
     points = models.PositiveIntegerField(verbose_name='Баллы', default=0, null=True)
@@ -170,7 +170,14 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
 
     def update_balance(self, amount):
         self.points += amount
-        self.save()
+        return self.save()
+
+    def is_validate(self):
+        try:
+            self.full_clean()
+            return True
+        except:
+            return False
 
 
 class SocialLinks(models.Model):
@@ -269,7 +276,7 @@ def transfer(sender, instance, created, **kwargs):
         instance.to_user.update_balance(instance.amount)
 
 
-@receiver(post_save, sender=Payments, dispatch_uid="update_stock_count")
+@receiver(post_save, sender=CashRequests, dispatch_uid="update_stock_count")
 def update_balance(sender, instance, created, **kwargs):
-    if created and instance.is_payed:
-        instance.user.update_balance(int(float(instance.sum)))
+    if not created and instance.is_payed:
+        instance.user.update_balance(-int(float(instance.points)))
