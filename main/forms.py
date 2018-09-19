@@ -22,7 +22,7 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
         fields = (
-            'username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'sponsor', 'is_agree', 'account',
+            'username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'sponsor', 'is_agree',
             'phone', 'region', 'city')
 
 
