@@ -255,6 +255,13 @@ class Payments(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        created = self.pk is None
+        if created:
+            self.user.update_balance(self.sum)
+        return super(Payments, self).save()
+
 
 class CashRequests(models.Model):
     class Meta:
