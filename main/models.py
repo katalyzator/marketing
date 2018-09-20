@@ -259,7 +259,7 @@ class Payments(models.Model):
              update_fields=None):
         created = self.pk is None
         if created:
-            self.user.update_balance(self.sum)
+            self.user.update_balance(self.sum / 10)
         return super(Payments, self).save()
 
 
