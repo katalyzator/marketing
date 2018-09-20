@@ -124,7 +124,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     account = models.CharField(verbose_name='Расчетный счет', max_length=255, null=True)
     region = models.CharField(verbose_name='Область', choices=region_choices, max_length=255, null=True)
     city = models.CharField(verbose_name='Город', max_length=255, null=True)
-    points = models.PositiveIntegerField(verbose_name='Баллы', default=0, null=True)
+    points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
     wallet_id = models.CharField(max_length=8, default=uuid.uuid4().hex[:8].upper())
 
