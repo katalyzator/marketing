@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import string
+import random
 from ckeditor_uploader.fields import RichTextUploadingField
 from colorfield.fields import ColorField
 from django.contrib.auth.models import AbstractUser
@@ -126,12 +128,21 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     city = models.CharField(verbose_name='Город', max_length=255, null=True)
     points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
-    wallet_id = models.CharField(max_length=8, default=uuid.uuid4().hex[:8].upper())
+    wallet_id = models.CharField(max_length=8, unique=True,
+                                 default=''.join(random.choice(string.digits) for _ in range(8)))
 
     def __unicode__(self):
         if self.username:
             return smart_unicode(self.username)
         return smart_unicode(self.email)
+
+    def save(self, *args, **kwargs):
+        try:
+            User.objects.get(wallet_id=self.wallet_id)
+            self.wallet_id = ''.join(random.choice(string.digits) for _ in range(8))
+            self.save(*args, **kwargs)
+        except ObjectDoesNotExist:
+            super(User, self).save(*args, **kwargs)
 
     @property
     def get_parent(self):
