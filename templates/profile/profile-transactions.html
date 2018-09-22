@@ -78,6 +78,7 @@
 {% block custom_scripts %}
     <script type="text/javascript">
         $(document).ready(function () {
+            ajax_request($('#send-points'));
             verifyNumber($('#cash-request'), $('#code-verification'), $('#code'), '{{ request.user.phone }}');
         })
     </script>
