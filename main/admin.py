@@ -42,6 +42,10 @@ class CashRequestsAdmin(admin.ModelAdmin):
         return obj.user.account
 
 
+class TransferAdmin(admin.ModelAdmin):
+    list_display = ['from_user', 'to_user', 'amount']
+
+
 admin.site.register(Agree)
 admin.site.register(Payments, PaymentsAdmin)
 admin.site.register(Slider)
@@ -49,6 +53,6 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Products)
 admin.site.register(TransactionKeys, TransactionKeysAdmin)
 admin.site.register(SocialLinks)
-admin.site.register(Transfer)
+admin.site.register(Transfer, TransferAdmin)
 admin.site.register(CashRequests, CashRequestsAdmin)
 admin.site.register(Video)
