@@ -138,9 +138,10 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
 
     def save(self, *args, **kwargs):
         try:
-            User.objects.get(wallet_id=self.wallet_id)
-            self.wallet_id = ''.join(random.choice(string.digits) for _ in range(8))
-            self.save(*args, **kwargs)
+            user = User.objects.get(wallet_id=self.wallet_id)
+            if not user == self:
+                self.wallet_id = ''.join(random.choice(string.digits) for _ in range(8))
+                self.save(*args, **kwargs)
         except ObjectDoesNotExist:
             super(User, self).save(*args, **kwargs)
 
