@@ -291,7 +291,7 @@ class CashRequests(models.Model):
 def transfer(sender, instance, created, **kwargs):
     if created:
         instance.from_user.update_balance(-instance.amount)
-        instance.to_user.update_balance(instance.amount)
+        instance.to_user.update_balance(instance.amount - 1)
 
 
 @receiver(post_save, sender=CashRequests, dispatch_uid="update_stock_count")
