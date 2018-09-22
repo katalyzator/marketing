@@ -77,6 +77,8 @@
 {% endblock %}
 {% block custom_scripts %}
     <script type="text/javascript">
-        verifyNumber()
+        $(document).ready(function () {
+            verifyNumber($('#cash-request'), $('#code-verification'), $('#code'), '{{ request.user.phone }}');
+        })
     </script>
 {% endblock %}
