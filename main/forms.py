@@ -51,6 +51,12 @@ class TransferForm(forms.ModelForm):
             return walled_id
         raise ValidationError("Пользователя с таки лицевым счетом, не найдено")
 
+    def clean_amount(self):
+        amount = self.cleaned_data['amount']
+        if self.cleaned_data['from_user'].points < amount:
+            raise ValidationError("У вас недостаточно баллов")
+        return amount
+
     def get_user(self):
         return User.objects.get(wallet_id=self.cleaned_data['wallet_id'])
 
@@ -59,3 +65,7 @@ class CashRequestsForm(forms.ModelForm):
     class Meta:
         model = CashRequests
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CashRequestsForm, self).__init__(*args, **kwargs)
+        self.fields['points'].choices = cash_request_choices

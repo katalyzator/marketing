@@ -255,6 +255,8 @@ class SendPoints(CreateView):
 
     def form_invalid(self, form):
         message = ''
+        print(form.errors)
+        print(form.cleaned_data)
         for item in form.errors:
             message += form.errors[item]
         return JsonResponse(dict(succcess=False, message=message))
@@ -316,6 +318,10 @@ class TransactionsTemplateView(CreateView):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
         context['cash_request_form'] = CashRequestsForm(self.request.POST)
         return context
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return super(TransactionsTemplateView, self).form_invalid(form)
 
 
 class CashRequestsCreateView(CreateView):

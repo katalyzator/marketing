@@ -28,7 +28,7 @@
                         </div>
                         <hr>
                         <h4 class="uk-text-center">Вывод бонусов</h4>
-                        <div class="uk-width-1-2@m uk-margin-auto">
+                        <div class="uk-width-2-3@m uk-margin-auto">
                             <p class="uk-text-danger">
                                 Мы вышлем на ваш номер телефона, верификационный код, после подтверждения которого, ваша
                                 заявка будет принята
@@ -36,7 +36,7 @@
                         </div>
                         {% if request.user.is_validate %}
                             <div class="uk-width-1-2@m uk-margin-auto">
-                                <form action="" class="" id="cash-request">
+                                <form action="{% url 'cash_request' %}" class="" id="cash-request">
                                     {% csrf_token %}
                                     <fieldset class="uk-fieldset">
                                         <div class="uk-margin">

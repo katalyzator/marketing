@@ -88,6 +88,7 @@
             <div>
                 {% if request.user.is_authenticated %}
                     <a href="{% url 'profile' %}" style="color: #fff;">Личный кабинет</a>
+{#                    <a href="#" style="color: #fff;">{{ request.user.points }}</a>#}
                 {% else %}
                     <a href="#" uk-toggle="target: #enter" style="color: #fff; margin-right: 10px;">Вход</a>
                     <a href="#" uk-toggle="target: #registration" style="color: #fff">Регистрация</a>

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import string
 import random
+import string
+
 from ckeditor_uploader.fields import RichTextUploadingField
 from colorfield.fields import ColorField
 from django.contrib.auth.models import AbstractUser
@@ -12,7 +13,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
-import uuid
 
 region_choices = (
     ('1', 'Чуй'),
@@ -21,7 +21,7 @@ region_choices = (
     ('4', 'Джалал-Абад'),
     ('5', 'Иссык-Куль'),
     ('6', 'Нарын'),
-    ('6', 'Талас'),
+    ('7', 'Талас'),
 )
 
 cash_request_choices = ((1000, '1000'), (2000, '2000'))
@@ -57,27 +57,8 @@ class TransactionKeys(models.Model):
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
     product = models.ForeignKey("Products", verbose_name='За товар', null=True)
 
-    # key_for_user = models.CharField(verbose_name='ID транзакции для пользователя', null=True, unique=True,
-    #                                 max_length=255)
-    # is_confirmed_by_user = models.BooleanField(verbose_name='Подтвержден пользователем', default=False)
-    # is_confirmed_by_admin = models.BooleanField(verbose_name='Подтвержден админом', default=False)
-
     def __unicode__(self):
         return smart_unicode(self.handler)
-
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        created = self.pk is None
-        if created:
-            self.handler.level = self.product
-            self.handler.update_balance(-self.product.price / 2)
-            self.used_by.update_balance(self.product.price / 2)
-        super(TransactionKeys, self).save()
-
-    @property
-    def confirm_as_admin(self):
-        self.is_confirmed_by_admin = True
-        self.save()
 
 
 class Transfer(models.Model):
@@ -128,7 +109,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     city = models.CharField(verbose_name='Город', max_length=255, null=True)
     points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
-    wallet_id = models.CharField(max_length=8, unique=True,
+    wallet_id = models.CharField(max_length=8, verbose_name='Лицевой счет', unique=True,
                                  default=''.join(random.choice(string.digits) for _ in range(8)))
 
     def __unicode__(self):
@@ -301,3 +282,11 @@ def transfer(sender, instance, created, **kwargs):
 def update_balance(sender, instance, created, **kwargs):
     if not created and instance.is_payed:
         instance.user.update_balance(-int(float(instance.points)))
+
+
+@receiver(post_save, sender=TransactionKeys, dispatch_uid="sell_levels")
+def set_level(sender, instance, created, **kwargs):
+    if created:
+        instance.handler.level = instance.product
+        instance.handler.update_balance(-instance.product.price)
+        instance.used_by.update_balance(instance.product.price / 2)
