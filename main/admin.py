@@ -35,7 +35,7 @@ class PaymentsAdmin(admin.ModelAdmin):
 
 
 class CashRequestsAdmin(admin.ModelAdmin):
-    list_display = ['points', 'user', 'user_account']
+    list_display = ['points', 'user', 'user_account', 'timestamp', 'updated']
 
     def user_account(self, obj):
         return obj.user.account

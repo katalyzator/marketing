@@ -20,10 +20,15 @@
         body {
             background: transparent url({% static 'img/diagonal.png' %}) repeat scroll 50%
         }
+
+        .intl-tel-input {
+            width: 100% !important;
+        }
     </style>
     <link rel="stylesheet" href="{% static 'css/libs.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/libs.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/intlTelInput.min.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
           integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
     <link rel="shortcut icon" href="{% static 'img/logo_new.png' %}" type="image/png">
@@ -207,13 +212,10 @@
                     {% render_field signup_form.last_name class+='uk-input' placeholder='Фамилия' %}
                 </div>
                 <div class="uk-margin">
-                    {% render_field signup_form.region class+='uk-select' placeholder='Область' %}
+                    <select id="country" class="uk-select" name="country"></select>
                 </div>
                 <div class="uk-margin">
-                    {% render_field signup_form.city class+='uk-input' placeholder='Город' %}
-                </div>
-                <div class="uk-margin">
-                    {% render_field signup_form.mobilnik class+='uk-input' placeholder='Мобильник-кошелек' %}
+                    <select name="state" class="uk-select" id="state"></select>
                 </div>
                 <div class="uk-margin">
                     {% render_field signup_form.phone class+='uk-input phone_with_code' placeholder='Номер телефона' %}
@@ -249,7 +251,8 @@
     <i class="fa fa-angle-up"></i>
 </div>
 <script src="{% static 'js/libs.min.js' %}"></script>
-<script src="https://unpkg.com/imask"></script>
+<script src="{% static 'js/intlTelInput.min.js' %}"></script>
+<script src="{% static 'js/countries.js' %}"></script>
 <script src="{% static 'js/common.min.js' %}"></script>
 <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 <script type="text/javascript">
