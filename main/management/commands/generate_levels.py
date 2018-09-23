@@ -7,5 +7,5 @@ from main.models import *
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for i in range(1, 8):
-            level, flag = Products.objects.get_or_create(title=str(i) + "тариф", price=i * 100)
+            level, flag = Products.objects.get_or_create(title=str(i) + "тариф", level=i, price=i * 100)
         self.stdout.write(self.style.SUCCESS("Users successfully created!"))
