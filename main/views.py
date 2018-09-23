@@ -244,7 +244,7 @@ class PromoView(ListView):
 class SendPoints(CreateView):
     model = Transfer
     form_class = TransferForm
-    template_name = 'profile/profile-transactions.html'
+    template_name = 'profile/personal-transactions.html'
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -312,7 +312,7 @@ class MobilnikResponse(View):
 class TransactionsTemplateView(CreateView):
     model = Transfer
     form_class = TransferForm
-    template_name = 'profile/profile-transactions.html'
+    template_name = 'profile/personal-transactions.html'
 
     def get_context_data(self, **kwargs):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
@@ -327,7 +327,7 @@ class TransactionsTemplateView(CreateView):
 class CashRequestsCreateView(CreateView):
     model = CashRequests
     form_class = CashRequestsForm
-    template_name = 'profile/profile-transactions.html'
+    template_name = 'profile/personal-transactions.html'
 
     def form_valid(self, form):
         if self.request.user.points > form.cleaned_data['points']:

@@ -110,7 +110,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
     wallet_id = models.CharField(max_length=8, verbose_name='Лицевой счет', unique=True,
-                                 default=''.join(random.choice(string.digits) for _ in range(8)))
+                                 default=''.join(random.choice(string.digits) for _ in range(7)))
 
     def __unicode__(self):
         if self.username:
@@ -121,7 +121,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         try:
             user = User.objects.get(wallet_id=self.wallet_id)
             if not user == self:
-                self.wallet_id = ''.join(random.choice(string.digits) for _ in range(8))
+                self.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
                 self.save(*args, **kwargs)
             else:
                 super(User, self).save(*args, **kwargs)
@@ -231,10 +231,10 @@ class Video(models.Model):
     product = models.ForeignKey(Products, verbose_name='Уровень', on_delete=models.CASCADE, related_name='lessons',
                                 null=True)
     video = models.FileField(verbose_name='Видео', upload_to='video/')
-    caption = models.CharField(verbose_name='Описание', max_length=255)
+    keycode = models.CharField(verbose_name='Ключевое слово или буква', max_length=5, null=True)
 
     def __str__(self):
-        return str(self.caption)
+        return str(self.keycode)
 
 
 class Payments(models.Model):
@@ -263,7 +263,7 @@ class CashRequests(models.Model):
         verbose_name_plural = 'Запросы на обналичивание'
         verbose_name = 'Запрос на обналичивание'
 
-    points = models.PositiveIntegerField(choices=cash_request_choices)
+    points = models.PositiveIntegerField(verbose_name='Бонусы', choices=cash_request_choices)
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     is_payed = models.BooleanField(verbose_name='Деньги переведены')
 
