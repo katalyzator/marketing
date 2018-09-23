@@ -16,4 +16,5 @@ class Command(BaseCommand):
                                                     city=''.join(
                                                         random.choice(string.ascii_letters) for _ in range(10)))
             user.set_password('newlife123')
+            user.save()
         self.stdout.write(self.style.SUCCESS("Users successfully created!"))
