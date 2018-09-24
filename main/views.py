@@ -167,10 +167,10 @@ class TransactionCreateView(CreateView):
         return self.request.path
 
     def form_valid(self, form):
-        if form.cleaned_data['product'].price < self.request.user.points:
+        if form.cleaned_data['product'].price > self.request.user.points:
             form.save()
             return JsonResponse(dict(success=True, message='Вы успешно получили следующий уровень!'))
-        return JsonResponse(dict(succes=False, message='У вас не хватает баллов'))
+        return JsonResponse(dict(succes=False, message='У вас не хватает бонусов'))
 
     def form_invalid(self, form):
         message = ''
@@ -251,7 +251,7 @@ class SendPoints(CreateView):
         instance.to_user = form.get_user()
         instance.save()
         return JsonResponse(
-            dict(success=True, message=('Вы успешно передали %s баллов' % (form.cleaned_data['amount']))))
+            dict(success=True, message=('Вы успешно передали %s бонусов' % (form.cleaned_data['amount']))))
 
     def form_invalid(self, form):
         message = ''
@@ -345,4 +345,4 @@ class CashRequestsCreateView(CreateView):
             for item in form.errors:
                 message += form.errors[item]
             return JsonResponse(dict(succcess=False, message=message))
-        return JsonResponse(dict(success=False, message='Недостаточно баллов'))
+        return JsonResponse(dict(success=False, message='Недостаточно бонусов'))
