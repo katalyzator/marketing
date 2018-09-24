@@ -105,7 +105,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     email = models.EmailField(verbose_name='Email', unique=True)
     phone = models.CharField(verbose_name='Номер телефона', max_length=255, null=True)
     account = models.CharField(verbose_name='Расчетный счет', max_length=255, null=True)
-    region = models.CharField(verbose_name='Область', choices=region_choices, max_length=255, null=True)
+    region = models.CharField(verbose_name='Область', max_length=255, null=True)
     city = models.CharField(verbose_name='Город', max_length=255, null=True)
     points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
