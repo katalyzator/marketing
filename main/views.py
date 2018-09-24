@@ -292,8 +292,12 @@ class MobilnikResponse(View):
         user_exists = User.objects.filter(wallet_id=account).exists()
         if command == 'check':
             if user_exists:
-                return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
-                                    content_type='application/xhtml+xml')
+                user = User.objects.get(wallet_id=account)
+                return HttpResponse(
+                    dicttoxml({"result": 0, "first_name": str(user.first_name), "last_name": str(user.last_name)},
+                              custom_root="response",
+                              attr_type=False),
+                    content_type='application/xhtml+xml')
             return HttpResponse(dicttoxml({"result": 1}, custom_root="response", attr_type=False),
                                 content_type='application/xhtml+xml')
         elif command == 'pay':
