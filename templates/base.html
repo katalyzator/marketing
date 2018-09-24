@@ -264,9 +264,7 @@
         storageBucket: "newlife-dffd4.appspot.com",
         messagingSenderId: "1082354059018"
     };
-    var cashRequestForm = $('#cash-request');
     var verifyNumberForm = $('#code-verification');
-    var sendPointsForm = $('#send-points');
     firebase.initializeApp(config);
     firebase.auth().useDeviceLanguage();
 
@@ -360,54 +358,14 @@
                 // Error; SMS not sent
                 // ...
             });
-    }
 
-    $(document).ready(function () {
         $('.scroll-top').on('click', function () {
             $('body,html').animate({scrollTop: 0}, 700, 'swing');
         });
         ajax_request($('#user-form'));
         ajax_request($('#login-form'));
-    });
-    $(document).scroll(function () {
-        var y = $(this).scrollTop();
-        if (y > 100) {
-            $('.scroll-top').fadeIn();
-        }
-        else {
-            $('.scroll-top').fadeOut();
-        }
-    })
+    }
 </script>
-
-<!-- BEGIN JIVOSITE CODE {literal} -->
-<script type='text/javascript'>
-    (function () {
-        var widget_id = '9BErP9iZjN';
-        var d = document;
-        var w = window;
-
-        function l() {
-            var s = document.createElement('script');
-            s.type = 'text/javascript';
-            s.async = true;
-            s.src = '//code.jivosite.com/script/widget/' + widget_id;
-            var ss = document.getElementsByTagName('script')[0];
-            ss.parentNode.insertBefore(s, ss);
-        }
-
-        if (d.readyState === 'complete') {
-            l();
-        } else {
-            if (w.attachEvent) {
-                w.attachEvent('onload', l);
-            } else {
-                w.addEventListener('load', l, false);
-            }
-        }
-    })();</script>
-<!-- {/literal} END JIVOSITE CODE -->
-
 {% block custom_scripts %}
     <script type="text/javascript">
         function get(name) {
@@ -432,7 +390,6 @@
                     $(this).children().removeClass('fa-eye-slash').addClass('fa-eye');
                 }
             });
-            $('select[name="region"] option:first-child').attr('disabled', true);
         })
     </script>
     <script>

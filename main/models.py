@@ -155,7 +155,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     def get_earned_money(self):
         if self.level:
             summ = TransactionKeys.objects.filter(used_by=self).aggregate(
-                Sum('product__price')).get('product__price__sum')
+                Sum('product__price')).get('product__price__sum') / 2
             if summ:
                 return summ
             else:
