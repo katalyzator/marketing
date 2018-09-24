@@ -362,8 +362,10 @@
         $('.scroll-top').on('click', function () {
             $('body,html').animate({scrollTop: 0}, 700, 'swing');
         });
-        ajax_request($('#user-form'));
-        ajax_request($('#login-form'));
+        $(document).ready(function () {
+            ajax_request($('#user-form'));
+            ajax_request($('#login-form'));
+        })
     }
 </script>
 {% block custom_scripts %}
