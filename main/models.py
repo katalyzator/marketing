@@ -70,7 +70,7 @@ class Transfer(models.Model):
                                   null=True)
     to_user = models.ForeignKey("User", related_name='to_user', verbose_name='Кому', on_delete=models.CASCADE,
                                 null=True)
-    amount = models.PositiveIntegerField(verbose_name='Сколько', default=0)
+    amount = models.PositiveIntegerField(verbose_name='Сколько')
 
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
