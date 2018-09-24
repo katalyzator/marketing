@@ -1,1 +1,16 @@
-{"web":{"client_id":"143353665323-bs2pb6dgip3aiofplfqa0i4e145pok96.apps.googleusercontent.com","project_id":"newlife-210318","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"vwvwDDbMiJQnU57DUAWm7Z5c","redirect_uris":["http://newlife.kg/oauth2callback"],"javascript_origins":["http://newlife.kg"]}}
+{
+  "web": {
+    "client_id": "143353665323-bs2pb6dgip3aiofplfqa0i4e145pok96.apps.googleusercontent.com",
+    "project_id": "newlife-210318",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "vwvwDDbMiJQnU57DUAWm7Z5c",
+    "redirect_uris": [
+      "http://newlife.kg/oauth2callback"
+    ],
+    "javascript_origins": [
+      "http://newlife.kg"
+    ]
+  }
+}
