@@ -17,7 +17,6 @@ class SignUpForm(forms.ModelForm):
     password2 = forms.CharField(max_length=30, widget=forms.PasswordInput(), required=True)
     sponsor = forms.CharField()
     is_agree = forms.BooleanField()
-    region = forms.ChoiceField(choices=(('', '--- Выберите область ---'),) + region_choices)
 
     class Meta:
         model = User
