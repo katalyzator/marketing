@@ -218,7 +218,7 @@
                     <select name="city" class="uk-select" id="state"></select>
                 </div>
                 <div class="uk-margin">
-                    {% render_field signup_form.phone class+='uk-input phone_with_code' placeholder='Номер телефона' %}
+                    {% render_field signup_form.phone class+='uk-input phone_with_code' %}
                 </div>
                 <div class="uk-margin">
                     {% render_field signup_form.email class+='uk-input' placeholder='Почта' %}
@@ -277,6 +277,7 @@
                 method: 'POST',
                 datatype: 'JSON',
                 success: function (response) {
+                    UIkit.notification.closeAll();
                     if (response.success) {
                         UIkit.notification(response.message, 'success');
                         setTimeout(function () {
@@ -284,7 +285,6 @@
                         }, 700)
                     }
                     else {
-                        UIkit.notification.closeAll();
                         UIkit.notification(response.message, 'danger');
                     }
                 }
