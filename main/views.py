@@ -167,7 +167,7 @@ class TransactionCreateView(CreateView):
         return self.request.path
 
     def form_valid(self, form):
-        if form.cleaned_data['product'].price >= self.request.user.points:
+        if form.cleaned_data['product'].price <= int(self.request.user.points):
             form.save()
             return JsonResponse(dict(success=True, message='Вы успешно получили следующий уровень!'))
         return JsonResponse(dict(succes=False, message='У вас не хватает бонусов'))

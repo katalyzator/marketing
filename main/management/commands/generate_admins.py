@@ -17,4 +17,8 @@ class Command(BaseCommand):
                                                         random.choice(string.ascii_letters) for _ in range(10)))
             user.set_password('newlife123')
             user.save()
+        for i in range(1, 8):
+            user = User.objects.get(username="newlife_" + str(i))
+            user.related_users.add(User.objects.get(username='newlife_' + str(i + 1)))
+            user.save()
         self.stdout.write(self.style.SUCCESS("Users successfully created!"))
