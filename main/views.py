@@ -294,7 +294,8 @@ class MobilnikResponse(View):
             if user_exists:
                 user = User.objects.get(wallet_id=account)
                 return HttpResponse(
-                    dicttoxml({"result": 0, "first_name": str(user.first_name), "last_name": str(user.last_name)},
+                    dicttoxml({"result": 0, "first_name": force_text(user.first_name, encoding='windows-1251'),
+                               "last_name": force_text(user.last_name, encoding='windows-1251')},
                               custom_root="response",
                               attr_type=False),
                     content_type='application/xhtml+xml')
