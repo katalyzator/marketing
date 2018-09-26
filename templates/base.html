@@ -218,7 +218,7 @@
                     <select name="city" class="uk-select" id="state"></select>
                 </div>
                 <div class="uk-margin">
-                    {% render_field signup_form.phone class+='uk-input phone_with_code' %}
+                    {% render_field signup_form.phone class+='uk-input phone_with_code' required="true" %}
                 </div>
                 <div class="uk-margin">
                     {% render_field signup_form.email class+='uk-input' placeholder='Почта' %}
@@ -234,7 +234,7 @@
                             class="fas fa-eye"></i></a>
                 </div>
                 <div class="uk-margin">
-                    {% render_field signup_form.sponsor class+='uk-input' placeholder='Введите логин спонсора' %}
+                    {% render_field signup_form.sponsor class+='uk-input' placeholder='Введите логин спонсора' value="newlife_7" required="true" %}
                 </div>
                 <div class="uk-margin">
                     <label>
