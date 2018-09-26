@@ -71,75 +71,68 @@
                         <hr>
                         <ul uk-accordion>
                             <li>
-                                <a class="uk-accordion-title" href="#">История транзакций</a>
+                                <a class="uk-accordion-title" href="#">История переводов</a>
                                 <div class="uk-accordion-content">
-                                    <ul class="uk-subnav uk-subnav-pill"
-                                        uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
-                                        <li><a href="#">Переводы бонусов</a></li>
-                                        <li><a href="#">Покупка тарифов</a></li>
-                                    </ul>
-                                    <ul class="uk-switcher uk-margin">
-                                        <li>
-                                            <div class="uk-width-1-1 uk-overflow-auto uk-height-large">
-                                                <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Кому</th>
-                                                        <th>Сумма</th>
-                                                        <th>Дата</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    {% for item in transfers %}
-                                                        <tr>
-                                                            <td>
-                                                                {{ item.to_user }}
-                                                            </td>
-                                                            <td>
-                                                                {{ item.amount }}
-                                                            </td>
-                                                            <td>
-                                                                {{ item.timestamp }}
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="uk-width-1-1 uk-overflow-auto uk-height-large">
-                                                <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Тариф</th>
-                                                        <th>Сумма</th>
-                                                        <th>Дата</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    {% for item in transactions %}
-                                                        <tr>
-                                                            <td>
-                                                                {{ item.product }}
-                                                            </td>
-                                                            <td>
-                                                                {{ item.product.price }}
-                                                            </td>
-                                                            <td>
-                                                                {{ item.timestamp }}
-                                                            </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <div class="uk-width-1-1 uk-overflow-auto uk-height-large">
+                                        <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                            <thead>
+                                            <tr>
+                                                <th>Назначение</th>
+                                                <th>Сумма</th>
+                                                <th>Дата</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for item in transfers %}
+                                                <tr>
+                                                    <td>
+                                                        {{ item.to_user }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.amount }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.timestamp }}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="uk-accordion-title" href="#">История покупок</a>
+                                <div class="uk-accordion-content">
+                                    <div class="uk-width-1-1 uk-overflow-auto uk-height-large">
+                                        <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                            <thead>
+                                            <tr>
+                                                <th>Тариф</th>
+                                                <th>Сумма</th>
+                                                <th>Дата</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for item in transactions %}
+                                                <tr>
+                                                    <td>
+                                                        {{ item.product }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.product.price }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.timestamp }}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
-
                     </div>
                 </div>
                 {% include 'partials/profile-sidebar.html' %}
