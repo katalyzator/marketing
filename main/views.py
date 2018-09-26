@@ -321,10 +321,9 @@ class TransactionsTemplateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
         context['cash_request_form'] = CashRequestsForm(self.request.POST)
-        context['transactions_history'] = chain(
-            TransactionKeys.objects.filter(Q(handler=self.request.user) | Q(used_by=self.request.user)),
-            Transfer.objects.filter(Q(from_user=self.request.user) | Q(to_user=self.request.user)),
-            Payments.objects.filter(user=self.request.user))
+        context['transactions'] = TransactionKeys.objects.filter(
+            Q(used_by=self.request.user) | Q(handler=self.request.user))
+        context['transfers'] = Transfer.objects.filter(Q(from_user=self.request.user))
         return context
 
     def form_invalid(self, form):
