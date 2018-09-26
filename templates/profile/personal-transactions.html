@@ -77,7 +77,8 @@
                                         <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                             <thead>
                                             <tr>
-                                                <th>Назначение</th>
+                                                <th>Отправитель</th>
+                                                <th>Получатель</th>
                                                 <th>Сумма</th>
                                                 <th>Дата</th>
                                             </tr>
@@ -85,6 +86,9 @@
                                             <tbody>
                                             {% for item in transfers %}
                                                 <tr>
+                                                    <td>
+                                                        {{ item.from_user }}
+                                                    </td>
                                                     <td>
                                                         {{ item.to_user }}
                                                     </td>
