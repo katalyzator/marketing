@@ -59,3 +59,13 @@ def set_flag(flag):
     if flag == "true":
         return True
     return False
+
+
+@register.filter
+def transaction_type(transaction):
+    if transaction in TransactionKeys.objects.all():
+        return "Покупка уровня"
+    elif transaction in Payments.objects.all():
+        return "Пополнили баланс"
+    else:
+        return "Перевод бонусов"

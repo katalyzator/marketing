@@ -57,6 +57,9 @@ class TransactionKeys(models.Model):
     used_by = models.ForeignKey("User", verbose_name='Ипользовано', related_name='used_by')
     product = models.ForeignKey("Products", verbose_name='За товар', null=True)
 
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
+
     def __unicode__(self):
         return smart_unicode(self.handler)
 
@@ -72,8 +75,8 @@ class Transfer(models.Model):
                                 null=True)
     amount = models.PositiveIntegerField(verbose_name='Сколько')
 
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     def __str__(self):
         return str(self.from_user)
@@ -246,6 +249,9 @@ class Payments(models.Model):
     txn_id = models.CharField(verbose_name='Ключ транзакции', max_length=255, unique=True)
     date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     sum = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Сумма')
+
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     def __str__(self):
         return str(self.user)

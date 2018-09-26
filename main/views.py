@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import base64
+from itertools import chain
 
 import xlwt as xlwt
 from dicttoxml import dicttoxml
@@ -255,8 +256,6 @@ class SendPoints(CreateView):
 
     def form_invalid(self, form):
         message = ''
-        print(form.errors)
-        print(form.cleaned_data)
         for item in form.errors:
             message += form.errors[item]
         return JsonResponse(dict(succcess=False, message=message))
@@ -322,10 +321,13 @@ class TransactionsTemplateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
         context['cash_request_form'] = CashRequestsForm(self.request.POST)
+        context['transactions_history'] = chain(
+            TransactionKeys.objects.filter(Q(handler=self.request.user) | Q(used_by=self.request.user)),
+            Transfer.objects.filter(Q(from_user=self.request.user) | Q(to_user=self.request.user)),
+            Payments.objects.filter(user=self.request.user))
         return context
 
     def form_invalid(self, form):
-        print(form.errors)
         return super(TransactionsTemplateView, self).form_invalid(form)
 
 

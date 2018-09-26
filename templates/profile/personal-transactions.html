@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load widget_tweaks staticfiles %}
+{% load widget_tweaks staticfiles my_filters %}
 {% block content %}
     <section class="personal-area">
         <div class="uk-container-expand uk-container">
@@ -68,6 +68,46 @@
                                 Вы не полностью заполнили свой профиль, пожалуйста проверьте все
                             </p>
                         {% endif %}
+                        <hr>
+                        <h4 class="uk-text-center">История транзакций</h4>
+                        <div class="uk-width-1-1">
+                            <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
+                                <thead>
+                                <tr>
+                                    <th>Сколько</th>
+                                    <th>Кому</th>
+                                    <th>Комментарий</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in transactions_history %}
+                                    <tr>
+                                        <td>
+                                            {% if item.product %}
+                                                {{ item.product.price|floatformat:2 }}
+                                            {% elif item.amount %}
+                                                {{ item.amount|floatformat:2 }}
+                                            {% elif item.sum %}
+                                                {{ item.sum|floatformat:2 }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if item.used_by %}
+                                                {{ item.used_by.username }}
+                                            {% elif item.to_user %}
+                                                {{ item.to_user.username }}
+                                            {% elif item.user %}
+                                                {{ item.user.username }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ item|transaction_type }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 {% include 'partials/profile-sidebar.html' %}
