@@ -322,8 +322,8 @@ class TransactionsTemplateView(CreateView):
         context = super(TransactionsTemplateView, self).get_context_data(**kwargs)
         context['cash_request_form'] = CashRequestsForm(self.request.POST)
         context['transactions'] = TransactionKeys.objects.filter(
-            Q(used_by=self.request.user) | Q(handler=self.request.user))
-        context['transfers'] = Transfer.objects.filter(Q(from_user=self.request.user))
+            Q(used_by=self.request.user) | Q(handler=self.request.user)).order_by('-timestamp')
+        context['transfers'] = Transfer.objects.filter(Q(from_user=self.request.user)).order_by('-timestamp')
         return context
 
     def form_invalid(self, form):

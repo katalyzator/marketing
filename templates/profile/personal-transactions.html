@@ -92,7 +92,7 @@
                                                         {{ item.amount }}
                                                     </td>
                                                     <td>
-                                                        {{ item.timestamp }}
+                                                        {{ item.timestamp|date:"d.m.Y" }}
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -123,7 +123,7 @@
                                                         {{ item.product.price }}
                                                     </td>
                                                     <td>
-                                                        {{ item.timestamp }}
+                                                        {{ item.timestamp|date:"d.m.Y" }}
                                                     </td>
                                                 </tr>
                                             {% endfor %}
