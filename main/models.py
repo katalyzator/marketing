@@ -24,7 +24,10 @@ region_choices = (
     ('7', 'Талас'),
 )
 
-cash_request_choices = ((1000, '1000'), (2000, '2000'))
+cash_request_choices = (
+    (1000, '1000'),
+    (2000, '2000'),
+)
 
 
 class Products(models.Model):
@@ -112,8 +115,8 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     city = models.CharField(verbose_name='Город', max_length=255, null=True)
     points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
-    wallet_id = models.CharField(max_length=8, verbose_name='Лицевой счет', unique=True,
-                                 default=''.join(random.choice(string.digits) for _ in range(7)))
+    wallet_id = models.CharField(max_length=8, verbose_name='Лицевой счет',
+                                 default=''.join(random.choice(string.digits) for _ in range(7)), null=True)
 
     def __unicode__(self):
         if self.username:
