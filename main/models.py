@@ -115,24 +115,23 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     city = models.CharField(verbose_name='Город', max_length=255, null=True)
     points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
-    wallet_id = models.CharField(max_length=8, verbose_name='Лицевой счет',
-                                 default=''.join(random.choice(string.digits) for _ in range(7)), null=True)
+    wallet_id = models.CharField(max_length=8, verbose_name='Лицевой счет', null=True)
 
     def __unicode__(self):
         if self.username:
             return smart_unicode(self.username)
         return smart_unicode(self.email)
 
-    def save(self, *args, **kwargs):
-        try:
-            user = User.objects.get(wallet_id=self.wallet_id)
-            if not user == self:
-                self.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
-                self.save(*args, **kwargs)
-            else:
-                super(User, self).save(*args, **kwargs)
-        except ObjectDoesNotExist:
-            super(User, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     try:
+    #         user = User.objects.get(wallet_id=self.wallet_id)
+    #         if not user == self:
+    #             self.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
+    #             self.save(*args, **kwargs)
+    #         else:
+    #             super(User, self).save(*args, **kwargs)
+    #     except ObjectDoesNotExist:
+    #         super(User, self).save(*args, **kwargs)
 
     @property
     def get_parent(self):
