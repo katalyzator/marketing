@@ -122,16 +122,16 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
             return smart_unicode(self.username)
         return smart_unicode(self.email)
 
-    # def save(self, *args, **kwargs):
-    #     try:
-    #         user = User.objects.get(wallet_id=self.wallet_id)
-    #         if not user == self:
-    #             self.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
-    #             self.save(*args, **kwargs)
-    #         else:
-    #             super(User, self).save(*args, **kwargs)
-    #     except ObjectDoesNotExist:
-    #         super(User, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        try:
+            user = User.objects.get(wallet_id=self.wallet_id)
+            if not user == self:
+                self.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
+                self.save(*args, **kwargs)
+            else:
+                super(User, self).save(*args, **kwargs)
+        except ObjectDoesNotExist:
+            super(User, self).save(*args, **kwargs)
 
     @property
     def get_parent(self):
