@@ -9,7 +9,7 @@ from main.models import TransactionKeys, User
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        for user in User.objects.filter(wallet_id__isnull=True):
+        for user in User.objects.all():
             user.wallet_id = None
             user.save()
             user.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
