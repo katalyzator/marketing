@@ -131,7 +131,8 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         #     else:
         #         super(User, self).save(*args, **kwargs)
         # except ObjectDoesNotExist:
-        self.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
+        if not self.wallet_id:
+            self.wallet_id = ''.join(random.choice(string.digits) for _ in range(7))
         # self.save(*args, **kwargs)
         super(User, self).save(*args, **kwargs)
 
