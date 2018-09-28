@@ -3,9 +3,9 @@ from fabric.context_managers import cd, prefix
 from fabric.operations import sudo, run, local
 from fabric.state import env
 
-PROJECT_NAME = 'marketing'
-PROJECT_ROOT = '/var/www/html/marketing'
-VENV_DIR = '/var/www/html/marketing_env'
+PROJECT_NAME = 'newlife'
+PROJECT_ROOT = '/var/www/html/newlife'
+VENV_DIR = '/var/www/html/newlife_env'
 REPO = ''
 
 
@@ -24,9 +24,9 @@ def commit():
 def deploy():
     migrate()
     commit()
-    env.host_string = '37.46.128.80'
+    env.host_string = '185.243.247.23'
     env.user = 'root'
-    env.password = 'V7eWTZ1603Zc'
+    env.password = 'izpodkaptal96'
     with cd(PROJECT_ROOT):
         sudo('git stash')
         sudo('git pull origin master')
@@ -38,5 +38,6 @@ def deploy():
             #     run('test -e main/parameters.py')
             # except:
             #     run('cp main/parameters.py.dis main/parameters.py')
-            sudo('service marketing restart')
-            sudo('service nginx restart')
+            sudo('service apache2 restart')
+            # sudo('service marketing restart')
+            # sudo('service nginx restart')
