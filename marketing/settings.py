@@ -185,14 +185,3 @@ SELLER_ID = '5e8282966e95c5ab7b69f01ae92cf05a5ca2756b'
 SELLER_SECRET = 'a77dc6e335130378f05109f2f78e9dcc88a52bb2bda1f493942b65301111c55e'
 JET_INDEX_DASHBOARD = 'main.dashboard.CustomIndexDashboard'
 JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = os.path.join(BASE_DIR, 'client_id.json')
-
-# SMS_BACKEND
-SMS_BACKEND_CONSOLE = 'smsish.sms.backends.console.SMSBackend'
-SMS_BACKEND_DUMMY = 'smsish.sms.backends.dummy.SMSBackend'
-SMS_BACKEND_TWILIO = 'smsish.sms.backends.twilio.SMSBackend'
-SMS_BACKEND = SMS_BACKEND_CONSOLE
-
-TWILIO_ACCOUNT_SID = os.getenv("MGddde01910a1abdbcfc7518e4c9b7253f", None)
-TWILIO_AUTH_TOKEN = os.getenv("624ff97d5d26d10a72fb8bf26ab050e3", None)
-TWILIO_MAGIC_FROM_NUMBER = "+15005550006"  # This number passes all validation.
-TWILIO_FROM_NUMBER = os.getenv("+15407013437", TWILIO_MAGIC_FROM_NUMBER)
