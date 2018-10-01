@@ -261,13 +261,6 @@ class Payments(models.Model):
     def __str__(self):
         return str(self.user)
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        created = self.pk is None
-        if created:
-            self.user.update_balance(int(self.sum) / 10)
-        return super(Payments, self).save()
-
 
 class CashRequests(models.Model):
     class Meta:
@@ -295,6 +288,12 @@ def transfer(sender, instance, created, **kwargs):
 def update_balance(sender, instance, created, **kwargs):
     if created:
         instance.user.update_balance(-int(float(instance.points)))
+
+
+@receiver(post_save, sender=Payments, dispatch_uid="update_stock_count")
+def update_balance(sender, instance, created, **kwargs):
+    if created:
+        instance.user.update_balance(int(instance.sum) / 10)
 
 
 @receiver(post_save, sender=TransactionKeys, dispatch_uid="sell_levels")
