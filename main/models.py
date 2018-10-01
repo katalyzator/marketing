@@ -293,7 +293,7 @@ def update_balance(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Payments, dispatch_uid="update_stock_count")
 def update_balance(sender, instance, created, **kwargs):
     if created:
-        instance.user.update_balance(int(instance.sum) / 10)
+        instance.user.update_balance((instance.sum) / decimal.Decimal(10))
 
 
 @receiver(post_save, sender=TransactionKeys, dispatch_uid="sell_levels")
