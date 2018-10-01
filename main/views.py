@@ -310,7 +310,7 @@ class MobilnikResponse(View):
                                     content_type='application/xml')
             return HttpResponse(dicttoxml({"result": 1}, custom_root="response", attr_type=False),
                                 content_type='application/xml')
-        return HttpResponse(status=400)
+        return HttpResponse(status=200)
 
 
 class TransactionsTemplateView(CreateView):
