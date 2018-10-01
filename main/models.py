@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import random
 import string
-
+import decimal
 from ckeditor_uploader.fields import RichTextUploadingField
 from colorfield.fields import ColorField
 from django.contrib.auth.models import AbstractUser
