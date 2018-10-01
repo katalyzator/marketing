@@ -304,7 +304,7 @@ class MobilnikResponse(View):
             if user_exists:
                 user = User.objects.get(wallet_id=account)
                 txn_id = request.GET.get('txn_id')
-                sum = request.GET.get('sum')
+                sum = int(request.GET.get('sum'))
                 Payments.objects.create(user=user, txn_id=txn_id, sum=sum)
                 return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
                                     content_type='application/xml')
