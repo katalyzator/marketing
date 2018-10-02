@@ -37,8 +37,19 @@ class Command(BaseCommand):
         new_user = User.objects.create(**data)
         parent_user.related_users.add(new_user)
         parent_user.save()
-        for item in user.related_users.all():
-            return self.copy_user(item, user)
+        users = []
+        for item, value in enumerate(user.related_users.count()):
+            user = User(firstName='User%dFirstName' % item,
+                        lastName='User%dLastName' % item,
+                        username='user%d' % item,
+                        email='user%d@mydomain.com' % item,
+                        password='hashedPasswordStringPastedHereFromStep1!',
+                        level=value.level,
+                        is_active=True, )
+            users.append(user)
+
+        User.objects.bulk_create(users)
+        print("Success")
 
     def to_dict(self, instance):
         opts = instance._meta
