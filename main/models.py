@@ -295,7 +295,7 @@ class News(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     def __str__(self):
-        return self.title
+        return smart_unicode(self.title)
 
 
 @receiver(post_save, sender=Transfer, dispatch_uid="update_stock_count")
