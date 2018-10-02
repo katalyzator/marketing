@@ -31,6 +31,7 @@ class Command(BaseCommand):
         data['email'] = data['email'].split('@')[0] + str(datetime.datetime.today().date()) + '@gmail.com'
         data['phone'] = str(data['phone']) + str(datetime.datetime.today().date())
         data['level'] = user.level
+        data['related_users'] = None
         data['pk'] = User.objects.last().pk + 1
         new_user = User.objects.create(**data)
         parent_user.related_users.add(new_user)
