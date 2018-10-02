@@ -11,6 +11,7 @@ from django.db import models
 from django.db.models import *
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
 region_choices = (
