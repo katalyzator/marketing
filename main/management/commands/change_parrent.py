@@ -38,7 +38,7 @@ class Command(BaseCommand):
         parent_user.related_users.add(new_user)
         parent_user.save()
         for item in user.related_users.all():
-            return self.copy_user(item, user)
+            self.copy_user(item, user)
 
     def to_dict(self, instance):
         opts = instance._meta
