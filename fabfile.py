@@ -17,7 +17,7 @@ def migrate():
 def commit():
     local('pip freeze > req.txt')
     local('git add .')
-    local('git commit -m "' + str(datetime.datetime.today()) + '"')
+    local('git commit -m "' + str(datetime.datetime.today().date()) + '"')
     local('git push origin master')
 
 

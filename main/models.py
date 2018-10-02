@@ -46,7 +46,7 @@ class Products(models.Model):
     color = ColorField(default='#FF0000')
 
     def __unicode__(self):
-        return str(self.title)
+        return smart_unicode(self.title)
 
     @property
     def get_highest_product(self):
@@ -67,7 +67,7 @@ class TransactionKeys(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     def __unicode__(self):
-        return str(self.handler)
+        return smart_unicode(self.handler)
 
 
 class Transfer(models.Model):
@@ -122,8 +122,8 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
 
     def __unicode__(self):
         if self.username:
-            return str(self.username)
-        return str(self.email)
+            return smart_unicode(self.username)
+        return smart_unicode(self.email)
 
     def save(self, *args, **kwargs):
         if not self.wallet_id:
@@ -198,7 +198,7 @@ class SocialLinks(models.Model):
                                  help_text='Код вы можете взять на сайте fontawesome.io/icons', max_length=255)
 
     def __unicode__(self):
-        return str(self.title)
+        return smart_unicode(self.title)
 
 
 class Agree(models.Model):
