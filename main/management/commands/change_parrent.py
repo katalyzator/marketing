@@ -28,10 +28,11 @@ class Command(BaseCommand):
     def copy_user(self, user, parent_user):
         data = self.to_dict(user)
         data['username'] = data['username'] + '_new'
-        data['email'] = data['email'].split('@')[0] + str(datetime.datetime.today().date()) + '@gmail.com'
-        data['phone'] = str(data['phone']) + str(datetime.datetime.today().date())
+        data['email'] = data['email'].split('@')[0] + str(data['wallet_id']) + '@gmail.com'
+        data['phone'] = str(data['phone']) + str(data['wallet_id'])
+        data['wallet_id'] = None
         data['level'] = user.level
-        data['related_users'] = None
+        # data['related_users'] = None
         data['pk'] = User.objects.last().pk + 1
         new_user = User.objects.create(**data)
         parent_user.related_users.add(new_user)
