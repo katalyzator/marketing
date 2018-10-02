@@ -30,6 +30,7 @@ class Command(BaseCommand):
         data['username'] = data['username'] + '_new'
         data['email'] = data['email'].split('@')[0] + '123@gmail.com'
         data['phone'] = str(data['phone']) + '123'
+        data['level'] = user.level
         data['pk'] = User.objects.last().pk + 1
         new_user = User.objects.create(**data)
         parent_user.related_users.add(new_user)
