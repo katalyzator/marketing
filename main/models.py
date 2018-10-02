@@ -11,7 +11,6 @@ from django.db import models
 from django.db.models import *
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
 region_choices = (
@@ -47,7 +46,7 @@ class Products(models.Model):
     color = ColorField(default='#FF0000')
 
     def __unicode__(self):
-        return smart_unicode(self.title)
+        return str(self.title)
 
     @property
     def get_highest_product(self):
@@ -68,7 +67,7 @@ class TransactionKeys(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     def __unicode__(self):
-        return smart_unicode(self.handler)
+        return str(self.handler)
 
 
 class Transfer(models.Model):
@@ -123,8 +122,8 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
 
     def __unicode__(self):
         if self.username:
-            return smart_unicode(self.username)
-        return smart_unicode(self.email)
+            return str(self.username)
+        return str(self.email)
 
     def save(self, *args, **kwargs):
         if not self.wallet_id:
@@ -199,7 +198,7 @@ class SocialLinks(models.Model):
                                  help_text='Код вы можете взять на сайте fontawesome.io/icons', max_length=255)
 
     def __unicode__(self):
-        return smart_unicode(self.title)
+        return str(self.title)
 
 
 class Agree(models.Model):
@@ -279,6 +278,23 @@ class CashRequests(models.Model):
 
     def __str__(self):
         return str(self.points)
+
+
+class News(models.Model):
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+
+    title = models.CharField(verbose_name='Название новости', max_length=255)
+    preview = models.ImageField(verbose_name='Картинка новости', null=True)
+    text = RichTextUploadingField(verbose_name='Содержимое новости', null=True)
+    slug = models.SlugField(verbose_name='Слаг', unique=True, default='')
+
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 @receiver(post_save, sender=Transfer, dispatch_uid="update_stock_count")

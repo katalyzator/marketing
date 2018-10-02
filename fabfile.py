@@ -15,7 +15,7 @@ def migrate():
 
 
 def commit():
-    local('pip freeze > req.txt')
+    local('pip freeze > requirements.txt')
     local('git add .')
     local('git commit -m "' + str(datetime.datetime.today()) + '"')
     local('git push origin master')
@@ -31,7 +31,7 @@ def deploy():
         sudo('git stash')
         sudo('git pull origin master')
         with prefix('source ' + VENV_DIR + '/bin/activate'):
-            run('pip install -r req.txt')
+            run('pip install -r requirements.txt')
             run('./manage.py collectstatic --noinput')
             run('./manage.py migrate')
             # try:

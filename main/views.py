@@ -30,6 +30,7 @@ class IndexView(TemplateView):
         context['sliders'] = Slider.objects.all()
         context['products'] = Products.objects.all()
         context['users'] = User.objects.filter(is_active=True).distinct().count()
+        context['news'] = News.objects.all().order_by('-updated', '-timestamp')
         return context
 
     def dispatch(self, request, *args, **kwargs):

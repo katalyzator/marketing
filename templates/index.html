@@ -28,6 +28,27 @@
             </div>
         </div>
     </section>
+    <section class="news statistic">
+        <div class="uk-container">
+            <h2>Новости</h2>
+            <div class="uk-child-width-1-2@m" uk-grid>
+                {% for item in news %}
+                    <div>
+                        <div class="uk-card uk-card-default">
+                            <div class="uk-card-media-top uk-height-large">
+                                <img src="{{ item.preview.url }}" alt=""
+                                     style="width: 100%;height: 100%;object-fit: cover">
+                            </div>
+                            <div class="uk-card-body">
+                                <h3 class="uk-card-title">{{ item.title }}</h3>
+                                {{ item.text|truncatewords:10|safe }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
     <section class="statistic">
         <div class="uk-container">
             <h2>Статистика</h2>
@@ -112,19 +133,19 @@
                         </div>
                     </div>
                 </div>
-{#                <div>#}
-{#                    <div class="item uk-box-shadow-small">#}
-{#                        <div class="uk-padding">#}
-{#                            <div class="image uk-text-center"><img src="{% static 'img/t2.png' %}" alt=""></div>#}
-{#                            <h5 class="uk-text-center">Бонус-аккаунты</h5>#}
-{#                            <p class="uk-text-center">Каждому новому участнику дается возможность открыть 2 аккаунта#}
-{#                                качестве#}
-{#                                бонуса на один Мобильник кошелек. Чем раньше вы вступите в проект, тем быстрей вы#}
-{#                                получите партнеров и начнете#}
-{#                                зарабатывать.</p>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
+                {#                <div>#}
+                {#                    <div class="item uk-box-shadow-small">#}
+                {#                        <div class="uk-padding">#}
+                {#                            <div class="image uk-text-center"><img src="{% static 'img/t2.png' %}" alt=""></div>#}
+                {#                            <h5 class="uk-text-center">Бонус-аккаунты</h5>#}
+                {#                            <p class="uk-text-center">Каждому новому участнику дается возможность открыть 2 аккаунта#}
+                {#                                качестве#}
+                {#                                бонуса на один Мобильник кошелек. Чем раньше вы вступите в проект, тем быстрей вы#}
+                {#                                получите партнеров и начнете#}
+                {#                                зарабатывать.</p>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
                 <div>
                     <div class="item uk-box-shadow-small">
                         <div class="uk-padding">
@@ -153,25 +174,6 @@
     </section>
     <section class="tarif">
         <div class="uk-container">
-            {#            <h2>Тарифы и стоимость</h2>#}
-            {#            <p></p>#}
-            {#            <div class="uk-grid uk-margin-large uk-child-width-1-5@m" uk-grid="">#}
-            {#                {% for product in products %}#}
-            {#                    <div>#}
-            {#                        <div class="item">#}
-            {#                            <div class="uk-margin">#}
-            {#                                <h5 class="uk-text-center">{{ product.title }}</h5>#}
-            {#                            </div>#}
-            {#                            {% if product.image %}#}
-            {#                                <div class="uk-cover-container uk-height-small">#}
-            {#                                    <img src="{{ product.image.url }}" alt="" uk-cover="">#}
-            {#                                </div>#}
-            {#                            {% endif %}#}
-            {#                            <p class="uk-text-center">{{ product.price }} Сом</p>#}
-            {#                        </div>#}
-            {#                    </div>#}
-            {#                {% endfor %}#}
-            {#            </div>#}
             <div class="uk-h3">Галерея</div>
             <div class="uk-child-width-1-5@m uk-grid-small" uk-grid uk-lightbox="animation: slide">
                 <div>
@@ -189,39 +191,6 @@
                     </a>
                 </div>
             </div>
-
-
-            <div class="uk-h3">Видео материалы</div>
-            <div class="uk-child-width-1-5@m uk-grid-small" uk-grid uk-lightbox="animation: slide">
-                <div>
-                    <a class="uk-cover-container uk-height-small uk-flex-inline uk-width-1-1"
-                       href="https://www.youtube.com/watch?v=P9wt2gARofU"
-                       data-caption="Caption 1">
-
-                        <img src="https://img.youtube.com/vi/P9wt2gARofU/0.jpg" alt="" uk-cover>
-                    </a>
-                </div>
-                <div>
-                    <a class="uk-cover-container uk-height-small uk-flex-inline uk-width-1-1"
-                       href="https://www.youtube.com/watch?v=P9wt2gARofU"
-                       data-caption="Caption 1">
-
-                        <img src="https://img.youtube.com/vi/P9wt2gARofU/0.jpg" alt="" uk-cover>
-                    </a>
-                </div>
-                <div>
-                    <a class="uk-cover-container uk-height-small uk-flex-inline uk-width-1-1"
-                       href="https://www.youtube.com/watch?v=P9wt2gARofU"
-                       data-caption="Caption 1">
-
-                        <img src="https://img.youtube.com/vi/P9wt2gARofU/0.jpg" alt="" uk-cover>
-                    </a>
-                </div>
-
-            </div>
-
-
-        </div>
     </section>
     <section class="text-block" style="background-color: #25cfab; ;">
         <div class="uk-container">
