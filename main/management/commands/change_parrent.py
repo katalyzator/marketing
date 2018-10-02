@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import BaseCommand
 from django.db.models.fields.related import ManyToManyField
@@ -28,8 +28,8 @@ class Command(BaseCommand):
     def copy_user(self, user, parent_user):
         data = self.to_dict(user)
         data['username'] = data['username'] + '_new'
-        data['email'] = data['email'].split('@')[0] + '123@gmail.com'
-        data['phone'] = str(data['phone']) + '123'
+        data['email'] = data['email'].split('@')[0] + datetime.datetime.today().date() + '@gmail.com'
+        data['phone'] = str(data['phone']) + datetime.datetime.today().date()
         data['level'] = user.level
         data['pk'] = User.objects.last().pk + 1
         new_user = User.objects.create(**data)
