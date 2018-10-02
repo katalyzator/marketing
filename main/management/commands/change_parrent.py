@@ -33,7 +33,7 @@ class Command(BaseCommand):
         data['wallet_id'] = None
         data['level'] = user.level
         # data['related_users'] = None
-        data['pk'] = data['pk'] + 10000
+        data['pk'] = user.pk + 10000
         new_user = User.objects.create(**data)
         parent_user.related_users.add(new_user)
         parent_user.save()
