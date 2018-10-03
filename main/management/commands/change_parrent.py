@@ -15,7 +15,7 @@ class Command(BaseCommand):
             username = options['username']
             new_sponsor = User.objects.get(username='zaripa1983')
             user = User.objects.get(username=username)
-            new_user = user.copy_itself()
-            new_sponsor.related_users.add(new_user)
+            new_user = user.copy_itself(new_sponsor)
+            # new_sponsor.related_users.add(new_user)
         except ObjectDoesNotExist:
             print('No!')
