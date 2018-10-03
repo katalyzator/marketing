@@ -169,7 +169,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         user.save()
         user.pk = None
         user.email = user.email.split('@')[0] + '_3' + user.email.split('@')[1]
-        user.related_users = None
+        user.related_users.clear()
         user.wallet_id = None
         user.phone.replace(user.phone[-1], '')
         new_user = user.save()
