@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import BaseCommand
-from django.db.models.fields.related import ManyToManyField
 
 from main.models import User
 
@@ -16,50 +14,8 @@ class Command(BaseCommand):
         try:
             username = options['username']
             new_sponsor = User.objects.get(username='zaripa1983')
-            old_sponsor = User.objects.get(username='brilliant618')
             user = User.objects.get(username=username)
-            old_sponsor.related_users.remove(user)
-            old_sponsor.save()
-            new_sponsor.related_users.add(user)
-            self.copy_user(user, old_sponsor)
+            new_user = user.copy_itself()
+            new_sponsor.related_users.add(new_user)
         except ObjectDoesNotExist:
             print('No!')
-
-    def copy_user(self, user, parent_user):
-        data = self.to_dict(user)
-        data['username'] = data['username'] + '_new'
-        data['email'] = data['email'].split('@')[0] + str(data['wallet_id']) + '@gmail.com'
-        data['phone'] = str(data['phone']) + str(data['wallet_id'])
-        data['wallet_id'] = None
-        data['level'] = user.level
-        # data['related_users'] = None
-        data['pk'] = user.pk + 10000
-        new_user = User.objects.create(**data)
-        parent_user.related_users.add(new_user)
-        parent_user.save()
-        users = []
-        for item, value in enumerate(user.related_users.count()):
-            user = User(firstName='User%dFirstName' % item,
-                        lastName='User%dLastName' % item,
-                        username='user%d' % item,
-                        email='user%d@mydomain.com' % item,
-                        password='hashedPasswordStringPastedHereFromStep1!',
-                        level=value.level,
-                        is_active=True, )
-            users.append(user)
-
-        User.objects.bulk_create(users)
-        print("Success")
-
-    def to_dict(self, instance):
-        opts = instance._meta
-        data = {}
-        for f in opts.concrete_fields + opts.many_to_many:
-            if isinstance(f, ManyToManyField):
-                if instance.pk is None:
-                    data[f.name] = []
-                else:
-                    data[f.name] = list(f.value_from_object(instance).values_list('pk', flat=True))
-            else:
-                data[f.name] = f.value_from_object(instance)
-        return data

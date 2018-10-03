@@ -163,6 +163,23 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
                     break
         return parents_array
 
+    def copy_itself(self, parent_user):
+        user = self
+        user.phone = user.phone + '3'
+        user.save()
+        user.pk = None
+        user.email = user.email.split('@')[0] + '_3' + user.email.split('@')[1]
+        user.related_users = None
+        user.wallet_id = None
+        user.phone.replace(user.phone[-1], '')
+        new_user = user.save()
+        parent_user.related_users.add(new_user)
+        parent_user.save()
+        if self.related_users:
+            for i in self.related_users.all():
+                i.copy_itself(i)
+        return new_user
+
     @property
     def get_earned_money(self):
         if self.level:
