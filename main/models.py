@@ -179,8 +179,6 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         new_user.save()
         parent_user.related_users.add(new_user)
         parent_user.save()
-        print(self)
-        print(self.related_users)
         if related_users:
             for i in related_users.all():
                 i.copy_itself(new_user)
