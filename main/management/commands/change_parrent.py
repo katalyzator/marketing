@@ -10,7 +10,7 @@ class Command(BaseCommand):
         parser.add_argument('username', type=str)
 
     def handle(self, *args, **options):
-        print(options)
+        # print(options)
         try:
             username = options['username']
             new_sponsor = User.objects.get(username='zaripa1983')

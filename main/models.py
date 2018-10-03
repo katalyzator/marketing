@@ -164,21 +164,26 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         return parents_array
 
     def copy_itself(self, parent_user):
+        related_users = self.related_users.all()
         user = self
-        user.phone = user.phone + '3'
+        user.phone = user.phone.replace(user.phone[-1], '3', 1)
         user.save()
         user.pk = User.objects.last().pk + 1
         user.username = user.username + '3'
         user.email = user.email.split('@')[0] + '_3' + user.email.split('@')[1]
-        user.related_users.clear()
         user.wallet_id = None
-        user.phone.replace(user.phone[-1], '')
-        new_user = user.save()
+        user.phone.replace(user.phone[-1], '', 1)
+        user.save()
+        new_user = user
+        new_user.related_users.clear()
+        new_user.save()
         parent_user.related_users.add(new_user)
         parent_user.save()
-        if self.related_users:
-            for i in self.related_users.all():
-                i.copy_itself(i)
+        print(self)
+        print(self.related_users)
+        if related_users:
+            for i in related_users.all():
+                i.copy_itself(new_user)
         return new_user
 
     @property

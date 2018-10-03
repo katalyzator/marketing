@@ -113,12 +113,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "newlife", "static", "media")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "marketing", "static", "media")
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "newlife", "static", "static_root")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "marketing", "static", "static_root")
 
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(BASE_DIR), "newlife", "templates", "assets", "static_files"),
+    os.path.join(os.path.dirname(BASE_DIR), "marketing", "templates", "assets", "static_files"),
 )
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
