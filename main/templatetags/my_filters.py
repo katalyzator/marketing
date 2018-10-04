@@ -31,7 +31,7 @@ def need_to_activate(user):
 def get_parent_user(user):
     if user.level:
         for pos, obj in enumerate(user.get_all_parents):
-            if obj:
+            if obj and obj.level:
                 if obj.level.level > user.level.level and pos == user.level.level:
                     return obj
                 elif obj.level.level > user.level.level and pos > user.level.level:
