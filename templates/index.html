@@ -28,7 +28,7 @@
             </div>
         </div>
     </section>
-{#    <section class="news statistic">#}
+    {#    <section class="news statistic">#}
     {#        <div class="uk-container">#}
     {#            <h2>Новости</h2>#}
     {#            <div class="uk-child-width-1-2@m" uk-grid>#}
@@ -198,5 +198,26 @@
                 УЖЕ НА ЭТОЙ НЕДЕЛЕ?</h4><a class="uk-button uk-button-default" href=""
                                            uk-toggle="target: #registration">Начать бесплатно</a>
         </div>
+    </section>
+
+    <section>
+        <a class="dg-widget-link"
+           href="http://2gis.kg/bishkek/firm/70000001032263999/center/74.59015818312764,42.87965478793045/zoom/18?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=bigMap">Посмотреть
+            на карте Бишкека</a>
+        <div class="dg-widget-link"><a
+                href="http://2gis.kg/bishkek/center/74.59025,42.879849/zoom/18/routeTab/rsType/bus/to/74.59025,42.879849╎New Life Holding, ОсОО?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=route">Найти
+            проезд до New Life Holding, ОсОО</a></div>
+        <script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script>
+        <script charset="utf-8">new DGWidgetLoader({
+            "width": "100%",
+            "height": 600,
+            "borderColor": "#a3a3a3",
+            "pos": {"lat": 42.87965478793045, "lon": 74.59015818312764, "zoom": 18},
+            "opt": {"city": "bishkek"},
+            "org": [{"id": "70000001032263999"}],
+        });</script>
+        <noscript style="color:#c00;font-size:16px;font-weight:bold;">Виджет карты использует JavaScript. Включите его в
+            настройках вашего браузера.
+        </noscript>
     </section>
 {% endblock %}
