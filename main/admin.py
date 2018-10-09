@@ -31,7 +31,7 @@ class TransactionKeysAdmin(admin.ModelAdmin):
 
 
 class PaymentsAdmin(admin.ModelAdmin):
-    list_display = ['user', 'date', ]
+    list_display = ['user', 'sum', 'timestamp', ]
 
 
 class CashRequestsAdmin(admin.ModelAdmin):
