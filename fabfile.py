@@ -34,7 +34,7 @@ def deploy():
         sudo('git pull origin master')
         with prefix('source ' + VENV_DIR + '/bin/activate'):
             run('pip install -r req.txt')
-            run('cp' + ROOT_FOLDER + '/parameters.py.dist ' + ROOT_FOLDER + '/parameters.py')
+            run('cp ' + ROOT_FOLDER + '/parameters.py.dist ' + ROOT_FOLDER + '/parameters.py')
             run('./manage.py collectstatic --noinput')
             run('./manage.py migrate')
             # try:
