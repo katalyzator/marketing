@@ -48,7 +48,8 @@ def get_ref_by_line(parents_ids, level, curr_level=1):
         for j in i.related_users.all():
             child_ids.append(j.pk)
     if curr_level == level:
-        return User.objects.filter(pk__in=child_ids).distinct()
+        return [User.objects.filter(pk__in=child_ids).distinct(),
+                User.objects.filter(pk__in=child_ids).distinct().count()]
     curr_level += 1
     parents_ids = child_ids
     return get_ref_by_line(parents_ids, level, curr_level)

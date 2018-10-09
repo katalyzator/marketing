@@ -16,9 +16,9 @@
                         {% get_ref_by_line request.user.pk 7 as seventh_referals %}
                         <ul uk-accordion>
                             <li class="uk-open">
-                                <a class="uk-accordion-title" href="#">Первая линия</a>
+                                <a class="uk-accordion-title" href="#">Первая линия ---- {{ first_referals.1 }}</a>
                                 <div class="uk-accordion-content">
-                                    {% if first_referals %}
+                                    {% if first_referals.0 %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -52,9 +52,9 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="uk-accordion-title" href="#">Вторая линия</a>
+                                <a class="uk-accordion-title" href="#">Вторая линия ---- {{ second_referals.1 }}</a>
                                 <div class="uk-accordion-content">
-                                    {% if second_referals %}
+                                    {% if second_referals.0 %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -88,9 +88,9 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="uk-accordion-title" href="#">Третья линия</a>
+                                <a class="uk-accordion-title" href="#">Третья линия ---- {{ third_referals.1 }}</a>
                                 <div class="uk-accordion-content">
-                                    {% if third_referals %}
+                                    {% if third_referals.0 %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -124,9 +124,9 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="uk-accordion-title" href="#">Четвертая линия</a>
+                                <a class="uk-accordion-title" href="#">Четвертая линия ---- {{ fourth_referals.1 }}</a>
                                 <div class="uk-accordion-content">
-                                    {% if fourth_referals %}
+                                    {% if fourth_referals.0 %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -160,9 +160,9 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="uk-accordion-title" href="#">Пятая линия</a>
+                                <a class="uk-accordion-title" href="#">Пятая линия ---- {{ fifth_referals.1 }}</a>
                                 <div class="uk-accordion-content">
-                                    {% if fifth_referals %}
+                                    {% if fifth_referals.0 %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -196,9 +196,9 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="uk-accordion-title" href="#">Шестая линия</a>
+                                <a class="uk-accordion-title" href="#">Шестая линия ---- {{ sixth_referals.1 }}</a>
                                 <div class="uk-accordion-content">
-                                    {% if sixth_referals %}
+                                    {% if sixth_referals.0 %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
@@ -232,9 +232,9 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="uk-accordion-title" href="#">Седьмая линия</a>
+                                <a class="uk-accordion-title" href="#">Седьмая линия ---- {{ seventh_referals.1 }}</a>
                                 <div class="uk-accordion-content">
-                                    {% if seventh_referals %}
+                                    {% if seventh_referals.0 %}
                                         <div class="uk-overflow-auto">
                                             <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle">
                                                 <thead>
