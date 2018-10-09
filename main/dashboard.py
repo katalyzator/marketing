@@ -1,11 +1,9 @@
-from jet.dashboard.dashboard import Dashboard
-from jet.dashboard.dashboard_modules import google_analytics
+# coding=utf-8
+from jet.dashboard.modules import DashboardModule
 
 
-class CustomIndexDashboard(Dashboard):
-    columns = 3
-
-    def init_with_context(self, context):
-        self.available_children.append(google_analytics.GoogleAnalyticsVisitorsTotals)
-        self.available_children.append(google_analytics.GoogleAnalyticsVisitorsChart)
-        self.available_children.append(google_analytics.GoogleAnalyticsPeriodVisitors)
+class BonusesCount(DashboardModule):
+    title = 'Бонусов в обороте'
+    title_url = ''
+    template = 'partials/bonus.html'
+    limit = 10

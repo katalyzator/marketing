@@ -1,6 +1,8 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from marketing.parameters import ROOT_FOLDER
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -113,12 +115,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "marketing", "static", "media")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), ROOT_FOLDER, "static", "media")
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "marketing", "static", "static_root")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), ROOT_FOLDER, "static", "static_root")
 
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(BASE_DIR), "marketing", "templates", "assets", "static_files"),
+    os.path.join(os.path.dirname(BASE_DIR), ROOT_FOLDER, "templates", "assets", "static_files"),
 )
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
@@ -183,5 +185,5 @@ ADMIN_PHONE = "5696685"
 DEFAULT_PASSWORD = "admin112358"
 SELLER_ID = '5e8282966e95c5ab7b69f01ae92cf05a5ca2756b'
 SELLER_SECRET = 'a77dc6e335130378f05109f2f78e9dcc88a52bb2bda1f493942b65301111c55e'
-JET_INDEX_DASHBOARD = 'main.dashboard.CustomIndexDashboard'
+JET_INDEX_DASHBOARD = 'main.dashboard.BonusesCount'
 JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = os.path.join(BASE_DIR, 'client_id.json')

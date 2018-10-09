@@ -198,7 +198,7 @@
         <button class="uk-modal-close-default" type="button" uk-close=""></button>
         <form action="{% url 'create_user' %}" method="POST" id="user-form">
             {% csrf_token %}
-            <p class="uk-text-danger">Просьба указывать данные с паспорта, т.к в псоледующем ваши данные будут
+            <p class="uk-text-danger">Просьба указывать данные с паспорта, т.к в последующем ваши данные будут
                 использованы для уплаты налогов</p>
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Регистрация</legend>
@@ -234,7 +234,7 @@
                             class="fas fa-eye"></i></a>
                 </div>
                 <div class="uk-margin">
-                    {% render_field signup_form.sponsor class+='uk-input' placeholder='Введите логин спонсора' value="newlife_1" required="true" %}
+                    {% render_field signup_form.sponsor class+='uk-input' placeholder='Введите логин спонсора' required="true" %}
                 </div>
                 <div class="uk-margin">
                     <label>
