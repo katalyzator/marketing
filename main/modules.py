@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from jet.dashboard.modules import DashboardModule
 from jet.utils import context_to_dict
 
-from main.models import User
+from main.models import *
 
 
 class BonusesQuantity(DashboardModule):
@@ -63,5 +63,6 @@ class BonusesQuantity(DashboardModule):
         context.update({
             'module': self,
             'bonuses': User.objects.aggregate(sum=Sum('points'))['sum'],
+            'buys': TransactionKeys.objects.aggregate(sum=Sum('product__price'))['sum'] / 2
         })
         return context
