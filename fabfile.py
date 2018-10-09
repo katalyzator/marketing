@@ -3,6 +3,8 @@ from fabric.context_managers import cd, prefix
 from fabric.operations import sudo, run, local
 from fabric.state import env
 
+from marketing.parameters import ROOT_FOLDER
+
 PROJECT_NAME = 'newlife'
 PROJECT_ROOT = '/var/www/html/newlife'
 VENV_DIR = '/var/www/html/newlife_env'
@@ -32,7 +34,7 @@ def deploy():
         sudo('git pull origin master')
         with prefix('source ' + VENV_DIR + '/bin/activate'):
             run('pip install -r req.txt')
-            run('cp main/parameters.py.dist main/parameters.py')
+            run('cp' + ROOT_FOLDER + '/parameters.py.dist ' + ROOT_FOLDER + '/parameters.py')
             run('./manage.py collectstatic --noinput')
             run('./manage.py migrate')
             # try:
