@@ -63,6 +63,7 @@ class BonusesQuantity(DashboardModule):
         context.update({
             'module': self,
             'bonuses': User.objects.aggregate(sum=Sum('points'))['sum'],
-            'buys': TransactionKeys.objects.aggregate(sum=Sum('product__price'))['sum'] / 2
+            'buys': TransactionKeys.objects.aggregate(sum=Sum('product__price'))['sum'] / 2,
+            'money': Payments.objects.aggregate(sum=Sum('sum'))['sum']
         })
         return context
