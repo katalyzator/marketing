@@ -1,0 +1,23 @@
+{% extends 'admin/base.html' %}
+{% block extrahead %}
+    <style>
+        .points_card {
+            padding: 10px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-item-header ui-sortable-handle">
+        <span class="dashboard-item-header-title">
+                <a href="#" class="dashboard-item-collapse"><span
+                        class="dashboard-item-header-collapse-button icon-arrow-down"></span></a>
+                <a href="#" class="dashboard-item-collapse"><span
+                        class="dashboard-item-header-collapse-button icon-arrow-up"></span></a>
+                Баллов в обороте
+        </span>
+    </div>
+    <div class="card points_card dashboard-item-content contrast" style="width: 18rem;">
+        <div class="card-body">
+        </div>
+    </div>
+{% endblock %}
