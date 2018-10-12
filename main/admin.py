@@ -26,8 +26,8 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class TransactionKeysAdmin(admin.ModelAdmin):
-    list_display = ('handler', 'used_by',)
-    list_filter = ('handler', 'used_by',)
+    list_display = ('handler', 'used_by', 'timestamp', 'updated')
+    search_fields = ('handler', 'used_by',)
 
 
 class PaymentsAdmin(admin.ModelAdmin):
