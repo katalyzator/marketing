@@ -228,7 +228,7 @@
                            style="text-decoration: none"><i
                                 class="fas fa-eye"></i></a>
                     </div>
-                    <a class="uk-button uk-button-primary">Следующий</a>
+                    <a class="uk-button uk-button-primary next-tab" data-index="1">Далее</a>
                 </li>
                 <li>
                     <div class="uk-margin">
@@ -252,7 +252,7 @@
                         <input type="hidden" name="phone" id="hidden_number">
                         {#                        {% render_field signup_form.phone class+='uk-input' placeholder="Номер телефона с кодом" required="true" %}#}
                     </div>
-                    <a class="uk-button uk-button-primary next-tab" data-index="1">Следующий</a>
+                    <a class="uk-button uk-button-primary next-tab" data-index="2">Далее</a>
                 </li>
                 <li>
                     <div class="uk-margin">
@@ -264,6 +264,7 @@
                             Я согласен с условиями <a href="{% url 'agreement' %}" target="_blank">соглашения</a>
                         </label>
                     </div>
+                    <button type="submit" class="uk-button uk-button-primary">Зарегистрироваться</button>
                 </li>
             </ul>
             {#            <button class="uk-button uk-button-primary" type="submit">Регистрация</button>#}
@@ -387,10 +388,18 @@
         });
     }
 
+    function nextTab(link) {
+        link.on('click', function (e) {
+            e.preventDefault();
+            UIkit.switcher('.uk-subnav').show($(this).attr('data-index'));
+        })
+    }
+
     $(document).ready(function () {
 
         ajax_request($('#user-form'));
         ajax_request($('#login-form'));
+        nextTab($('.next-tab'))
     })
 </script>
 {% block custom_scripts %}
