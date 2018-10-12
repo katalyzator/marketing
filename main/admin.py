@@ -42,7 +42,7 @@ class CashRequestsAdmin(admin.ModelAdmin):
 
 
 class TransferAdmin(admin.ModelAdmin):
-    list_display = ['from_user', 'to_user', 'amount']
+    list_display = ['from_user', 'to_user', 'amount', 'timestamp', 'updated']
 
 
 admin.site.register(Agree)
