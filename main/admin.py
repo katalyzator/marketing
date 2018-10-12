@@ -31,7 +31,12 @@ class TransactionKeysAdmin(admin.ModelAdmin):
 
 
 class PaymentsAdmin(admin.ModelAdmin):
-    list_display = ['user', 'sum', 'timestamp', ]
+    list_display = ['user', 'get_bonus', 'timestamp', ]
+
+    def get_bonus(self, obj):
+        return obj.sum / 10
+
+    get_bonus.short_description = 'Баллы'
 
 
 class CashRequestsAdmin(admin.ModelAdmin):
