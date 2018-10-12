@@ -201,50 +201,72 @@
             {% csrf_token %}
             <p class="uk-text-danger">Просьба указывать данные с паспорта, т.к в последующем ваши данные будут
                 использованы для уплаты налогов</p>
-            <fieldset class="uk-fieldset">
-                <legend class="uk-legend">Регистрация</legend>
-                <div class="uk-margin">
-                    {% render_field signup_form.username class+='uk-input' placeholder='Логин' %}
-                </div>
-                <div class="uk-margin">
-                    {% render_field signup_form.first_name class+='uk-input' placeholder='Имя' %}
-                </div>
-                <div class="uk-margin">
-                    {% render_field signup_form.last_name class+='uk-input' placeholder='Фамилия' %}
-                </div>
-                <div class="uk-margin">
-                    <select id="country" class="uk-select" name="region"></select>
-                </div>
-                <div class="uk-margin">
-                    <select name="city" class="uk-select" id="state"></select>
-                </div>
-                <div class="uk-margin">
-                    {% render_field signup_form.phone class+='uk-input phone_with_code' placeholder="Номер телефона с кодом" required="true" %}
-                </div>
-                <div class="uk-margin">
-                    {% render_field signup_form.email class+='uk-input' placeholder='Почта' %}
-                </div>
-                <div class="uk-margin uk-position-relative">
-                    {% render_field signup_form.password1 class+='uk-input' placeholder='Пароль' %}
-                    <a href="#" class="uk-form-icon uk-form-icon-flip show_password" style="text-decoration: none"><i
-                            class="fas fa-eye"></i></a>
-                </div>
-                <div class="uk-margin uk-position-relative">
-                    {% render_field signup_form.password2 class+='uk-input' placeholder='Повторите пароль' %}
-                    <a href="#" class="uk-form-icon uk-form-icon-flip show_password" style="text-decoration: none"><i
-                            class="fas fa-eye"></i></a>
-                </div>
-                <div class="uk-margin">
-                    {% render_field signup_form.sponsor class+='uk-input' placeholder='Введите логин спонсора' required="true" %}
-                </div>
-                <div class="uk-margin">
-                    <label>
-                        {% render_field signup_form.is_agree class+='uk-checkbox uk-margin-right' %}
-                        Я согласен с условиями <a href="{% url 'agreement' %}" target="_blank">соглашения</a>
-                    </label>
-                </div>
-                <button class="uk-button uk-button-primary" type="submit">Регистрация</button>
-            </fieldset>
+            <legend class="uk-legend">Регистрация</legend>
+            <ul class="uk-subnav uk-subnav-pill"
+                uk-switcher="animation: uk-animation-slide-left-small, uk-animation-slide-right-small">
+                <li><a href="#">Аккаунт</a></li>
+                <li><a class="disabled-link" href="#">Личные данные</a></li>
+                <li><a class="disabled-link" href="#">Спонсор</a></li>
+            </ul>
+            <ul class="uk-switcher uk-margin">
+                <li>
+                    <div class="uk-margin">
+                        {% render_field signup_form.username class+='uk-input' placeholder='Логин' %}
+                    </div>
+                    <div class="uk-margin">
+                        {% render_field signup_form.email class+='uk-input' placeholder='Почта' %}
+                    </div>
+                    <div class="uk-margin uk-position-relative">
+                        {% render_field signup_form.password1 class+='uk-input' placeholder='Пароль' %}
+                        <a href="#" class="uk-form-icon uk-form-icon-flip show_password"
+                           style="text-decoration: none"><i
+                                class="fas fa-eye"></i></a>
+                    </div>
+                    <div class="uk-margin uk-position-relative">
+                        {% render_field signup_form.password2 class+='uk-input' placeholder='Повторите пароль' %}
+                        <a href="#" class="uk-form-icon uk-form-icon-flip show_password"
+                           style="text-decoration: none"><i
+                                class="fas fa-eye"></i></a>
+                    </div>
+                    <a class="uk-button uk-button-primary">Следующий</a>
+                </li>
+                <li>
+                    <div class="uk-margin">
+                        {% render_field signup_form.first_name class+='uk-input' placeholder='Имя' %}
+                    </div>
+                    <div class="uk-margin">
+                        {% render_field signup_form.last_name class+='uk-input' placeholder='Фамилия' %}
+                    </div>
+                    <div class="uk-margin">
+                        <select id="country" class="uk-select" name="country"></select>
+                    </div>
+                    <div class="uk-margin">
+                        <select name="region" class="uk-select" id="state"></select>
+                    </div>
+                    <div class="uk-margin">
+                        {% render_field signup_form.city class+='uk-input' placeholder='Город' required="true" %}
+                    </div>
+                    <div class="uk-margin">
+                        <p class="uk-text-danger" id="phone-error" style="display: none;">Неправильный номер</p>
+                        <input type="text" class="phone_with_code uk-input" required>
+                        <input type="hidden" name="phone" id="hidden_number">
+                        {#                        {% render_field signup_form.phone class+='uk-input' placeholder="Номер телефона с кодом" required="true" %}#}
+                    </div>
+                    <a class="uk-button uk-button-primary next-tab" data-index="1">Следующий</a>
+                </li>
+                <li>
+                    <div class="uk-margin">
+                        {% render_field signup_form.sponsor class+='uk-input' placeholder='Введите логин спонсора' required="true" %}
+                    </div>
+                    <div class="uk-margin">
+                        <label>
+                            {% render_field signup_form.is_agree class+='uk-checkbox uk-margin-right' %}
+                            Я согласен с условиями <a href="{% url 'agreement' %}" target="_blank">соглашения</a>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            {#            <button class="uk-button uk-button-primary" type="submit">Регистрация</button>#}
         </form>
     </div>
 </div>
@@ -254,6 +276,7 @@
 <script src="{% static 'js/libs.min.js' %}"></script>
 <script src="{% static 'js/intlTelInput.min.js' %}"></script>
 <script src="{% static 'js/countries.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/common.min.js' %}"></script>
 <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 <script type="text/javascript">
@@ -365,6 +388,7 @@
     }
 
     $(document).ready(function () {
+
         ajax_request($('#user-form'));
         ajax_request($('#login-form'));
     })
