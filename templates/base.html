@@ -238,6 +238,12 @@
                         {% render_field signup_form.last_name class+='uk-input' placeholder='Фамилия' %}
                     </div>
                     <div class="uk-margin">
+                        {% render_field signup_form.passport_id class+='uk-input' placeholder='Паспорт серии' %}
+                    </div>
+                    <div class="uk-margin">
+                        {% render_field signup_form.INN class+='uk-input' placeholder='ИНН' %}
+                    </div>
+                    <div class="uk-margin">
                         <select id="country" class="uk-select" name="country"></select>
                     </div>
                     <div class="uk-margin">

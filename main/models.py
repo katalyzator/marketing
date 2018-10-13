@@ -121,6 +121,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     points = models.DecimalField(verbose_name='Баллы', default=0.0, max_digits=15, decimal_places=2, null=True)
 
     passport_id = models.CharField(verbose_name='Паспорт серии', null=True, max_length=255)
+    INN = models.CharField(verbose_name='ИНН', max_length=255, null=True)
     district = models.CharField(verbose_name='Район', null=True, max_length=255)
     address = models.CharField(verbose_name='Адрес', null=True, max_length=255)
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
