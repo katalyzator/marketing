@@ -22,6 +22,7 @@ class SignUpForm(forms.ModelForm):
         model = User
         fields = (
             'username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'sponsor', 'is_agree',
+            'passport_id', 'INN',
             'phone', 'region', 'city')
 
 
