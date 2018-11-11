@@ -7,7 +7,7 @@ from marketing.parameters import ROOT_FOLDER
 
 PROJECT_NAME = 'newlife'
 PROJECT_ROOT = '/var/www/html/newlife'
-VENV_DIR = '/var/www/html/newlife_env'
+VENV_DIR = '/var/www/html/py3newlife_env'
 REPO = ''
 
 
