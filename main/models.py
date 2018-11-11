@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import random
 import string
-import decimal
+
 from ckeditor_uploader.fields import RichTextUploadingField
 from colorfield.fields import ColorField
 from django.contrib.auth.models import AbstractUser
@@ -11,7 +11,6 @@ from django.db import models
 from django.db.models import *
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.encoding import smart_unicode
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
 region_choices = (
@@ -46,8 +45,8 @@ class Products(models.Model):
     image = models.ImageField(upload_to='images/product_images', blank=True, null=True)
     color = ColorField(default='#FF0000')
 
-    def __unicode__(self):
-        return smart_unicode(self.title)
+    def __str__(self):
+        return str(self.title)
 
     @property
     def get_highest_product(self):
@@ -67,8 +66,8 @@ class TransactionKeys(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
-    def __unicode__(self):
-        return smart_unicode(self.handler)
+    def __str__(self):
+        return str(self.handler)
 
 
 class Transfer(models.Model):
@@ -102,7 +101,7 @@ class Slider(models.Model):
         verbose_name_plural = 'Раздел слайдов'
         ordering = ['timestamp']
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.title)
 
 
@@ -127,10 +126,10 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
     related_users = models.ManyToManyField("User", verbose_name='Рефералы', blank=True)
     wallet_id = models.CharField(max_length=8, verbose_name='Лицевой счет', null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.username:
-            return smart_unicode(self.username)
-        return smart_unicode(self.email)
+            return str(self.username)
+        return str(self.email)
 
     def save(self, *args, **kwargs):
         if not self.wallet_id:
@@ -225,8 +224,8 @@ class SocialLinks(models.Model):
     icon_code = models.CharField(verbose_name='Код иконки',
                                  help_text='Код вы можете взять на сайте fontawesome.io/icons', max_length=255)
 
-    def __unicode__(self):
-        return smart_unicode(self.title)
+    def __str__(self):
+        return str(self.title)
 
 
 class Agree(models.Model):
@@ -322,7 +321,7 @@ class News(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
     def __str__(self):
-        return smart_unicode(self.title)
+        return str(self.title)
 
 
 @receiver(post_save, sender=Transfer, dispatch_uid="update_stock_count")

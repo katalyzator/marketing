@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'mptt',
     'main',
+    'akoikelov.djazz'
 ]
 
 MIDDLEWARE = [
