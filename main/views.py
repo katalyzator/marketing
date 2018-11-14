@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 import base64
-from itertools import chain
+import json
+
 import decimal
 import xlwt as xlwt
 from dicttoxml import dicttoxml
@@ -10,16 +11,17 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, login
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.views.generic import *
-
-from main.forms import *
-from main.models import *
 from django.utils.encoding import force_text
-import json
+from django.views.generic import TemplateView, CreateView, UpdateView, DetailView, ListView
+from django.views.generic.base import View
+
+from main.forms import SignUpForm, UserUpdateForm, TransactionForm, TransferForm, CashRequestsForm
+from main.models import Slider, Products, User, News, TransactionKeys, Agree, Transfer, Payments, CashRequests
 
 
 class IndexView(TemplateView):

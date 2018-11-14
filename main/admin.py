@@ -50,6 +50,10 @@ class TransferAdmin(admin.ModelAdmin):
     list_display = ['from_user', 'to_user', 'amount', 'timestamp', 'updated']
 
 
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ['title', 'timestamp', 'updated']
+
+
 admin.site.register(Agree)
 admin.site.register(Payments, PaymentsAdmin)
 admin.site.register(Slider)
@@ -60,4 +64,4 @@ admin.site.register(SocialLinks)
 admin.site.register(Transfer, TransferAdmin)
 admin.site.register(CashRequests, CashRequestsAdmin)
 admin.site.register(Video)
-admin.site.register(News)
+admin.site.register(News, NewsAdmin)
