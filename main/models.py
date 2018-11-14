@@ -3,12 +3,13 @@ from __future__ import unicode_literals
 
 import random
 import string
-
+import decimal
 from ckeditor_uploader.fields import RichTextUploadingField
 from colorfield.fields import ColorField
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import *
+from django.db.models import Sum
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
