@@ -42,5 +42,5 @@ def deploy():
             # except:
             #     run('cp main/parameters.py.dis main/parameters.py')
             # sudo('service apache2 restart')
-            sudo('service newlife restart')
+            sudo('service marketing restart')
             sudo('service nginx restart')
