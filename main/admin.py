@@ -33,9 +33,11 @@ class UserAdmin(admin.ModelAdmin):
             from_user=obj).count() or decimal.Decimal(0)
         my_transactions = TransactionKeys.objects.filter(
             handler=obj).aggregate(
-            sum=Sum('product__price', output_field=models.DecimalField())) / 2 or decimal.Decimal(0)
+            sum=Sum('product__price', output_field=models.DecimalField()))['sum']
         to_me_transactions = TransactionKeys.objects.filter(used_by=obj).aggregate(
-            sum=Sum('product__price', output_field=models.DecimalField()))['sum'] / 2 or decimal.Decimal(0)
+            sum=Sum('product__price', output_field=models.DecimalField()))['sum']
+        my_transactions = my_transactions / 2 if my_transactions else 0
+        to_me_transactions = to_me_transactions / 2 if to_me_transactions else 0
         return payments + to_me_transfers + to_me_transactions - my_transfers - transfers_count - my_transactions
 
     def get_products(self, obj):
