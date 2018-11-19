@@ -1,62 +1,105 @@
-* {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box; }
+@import '//codepenio/chrisdothtml/pen/ojLzJK.css';
+.social-btns .btn,
+.social-btns .btn:before,
+.social-btns .btn .fa {
+    transition: all 0.35s;
+    transition-timing-function: cubic-bezier(0.31, -0.105, 0.43, 1.59);
+}
 
-body {
-  margin: 20px;
-  font-size: 14px;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  color: #555; }
+.social-btns .btn:before {
+    top: 90%;
+    left: -110%;
+}
 
-.hide {
-  display: none; }
+.social-btns .btn i {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+}
 
-pre {
-  margin: 0 !important;
-  display: inline-block; }
+.social-btns .btn.facebook:before {
+    background-color: #3b5998;
+}
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string,
-.token.variable {
-  background: none; }
+.social-btns .btn.facebook i {
+    color: #3b5998;
+}
 
-input, button {
-  height: 35px;
-  margin: 0;
-  padding: 6px 12px;
-  border-radius: 2px;
-  font-family: inherit;
-  font-size: 100%;
-  color: inherit; }
-  input[disabled], button[disabled] {
-    background-color: #eee; }
+.social-btns .btn.twitter:before {
+    background-color: #3cf;
+}
 
-input, select {
-  border: 1px solid #CCC;
-  width: 250px; }
+.social-btns .btn.twitter i {
+    color: #3cf;
+}
 
-::-webkit-input-placeholder {
-  color: #BBB; }
+.social-btns .btn.google:before {
+    background-color: #dc4a38;
+}
 
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #BBB;
-  opacity: 1; }
+.social-btns .btn.google i {
+    color: #dc4a38;
+}
 
-:-ms-input-placeholder {
-  color: #BBB; }
+.social-btns .btn.dribbble:before {
+    background-color: #f26798;
+}
 
-button {
-  color: #FFF;
-  background-color: #428BCA;
-  border: 1px solid #357EBD; }
-  button:hover {
-    background-color: #3276B1;
-    border-color: #285E8E;
-    cursor: pointer; }
+.social-btns .btn.dribbble i {
+    color: #f26798;
+}
 
-#result {
-  margin-bottom: 100px; }
+.social-btns .btn.skype:before {
+    background-color: #00aff0;
+}
+
+.social-btns .btn.skype i {
+    color: #00aff0;
+}
+
+.social-btns .btn:focus:before,
+.social-btns .btn:hover:before {
+    top: -10%;
+    left: -10%;
+}
+
+.social-btns .btn:focus i,
+.social-btns .btn:hover i {
+    color: #fff;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.social-btns {
+    margin: auto;
+    font-size: 0;
+    text-align: center;
+}
+
+.social-btns .btn {
+    display: inline-block;
+    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 28%;
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
+    opacity: 0.99;
+}
+
+.social-btns .btn:before {
+    content: '';
+    width: 120%;
+    height: 120%;
+    position: absolute;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.social-btns .btn i {
+    font-size: 20px;
+    vertical-align: middle;
+}

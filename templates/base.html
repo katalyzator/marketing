@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{% static 'css/libs.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/libs.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
     <link rel="stylesheet" href="{% static 'css/intlTelInput.min.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
           integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
@@ -71,7 +72,9 @@
                     {% if request.user.is_authenticated %}
                         <li><a href="{% url 'mark_view' %}">Маркетинг</a></li>
                     {% endif %}
-                    {#                    <li><a href="#">Faq</a></li>#}
+                    <li>
+                        <a href="#">FAQ</a>
+                    </li>
                     <li><a href="{% url 'agreement' %}">Соглашение</a></li>
                 </ul>
             </div>
@@ -93,31 +96,40 @@
             <div>
                 {% if request.user.is_authenticated %}
                     <a href="{% url 'profile' %}" style="color: #fff;">Личный кабинет</a>
-                    {#                    <a href="#" style="color: #fff;">{{ request.user.points }}</a>#}
                 {% else %}
                     <a href="#" uk-toggle="target: #enter" style="color: #fff; margin-right: 10px;">Вход</a>
                     <a href="#" uk-toggle="target: #registration" style="color: #fff">Регистрация</a>
                 {% endif %}
             </div>
             <div>
-                <button class="uk-button uk-button-default" type="button"><span uk-icon="icon: grid"></span></button>
+                <button class="uk-button uk-button-default" type="button">
+                    <span uk-icon="icon: grid"></span>
+                </button>
                 <div class="uk-margin-remove"
                      uk-drop="pos: bottom-justify; boundary: .boundary-align; boundary-align: true; mode: click">
                     <div class="uk-card uk-card-body uk-card-default">
                         <nav class="uk-navbar" uk-navbar="">
                             <div class="uk-navbar-center">
                                 <ul class="uk-navbar-nav">
-                                    <li><a href="{% url 'main' %}">
-                                        <img src="{% static 'img/logo_new_1.png' %}" width="50" height="50">
-                                    </a></li>
+                                    <li>
+                                        <a href="{% url 'main' %}">
+                                            <img src="{% static 'img/logo_new_1.png' %}" width="50" height="50">
+                                        </a>
+                                    </li>
                                 </ul>
                                 <ul class="uk-navbar-nav">
                                     <li class="uk-active"><a href="{% url 'main' %}">Главная</a></li>
                                     {% if request.user.is_authenticated %}
-                                        <li><a href="{% url 'mark_view' %}">Маркетинг</a></li>
+                                        <li>
+                                            <a href="{% url 'mark_view' %}">Маркетинг</a>
+                                        </li>
                                     {% endif %}
-                                    <li><a href="#">Faq</a></li>
-                                    <li><a href="{% url 'agreement' %}">Соглашение</a></li>
+                                    <li>
+                                        <a href="#">FAQ</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'agreement' %}">Соглашение</a>
+                                    </li>
                                 </ul>
                                 <ul class="uk-navbar-nav reg uk-text-center uk-margin">
                                     {% if request.user.is_authenticated %}
@@ -143,9 +155,20 @@
         <div class="uk-grid uk-child-width-1-3@m">
             <div>
                 <div class="item">
-                    <p>Copyright © {% now "Y" %}</p>
-                    <a href="mailto:newlifekgholding@gmail.com">newlifekgholding@gmail.com</a>
+                    <p>Copyright © 2018</p>
                 </div>
+            </div>
+            <div>
+                <div class="social-btns">
+                    <a class="btn facebook" href="#"><i class="fab fa-facebook"></i></a>
+                    <a class="btn twitter" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn google" href="#"><i class="fab fa-google"></i></a>
+                    <a class="btn dribbble" href="#"><i class="fab fa-dribbble"></i></a>
+                    <a class="btn skype" href="#"><i class="fab fa-skype"></i></a>
+                </div>
+            </div>
+            <div class="uk-text-right">
+                <a style="color: #fff;font-family: AvenirNextCyr-Light;" href="mailto:newlifekgholding@gmail.com">newlifekgholding@gmail.com</a>
             </div>
         </div>
     </div>

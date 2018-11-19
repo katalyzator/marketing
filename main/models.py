@@ -203,7 +203,7 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
             return 0
 
     def update_balance(self, amount):
-        self.points += amount
+        self.points += decimal.Decimal(amount)
         return self.save()
 
     def is_validate(self):
