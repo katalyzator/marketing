@@ -189,3 +189,4 @@ SELLER_SECRET = 'a77dc6e335130378f05109f2f78e9dcc88a52bb2bda1f493942b65301111c55
 JET_INDEX_DASHBOARD = 'main.dashboard.CustomDashboard'
 JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = os.path.join(BASE_DIR, 'client_id.json')
 DROPBOX_ACCESS_TOKEN = 'xhlt3c5imb68nfn'
+TRANSACTION_LOGS_PATH = os.path.join('logs/log.txt')

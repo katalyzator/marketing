@@ -1,13 +1,10 @@
 # coding=utf-8
 import base64
 import json
-import random
-import string
 
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage, send_mail
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render

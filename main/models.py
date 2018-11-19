@@ -14,6 +14,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
+from main.utils import _log
+
 region_choices = (
     ('1', 'Чуй'),
     ('2', 'Ош'),
@@ -350,3 +352,4 @@ def set_level(sender, instance, created, **kwargs):
         instance.handler.level = instance.product
         instance.handler.update_balance(-instance.product.price)
         instance.used_by.update_balance(instance.product.price / 2)
+        _log(instance.used_by + '---' + instance.product.price / 2)
