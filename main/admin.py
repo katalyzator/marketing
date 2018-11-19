@@ -11,8 +11,9 @@ admin.site.site_header = 'Панель управления'
 
 
 class UserAdmin(admin.ModelAdmin):
-    search_fields = ['username', 'points', 'wallet_id', 'first_name', 'last_name', 'email', ]
-    list_display = ['username', 'points', 'first_name', 'wallet_id', 'email', 'is_active', 'level', 'date_joined']
+    search_fields = ['username', 'points', 'get_real_cash', 'wallet_id', 'first_name', 'last_name', 'email', ]
+    list_display = ['username', 'points', 'get_real_cash', 'first_name', 'wallet_id', 'email', 'is_active', 'level',
+                    'date_joined']
     list_filter = ['is_active', ]
 
     class Media:
@@ -20,6 +21,13 @@ class UserAdmin(admin.ModelAdmin):
             'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
             settings.STATIC_URL + 'admin/js/export_to_excel.js'
         ]
+
+    def get_real_cash(self, obj):
+        return Payments.objects.filter(user=obj).aggregate(sum=Sum('amount'))['sum'] + TransactionKeys.objects.filter(
+            used_by=obj).aggregate(sum=Sum('product__price'))['sum'] / 2 - TransactionKeys.objects.filter(
+            handler=obj).aggregate(sum=Sum('product__price'))['sum'] / 2 + \
+               Transfer.objects.filter(from_user=obj).aggregate(sum=Sum('amount'))['sum'] - Transfer.objects.filter(
+            to_user=obj).aggregate(sum=Sum('amount'))['sum']
 
     def get_products(self, obj):
         return "\n".join([p.username for p in obj.related_users.all()])
