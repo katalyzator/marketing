@@ -215,6 +215,9 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         except:
             return False
 
+    def get_region_display(self):
+        return str(self.region)
+
 
 class SocialLinks(models.Model):
     class Meta:
