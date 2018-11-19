@@ -23,18 +23,20 @@ class UserAdmin(admin.ModelAdmin):
         ]
 
     def get_real_cash(self, obj):
-        payments = Payments.objects.filter(user=obj).aggregate(sum=Sum('sum', output_field=models.DecimalField())).get(
-            'sum', 0)
-        transfers = Transfer.objects.filter(to_user=obj).aggregate(
-            sum=Sum('amount', output_field=models.DecimalField())).get('sum', 0) - Transfer.objects.filter(
-            from_user=obj).aggregate(sum=Sum('amount', output_field=models.DecimalField())).get('sum',
-                                                                                                0) - Transfer.objects.filter(
-            from_user=obj).count()
-        transactions = TransactionKeys.objects.filter(used_by=obj).aggregate(
-            sum=Sum('product__price', output_field=decimal.Decimal())).get('sum',
-                                                                           0) / 2 - TransactionKeys.objects.filter(
-            handler=obj).aggregate(sum=Sum('product__price', output_field=models.DecimalField())).get('sum', 0) / 2
-        return payments + transactions + transfers
+        payments = Payments.objects.filter(user=obj).aggregate(sum=Sum('sum', output_field=models.DecimalField()))[
+                       'sum'] or decimal.Decimal(0)
+        to_me_transfers = Transfer.objects.filter(to_user=obj).aggregate(
+            sum=Sum('amount', output_field=models.DecimalField()))['sum'] or decimal.Decimal(0)
+        my_transfers = Transfer.objects.filter(
+            from_user=obj).aggregate(sum=Sum('amount', output_field=models.DecimalField()))['sum'] or decimal.Decimal(0)
+        transfers_count = Transfer.objects.filter(
+            from_user=obj).count() or decimal.Decimal(0)
+        my_transactions = TransactionKeys.objects.filter(
+            handler=obj).aggregate(
+            sum=Sum('product__price', output_field=models.DecimalField())) / 2 or decimal.Decimal(0)
+        to_me_transactions = TransactionKeys.objects.filter(used_by=obj).aggregate(
+            sum=Sum('product__price', output_field=models.DecimalField()))['sum'] / 2 or decimal.Decimal(0)
+        return payments + to_me_transfers + to_me_transactions - my_transfers - transfers_count - my_transactions
 
     def get_products(self, obj):
         return "\n".join([p.username for p in obj.related_users.all()])
