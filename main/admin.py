@@ -23,11 +23,17 @@ class UserAdmin(admin.ModelAdmin):
         ]
 
     def get_real_cash(self, obj):
-        return Payments.objects.filter(user=obj).aggregate(sum=Sum('sum'))['sum'] + TransactionKeys.objects.filter(
-            used_by=obj).aggregate(sum=Sum('product__price')).get('sum', 0) / 2 - TransactionKeys.objects.filter(
-            handler=obj).aggregate(sum=Sum('product__price')).get('sum', 0) / 2 + \
-               Transfer.objects.filter(from_user=obj).aggregate(sum=Sum('amount'))['sum'] - Transfer.objects.filter(
-            to_user=obj).aggregate(sum=Sum('amount'))['sum']
+        payments = Payments.objects.filter(user=obj).aggregate(sum=Sum('sum', output_field=models.DecimalField())).get(
+            'sum', 0)
+        transfers = Transfer.objects.filter(to_user=obj).aggregate(
+            sum=Sum('amount', output_field=models.DecimalField())).get('sum', 0) - Transfer.objects.filter(
+            from_user=obj).aggregate(sum=Sum('amount', output_field=models.DecimalField())).get('sum',
+                                                                                                0) - Transfer.objects.filter(
+            from_user=obj).count()
+        transactions = TransactionKeys.objects.filter(used_by=obj).aggregate(
+            sum=Sum('product__price', output_field=decimal.Decimal())) - TransactionKeys.objects.filter(
+            handler=obj).aggregate(sum=Sum('product__price', output_field=models.DecimalField()))
+        return payments + transactions + transfers
 
     def get_products(self, obj):
         return "\n".join([p.username for p in obj.related_users.all()])
