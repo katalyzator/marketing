@@ -11,8 +11,8 @@ admin.site.site_header = 'Панель управления'
 
 
 class UserAdmin(admin.ModelAdmin):
-    search_fields = ['username', 'wallet_id', 'first_name', 'last_name', 'email', ]
-    list_display = ['username', 'first_name', 'wallet_id', 'email', 'is_active', 'level', 'date_joined']
+    search_fields = ['username', 'points', 'wallet_id', 'first_name', 'last_name', 'email', ]
+    list_display = ['username', 'points', 'first_name', 'wallet_id', 'email', 'is_active', 'level', 'date_joined']
     list_filter = ['is_active', ]
 
     class Media:
