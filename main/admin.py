@@ -23,7 +23,7 @@ class UserAdmin(admin.ModelAdmin):
         ]
 
     def get_real_cash(self, obj):
-        return Payments.objects.filter(user=obj).aggregate(sum=Sum('amount'))['sum'] + TransactionKeys.objects.filter(
+        return Payments.objects.filter(user=obj).aggregate(sum=Sum('sum'))['sum'] + TransactionKeys.objects.filter(
             used_by=obj).aggregate(sum=Sum('product__price'))['sum'] / 2 - TransactionKeys.objects.filter(
             handler=obj).aggregate(sum=Sum('product__price'))['sum'] / 2 + \
                Transfer.objects.filter(from_user=obj).aggregate(sum=Sum('amount'))['sum'] - Transfer.objects.filter(
