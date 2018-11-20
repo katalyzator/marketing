@@ -29,8 +29,6 @@ class UserAdmin(admin.ModelAdmin):
             sum=Sum('amount', output_field=models.DecimalField()))['sum'] or decimal.Decimal(0)
         my_transfers = Transfer.objects.filter(
             from_user=obj).aggregate(sum=Sum('amount', output_field=models.DecimalField()))['sum'] or decimal.Decimal(0)
-        transfers_count = Transfer.objects.filter(
-            from_user=obj).count() or decimal.Decimal(0)
         my_transactions = TransactionKeys.objects.filter(
             handler=obj).aggregate(
             sum=Sum('product__price', output_field=models.DecimalField()))['sum']
@@ -40,7 +38,7 @@ class UserAdmin(admin.ModelAdmin):
             my_transactions = 0
         to_me_transactions = to_me_transactions / 2 if to_me_transactions else 0
         payments = payments / 10 if payments else 0
-        return payments + to_me_transfers + to_me_transactions - my_transfers - transfers_count - my_transactions
+        return payments + to_me_transfers + to_me_transactions - my_transfers - my_transactions
 
     def get_products(self, obj):
         return "\n".join([p.username for p in obj.related_users.all()])
