@@ -39,7 +39,6 @@
     <link rel="apple-touch-icon" href="{% static 'img/logo_new.png' %}" sizes="152x152">
     <link rel="apple-touch-icon" href="{% static 'img/logo_new.png' %}" sizes="256x256">
     <link rel="apple-touch-icon" href="{% static 'img/logo_new.png' %}" sizes="512x512">
-    <link rel="manifest" href="{% static 'manifest.json' %}">
     {% block mobilnik_script %}
     {% endblock %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -148,6 +147,15 @@
         </div>
     </div>
 </header>
+<div class="preloader">
+    <div class="preloader-container">
+        <div class="📦"></div>
+        <div class="📦"></div>
+        <div class="📦"></div>
+        <div class="📦"></div>
+        <div class="📦"></div>
+    </div>
+</div>
 {% block content %}
 {% endblock %}
 <footer>
@@ -423,6 +431,12 @@
         })
     }
 
+    $(window).load(function () {
+        setTimeout(function () {
+            $('.preloader').fadeOut('slow');
+            $('html,body').scrollTop(0);
+        }, 500)
+    });
     $(document).ready(function () {
 
         ajax_request($('#user-form'));

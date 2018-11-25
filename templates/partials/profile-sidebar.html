@@ -10,13 +10,15 @@
             </li>
             <li>
                 <a class="uk-flex-middle" href="" style="background-color: indianred;">
-                    <i class="uk-margin-small-right fa fa-money-bill-alt uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-money-bill-alt uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Ваш баланс: {{ request.user.points }} бонусов
                 </a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="" style="background-color: indianred;">
-                    <i class="uk-margin-small-right fa fa-credit-card uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-credit-card uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Лицевой счет: {{ request.user.wallet_id }}
                 </a>
             </li>
@@ -26,43 +28,50 @@
         <ul class="uk-list uk-card uk-card-default uk-card-body">
             <li class="active">
                 <a class="uk-flex-middle" href="{% url 'main' %}">
-                    <i class="uk-margin-small-right fa fa-home uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-home uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Главная
                 </a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="{% url 'get_tariff' %}">
-                    <i class="uk-margin-small-right fa fa-shopping-cart uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-shopping-cart uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Заказать тариф
                 </a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="{% url 'profile-transactions' %}">
-                    <i class="uk-margin-small-right fa fa-dollar-sign uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-dollar-sign uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Транзакции
                 </a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="{% url 'profile-sponsors' %}">
-                    <i class="uk-margin-small-right fa fa-users uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-users uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Спонсоры
                 </a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="{% url 'profile-referals' %}">
-                    <i class="uk-margin-small-right fa fa-user-circle uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-user-circle uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Команда
                 </a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="{% url 'profile-education' %}">
-                    <i class="uk-margin-small-right fa fa-bookmark uk-text-center" style="width: 30px;" aria-hidden="true"></i>
-                    Промо-материалы
+                    <i class="uk-margin-small-right fa fa-bookmark uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
+                    Видео-материалы
                 </a>
             </li>
             <li>
                 <a class="uk-flex-middle" href="{% url 'profile-settings' %}">
-                    <i class="uk-margin-small-right fa fa-user uk-width uk-text-center" style="width: 30px;" aria-hidden="true"></i>
+                    <i class="uk-margin-small-right fa fa-user uk-width uk-text-center" style="width: 30px;"
+                       aria-hidden="true"></i>
                     Профиль
                 </a>
             </li>
