@@ -26,9 +26,9 @@ def commit():
 def deploy():
     migrate()
     commit()
-    env.host_string = '185.243.247.23'
+    env.host_string = '81.16.141.151'
     env.user = 'root'
-    env.password = 'izpodkaptal96'
+    env.password = 's4My2G27f45p'
     with cd(PROJECT_ROOT):
         sudo('git stash')
         sudo('git pull origin master')
