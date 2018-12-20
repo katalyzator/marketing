@@ -351,3 +351,8 @@ class CashRequestsCreateView(CreateView):
                 message += form.errors[item]
             return JsonResponse(dict(succcess=False, message=message))
         return JsonResponse(dict(success=False, message='Недостаточно бонусов'))
+
+
+class NewsDetailView(DetailView):
+    model = News
+    template_name = 'news-detail.html'

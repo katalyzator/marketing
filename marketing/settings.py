@@ -177,6 +177,7 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
         'height': 300,
         'width': 800,
+        'extraPlugins': ','.join(['html5video', ])
     },
 }
 

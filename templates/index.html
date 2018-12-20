@@ -35,7 +35,7 @@
                 {% for item in news %}
                     {% if forloop.counter <= 3 %}
                         <div>
-                            <a href="#" style="text-decoration: none">
+                            <a href="{% url 'news-detail' item.slug %}" style="text-decoration: none">
                                 <div class="uk-card uk-card-default">
                                     <div class="uk-card-media-top uk-height-medium">
                                         <img src="{{ item.preview.url }}" alt=""

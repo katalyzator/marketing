@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^agree/$', AgreementDetailView.as_view(), name='agreement'),
     url(r'^set_admin/$', register_seven_admins, name='set_admin'),
     url(r'^marketing/$', MarketingView.as_view(), name='mark_view'),
+    url(r'^news/(?P<slug>[\w-]+)/$', NewsDetailView.as_view(), name='news-detail'),
     url(r'^send_points/$', SendPoints.as_view(), name='send_points'),
     url(r'^mobilnik/$', MobilnikPayEvent.as_view(), name='mobilnik'),
     url(r'^mobilnik/terminal/response/$', MobilnikResponse.as_view(), name='mobilnik-terminal'),
