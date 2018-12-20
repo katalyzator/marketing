@@ -72,6 +72,7 @@ class TransferAdmin(admin.ModelAdmin):
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ['title', 'timestamp', 'updated']
+    prepopulated_fields = {"slug": ("title",)}
 
 
 admin.site.register(Agree)
