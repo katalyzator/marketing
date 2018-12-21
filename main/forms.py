@@ -35,7 +35,7 @@ class TransactionForm(forms.ModelForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'account', 'phone', 'email')
+        exclude = ('password', 'username', 'last_login', 'date_joined')
 
 
 class TransferForm(forms.ModelForm):

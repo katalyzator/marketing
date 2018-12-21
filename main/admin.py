@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib import admin, messages
-
-# Register your models here.
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
-from django.urls import reverse
+from django.contrib import admin
 
 from main.models import *
 from marketing import settings
+
+# Register your models here.
 
 admin.site.site_header = 'Панель управления'
 
@@ -60,7 +57,7 @@ class PaymentsAdmin(admin.ModelAdmin):
     def get_bonus(self, obj):
         return obj.sum / 10
 
-    get_bonus.short_description = 'Баллы'
+    get_bonus.short_description = 'Бонусы'
 
 
 class CashRequestsAdmin(admin.ModelAdmin):
