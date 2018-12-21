@@ -3,6 +3,11 @@
     <section style="padding-top: 150px;">
         <h1>{{ news.title }}</h1>
         <div class="uk-container">
+            <div class="video uk-padding-small">
+                <video src="{{ news.video.url }}" controls>
+                    <source src="{{ news.video.url }}" type="video/mp4">
+                </video>
+            </div>
             {{ news.text|safe }}
         </div>
     </section>
