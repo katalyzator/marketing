@@ -10,7 +10,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Sum
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
 
@@ -339,9 +339,10 @@ def transfer(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=CashRequests, dispatch_uid="update_stock_count")
-def update_balance(sender, instance, created, **kwargs):
+def send_cash(sender, instance, created, **kwargs):
     if instance.is_payed:
         instance.user.update_balance(-int(float(instance.points)))
+        post_save.disconnect(receiver=update_balance)
 
 
 @receiver(post_save, sender=Payments, dispatch_uid="update_stock_count")
