@@ -617,6 +617,6 @@
     }
 }
 
-.uk-card-body .ckeditor-html5-video {
+.uk-card-body video{
     display: none !important;
 }
