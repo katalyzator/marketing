@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="uk-card-body">
                                         <h3 class="uk-card-title">{{ item.title }}</h3>
-                                        {{ item.text|truncatechars:100|safe }}
+                                        {{ item.text|truncatewords_html:10|safe }}
                                     </div>
                                 </div>
                             </a>

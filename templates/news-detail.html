@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="uk-container">
-        {{ news.text|safe }}
-    </div>
+    <section style="padding-top: 150px;">
+        <h1>{{ news.title }}</h1>
+        <div class="uk-container">
+            {{ news.text|safe }}
+        </div>
+    </section>
 {% endblock %}
