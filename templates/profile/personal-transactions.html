@@ -30,7 +30,7 @@
                         <h4 class="uk-text-center">Вывод бонусов</h4>
                         {% if not request.user.has_cash_requests %}
                             <div class="uk-width-2-3@m uk-margin-auto">
-                                <p class="uk-text-danger">
+                                <p class="uk-text-danger uk-text-center">
                                     Мы вышлем на ваш номер телефона, верификационный код, после подтверждения которого,
                                     ваша
                                     заявка будет принята
@@ -73,7 +73,7 @@
                             {% endif %}
                         {% else %}
                             <div class="uk-width-2-3@m uk-margin-auto">
-                                <p class="uk-text-danger">
+                                <p class="uk-text-danger uk-text-center">
                                     Вы уже подавали завяку на обналичивание, пожалуйста дождитесь его одобрения
                                 </p>
                             </div>
