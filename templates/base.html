@@ -315,7 +315,7 @@
 <script src="{% static 'js/countries.js' %}"></script>
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/common.min.js' %}"></script>
-<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase__ru.js"></script>
 <script type="text/javascript">
     // Initialize Firebase
     var config = {
@@ -412,6 +412,10 @@
                             }
                         })
                     }).catch(function (error) {
+                        firstForm.parent().prepend('<div class="uk-alert-danger" uk-alert>\n' +
+                            '    <a class="uk-alert-close" uk-close></a>\n' +
+                            '    <p>Убедитесь в правильности своего номера телефона!<br>Пример: +996XXXXXXXXX</p>\n' +
+                            '</div>\n')
                     });
                 })
             })
