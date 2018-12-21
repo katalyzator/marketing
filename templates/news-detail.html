@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
     <section style="padding-top: 150px;">
-        <h1>{{ news.title }}</h1>
         <div class="uk-container">
-            <div class="video uk-padding-small">
+            <h1>{{ news.title }}</h1>
+            <div class="video uk-padding-small uk-width-2-3 uk-margin-auto">
                 <video src="{{ news.video.url }}" controls>
                     <source src="{{ news.video.url }}" type="video/mp4">
                 </video>
