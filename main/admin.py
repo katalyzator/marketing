@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib import admin
+from django.contrib import admin, messages
 
 # Register your models here.
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.urls import reverse
+
 from main.models import *
 from marketing import settings
 
@@ -64,6 +68,9 @@ class CashRequestsAdmin(admin.ModelAdmin):
 
     def user_account(self, obj):
         return obj.user.account
+
+    def get_queryset(self, request):
+        return self.model.objects.filter(is_payed=False)
 
 
 class TransferAdmin(admin.ModelAdmin):
