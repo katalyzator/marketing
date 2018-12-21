@@ -317,17 +317,19 @@
 <script src="{% static 'js/common.min.js' %}"></script>
 <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 <script type="text/javascript">
+    // Initialize Firebase
     var config = {
-        apiKey: "AIzaSyB0uP3Amj2LDZv5c3tfcVDDHuYTiM7I4UY",
-        authDomain: "newlife-dffd4.firebaseapp.com",
-        databaseURL: "https://newlife-dffd4.firebaseio.com",
-        projectId: "newlife-dffd4",
-        storageBucket: "newlife-dffd4.appspot.com",
-        messagingSenderId: "1082354059018"
+        apiKey: "AIzaSyDtAWl2geXjct6mMcEgS90TCAbGy18lwvc",
+        authDomain: "newlife-210318.firebaseapp.com",
+        databaseURL: "https://newlife-210318.firebaseio.com",
+        projectId: "newlife-210318",
+        storageBucket: "",
+        messagingSenderId: "143353665323"
     };
-    var verifyNumberForm = $('#code-verification');
     firebase.initializeApp(config);
     firebase.auth().useDeviceLanguage();
+
+    var verifyNumberForm = $('#code-verification');
 
     function ajax_request(form) {
         $(form).on('submit', function (e) {
