@@ -340,7 +340,7 @@ def transfer(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=CashRequests, dispatch_uid="update_stock_count")
 def update_balance(sender, instance, created, **kwargs):
-    if created and instance.is_payed:
+    if instance.is_payed:
         instance.user.update_balance(-int(float(instance.points)))
 
 
