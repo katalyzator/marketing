@@ -305,7 +305,7 @@ class CashRequests(models.Model):
 
     points = models.PositiveIntegerField(verbose_name='Бонусы', choices=cash_request_choices)
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    # is_payed = models.BooleanField(verbose_name='Деньги переведены')
+    is_payed = models.BooleanField(verbose_name='Деньги переведены', default=False)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True)
 
