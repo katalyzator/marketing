@@ -320,6 +320,7 @@ class News(models.Model):
 
     title = models.CharField(verbose_name='Название новости', max_length=255)
     preview = models.ImageField(verbose_name='Картинка новости', null=True)
+    viedo = models.FileField(verbose_name='Видео', null=True, blank=True)
     text = RichTextUploadingField(verbose_name='Содержимое новости', null=True)
     slug = models.SlugField(verbose_name='Слаг', unique=True, default='')
 
