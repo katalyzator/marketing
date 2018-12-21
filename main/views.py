@@ -339,7 +339,7 @@ class CashRequestsCreateView(CreateView):
     template_name = 'profile/personal-transactions.html'
 
     def form_valid(self, form):
-        if self.request.user.points > form.cleaned_data['points']:
+        if self.request.user.points >= form.cleaned_data['points']:
             form.save()
             return JsonResponse(dict(success=True, message='Ваша заявка успешно оформлена'))
         return self.form_invalid(form)
