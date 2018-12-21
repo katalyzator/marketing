@@ -414,7 +414,7 @@
                     }).catch(function (error) {
                         firstForm.parent().prepend('<div class="uk-alert-danger" uk-alert>\n' +
                             '    <a class="uk-alert-close" uk-close></a>\n' +
-                            '    <p>Убедитесь в правильности своего номера телефона!<br>Пример: +996XXXXXXXXX</p>\n' +
+                            '    <p>' + error.message + '</p>\n' +
                             '</div>\n')
                     });
                 })

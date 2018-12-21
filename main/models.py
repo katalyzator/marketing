@@ -193,6 +193,10 @@ class User(SimpleEmailConfirmationUserMixin, AbstractUser):
         return new_user
 
     @property
+    def has_cash_requests(self):
+        return True if CashRequests.objects.filter(user=self, is_payed=False).exists() else False
+
+    @property
     def get_earned_money(self):
         if self.level:
             summ = TransactionKeys.objects.filter(used_by=self).aggregate(
