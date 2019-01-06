@@ -8,7 +8,7 @@ celery==3.1.26.post2
 certifi==2018.4.16
 cffi==1.11.5
 chardet==3.0.4
-cryptography==1.7.2
+#cryptography==1.7.2
 defusedxml==0.5.0
 dicttoxml==1.7.4
 diff-match-patch==20181111
