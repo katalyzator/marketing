@@ -15,7 +15,7 @@ admin.site.site_header = 'Панель управления'
 
 
 class UserResource(resources.ModelResource):
-    parent = fields.Field(widget=ForeignKeyWidget(User, 'username'), attribute='get_parent')
+    parent = fields.Field(attribute='get_parent')
 
     class Meta:
         model = User

@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^send_points/$', SendPoints.as_view(), name='send_points'),
     url(r'^mobilnik/$', MobilnikPayEvent.as_view(), name='mobilnik'),
     url(r'^mobilnik/terminal/response/$', MobilnikResponse.as_view(), name='mobilnik-terminal'),
+    url(r'^asisnur/terminal/response/$', AsisNurResponse.as_view(), name='asisnur-terminal'),
     url(r'^export_to_xls/$', ExportToXLS.as_view(), name='export_to_xls'),
     url(r'^cash-request/$', CashRequestsCreateView.as_view(), name='cash_request'),
     url(r'^mobilnik/response/$', mobilnik_response, name='mobilnik-response'),

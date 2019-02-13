@@ -290,6 +290,8 @@ class Payments(models.Model):
         verbose_name = 'Платеж'
         verbose_name_plural = 'Платежи'
 
+    type = models.CharField(verbose_name='Вид терминала', choices=(('asisnur', 'Асис НУР'), ('mobilnik', 'Мобильник')),
+                            default='mobilnik', null=True, blank=True, max_length=255)
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     txn_id = models.CharField(verbose_name='Ключ транзакции', max_length=255, unique=True)
     date = models.DateField(auto_now_add=True, verbose_name='Дата создания')

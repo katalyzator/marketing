@@ -356,3 +356,32 @@ class CashRequestsCreateView(CreateView):
 class NewsDetailView(DetailView):
     model = News
     template_name = 'news-detail.html'
+
+
+class AsisNurResponse(View):
+    def get(self, request):
+        command = request.GET.get('command')
+        account = request.GET.get('account')
+        user_exists = User.objects.filter(wallet_id=account).exists()
+        if command == 'check':
+            if user_exists:
+                user = User.objects.get(wallet_id=account)
+                return HttpResponse(
+                    dicttoxml({"result": 0, "first_name": force_text(user.first_name, encoding='windows-1251'),
+                               "last_name": force_text(user.last_name, encoding='windows-1251')},
+                              custom_root="response",
+                              attr_type=False),
+                    content_type='application/xhtml+xml')
+            return HttpResponse(dicttoxml({"result": 1}, custom_root="response", attr_type=False),
+                                content_type='application/xhtml+xml')
+        elif command == 'pay':
+            if user_exists:
+                user = User.objects.get(wallet_id=account)
+                txn_id = request.GET.get('txn_id')
+                sum = decimal.Decimal(request.GET.get('sum'))
+                Payments.objects.create(user=user, txn_id=txn_id, sum=sum, type='asisnur')
+                return HttpResponse(dicttoxml({"result": 0}, custom_root="response", attr_type=False),
+                                    content_type='application/xml')
+            return HttpResponse(dicttoxml({"result": 1}, custom_root="response", attr_type=False),
+                                content_type='application/xml')
+        return HttpResponse(status=200)
