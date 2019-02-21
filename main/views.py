@@ -367,8 +367,7 @@ class AsisNurResponse(View):
             if user_exists:
                 user = User.objects.get(wallet_id=account)
                 return HttpResponse(
-                    dicttoxml({"result": 0, "first_name": force_text(user.first_name, encoding='windows-1251'),
-                               "last_name": force_text(user.last_name, encoding='windows-1251')},
+                    dicttoxml({"result": 0, "full_name": force_text(user.get_full_name(), encoding='windows-1251')},
                               custom_root="response",
                               attr_type=False),
                     content_type='application/xhtml+xml')
